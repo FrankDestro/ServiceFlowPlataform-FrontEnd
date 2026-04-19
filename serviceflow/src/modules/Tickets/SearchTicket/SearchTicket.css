@@ -1,0 +1,129 @@
+.container-search-ticket {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    margin: 10px;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.container-opcoes-ticket {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.container-opcoes-ticket span {
+    font-size: 14px;
+    color: gray;
+}
+
+
+
+/* CARD SEM ACCORDION */
+.ticket-search-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    margin-bottom: 16px;
+}
+
+.ticket-search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* SWITCHES */
+.group-search-switches {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.switch-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #334155;
+}
+
+/* SELECTS */
+.kedb-select-container {
+    flex: 1;
+}
+
+.kedb-select-container select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    font-size: 13px;
+    color: #334155;
+    cursor: pointer;
+}
+
+.kedb-select-container select:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+/* DATAS */
+.group-search-date {
+    display: flex;
+    gap: 12px;
+}
+
+.group-search-date-register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px dashed #e2e8f0;
+    width: 100%;
+}
+
+.group-search-date-register span {
+    font-size: 12px;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.date-input-ticker {
+    height: 40px;          /* ← mesmo height dos selects */
+    border-radius: 10px;   /* ← mesmo border-radius */
+    border: 1px solid #e2e8f0;
+    padding: 0 12px;       /* ← mesmo padding */
+    font-size: 13px;       /* ← mesmo font-size */
+    color: #334155;        /* ← mesma cor */
+    background: #fff;
+    cursor: pointer;
+    flex: 1;               /* ← ocupa o espaço disponível */
+}
+
+.date-input-ticker:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+@media (max-width: 1024px) {
+    .group-search-text {
+        flex-direction: column;
+    }
+    .group-search-switches {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

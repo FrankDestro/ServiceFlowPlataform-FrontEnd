@@ -1,0 +1,33 @@
+.custom-datepicker-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-datepicker-input {
+  width: 100%;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #888;
+  border-radius: 4px;
+  outline: none;
+}
+
+.custom-datepicker-label {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  background: white;
+  padding: 0 0.25rem;
+  transition: 0.2s ease all;
+  pointer-events: none;
+  user-select: none;
+}
+
+.custom-datepicker-label.float {
+  top: -0.5rem;
+  left: 0.4rem;
+  font-size: 0.75rem;
+  color: #007bff;
+}

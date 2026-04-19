@@ -1,0 +1,18 @@
+.limited-text {
+  max-width: 200px !important; /* Defina o limite de largura que você deseja */
+  white-space: nowrap; /* Impede o texto de quebrar em várias linhas */
+  overflow: hidden; /* Oculta o texto que ultrapassar o limite */
+  text-overflow: ellipsis; /* Exibe "..." quando o texto for cortado */
+}
+
+.tag-td {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0f7fa;
+  padding: 4px 8px;
+  margin-right: 5px; /* Espaço entre as tags */
+  border-radius: 5px;
+  font-size: 14px;
+  color: #00796b;
+
+}

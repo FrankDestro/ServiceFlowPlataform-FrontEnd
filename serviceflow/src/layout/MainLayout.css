@@ -1,0 +1,68 @@
+/* ===============================
+   HEADER
+   =============================== */
+
+.container-header {
+  width: 100%;
+  padding: 0px 24px 0px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-header-options {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* mais moderno que width fixo */
+}
+
+
+/* ===============================
+   SCROLL (estilo SaaS clean)
+   =============================== */
+
+.scroll-content {
+  padding: 16px;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* barra */
+.scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* trilho */
+.scroll-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* thumb */
+.scroll-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 999px;
+}
+
+/* hover */
+.scroll-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
+
+
+/* ===============================
+   TITLE (branding moderno)
+   =============================== */
+
+.app-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #0f172a; /* slate-900 */
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.app-title .highlight {
+  color: #0f766e; /* teal padrão sistema */
+}

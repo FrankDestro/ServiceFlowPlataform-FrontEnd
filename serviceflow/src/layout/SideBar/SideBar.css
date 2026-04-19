@@ -1,0 +1,43 @@
+/* Não remover transições */
+.custom-menu .ant-menu-item,
+.custom-menu .ant-menu-submenu-title {
+    transition: background-color 0.18s ease, border 0.18s ease;
+}
+
+/* Hover */
+.custom-menu .ant-menu-item:hover,
+.custom-menu .ant-menu-submenu-title:hover {
+    background-color: rgba(177, 189, 200, 0.08) !important;
+    border-radius: 6px;
+    border: 1px solid rgba(177, 189, 200, 0.15) !important;
+    color: #fff !important;
+}
+
+/* Selected (mesmo visual do hover) */
+.custom-menu .ant-menu-item-selected {
+    background-color: rgba(177, 189, 200, 0.08) !important;
+    border-radius: 6px;
+
+    color: #fff !important;
+    font-weight: 500;
+    border-left: 3px solid #ffffff;
+}
+
+/* garantir que o conteúdo interno (links / spans) herdem cor e não tenham fundo próprio */
+.custom-menu .ant-menu-item-selected>a,
+.custom-menu .ant-menu-item-selected .navlink-custom,
+.custom-menu .ant-menu-item-selected .ant-menu-title-content {
+    color: #fff !important;
+    background: transparent !important;
+}
+
+/* caso ainda exista a regra transparente global — tornar ela apenas para itens não selecionados */
+.custom-menu .ant-menu-item:not(.ant-menu-item-selected) {
+    background: transparent !important;
+}
+
+.container-logo {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}

@@ -1,0 +1,68 @@
+.chamado-container {
+    max-width: 100%;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    height: auto;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-top: 15px;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    background: #f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  
+  }
+  
+  .tab:hover {
+    background-color:  #11344dd7;
+   color: white;
+    border-radius: 10px 10px 0px 0px;
+  }
+  
+  .ativa {
+    background: white;
+    background-color:  #11344d;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+  }
+  
+  .conteudo {
+    padding: 1rem;
+    border: 1px solid #ddd;
+  }
+  
+  textarea {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    resize: vertical;
+  }
+  
+  .btn-anexo {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .btn-anexo:hover {
+    background-color: #187bcd;
+  }
+  
+  .container-title-andamento-summary-historic {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

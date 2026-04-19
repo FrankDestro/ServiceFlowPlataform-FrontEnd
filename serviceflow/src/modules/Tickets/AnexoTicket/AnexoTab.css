@@ -1,0 +1,102 @@
+.aba-anexo {
+  padding: 1rem;
+}
+
+.lista-anexos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-anexo {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  gap: 0.75rem;
+}
+
+.icone {
+  flex-shrink: 0;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.info strong {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.file-name {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+.data {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.download-link {
+  color: #007bff;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.download-link:hover {
+  color: #0056b3;
+}
+
+.upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.upload-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #444;
+  cursor: pointer;
+}
+
+.upload-input {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+.upload-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.upload-input::before {
+  content: "Escolher arquivo";
+  display: inline-block;
+  background: #1976d2;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.upload-input:hover::before {
+  background: #1565c0;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #555;
+}

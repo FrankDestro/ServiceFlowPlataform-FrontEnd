@@ -1,0 +1,133 @@
+/* ===============================
+   PAGINATION – PRO LEVEL UI
+   =============================== */
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* -------------------------------
+   CONTROLES
+   ------------------------------- */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botões padrão */
+.pagination-controls button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover bonito */
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #cbd5f5;
+  color: #0f766e;
+  transform: translateY(-1px);
+}
+
+/* Clique */
+.pagination-controls button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+/* Desabilitado */
+.pagination-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Ícones */
+.pagination-controls button svg {
+  stroke-width: 2.2;
+}
+
+/* -------------------------------
+   NÚMEROS DE PÁGINA
+   ------------------------------- */
+.page-number {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: #475569;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.page-number:hover {
+  background-color: #f1f5f9;
+}
+
+/* Página ativa */
+.page-number.active {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25);
+}
+
+/* -------------------------------
+   ITENS POR PÁGINA
+   ------------------------------- */
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.items-per-page label {
+  font-weight: 500;
+}
+
+.items-per-page select {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.items-per-page select:hover {
+  border-color: #94a3b8;
+}
+
+/* Focus premium */
+.items-per-page select:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+.pagination-container {
+  border-top: 1px solid #f1f5f9;
+}
