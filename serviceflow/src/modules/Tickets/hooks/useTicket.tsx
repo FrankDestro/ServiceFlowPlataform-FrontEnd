@@ -8,15 +8,14 @@ export const initialQueryParams: TicketFilter = {
   size: 10,
   ticketNumber: "",
   statusTicket: null,
-  priority: null,
   channel: null,
   slaBreached: null,
   solvingAreaId: null,
   categoryTicketId: null,
   typeRequestId: null,
   slaId: null,
-  registrationDate: null,
-  completionDate: null,
+  initialDate: "",
+  finalDate: "",
   myTickets: false,
   myAreaTickets: false,
   assignedToMe: false,
@@ -28,6 +27,7 @@ export function useTicket() {
   const [tickets, setTickets] = useState<TicketSimpleDTO[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [showPagination, setShowPagination] = useState(true);
+  const [totalItems, setTotalItems] = useState(0);
   const [queryParams, setQueryParams] = useState<TicketFilter>(initialQueryParams);
 
   useEffect(() => {
@@ -35,10 +35,11 @@ export function useTicket() {
 
     ticketService
       .getAllTicketsByFilters(queryParams)
-      .then((response: { data: { totalPages: number; content: TicketSimpleDTO[] } }) => {
-        const { totalPages, content } = response.data;
+      .then((response: { data: { totalPages: number; content: TicketSimpleDTO[], totalElements: number } }) => {
+        const { totalPages, content, totalElements } = response.data;
         setTickets(content);
         setTotalPages(totalPages);
+        setTotalItems(totalElements); // ✅ pega o totalElements
       })
       .finally(() => setIsLoading(false));
 
@@ -55,6 +56,7 @@ export function useTicket() {
   }
 
   function handlePageChange(newPage: number) {
+    console.log("🔍 handlePageChange recebeu:", newPage); // ✅
     setQueryParams(prev => ({ ...prev, page: newPage }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -71,6 +73,7 @@ export function useTicket() {
     isLoading,
     tickets,
     totalPages,
+    totalItems,
     showPagination,
     queryParams,
     handleSearch,

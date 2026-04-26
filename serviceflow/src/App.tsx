@@ -13,7 +13,9 @@ import * as authService from "./modules/Auth/service/auth-keycloak-service.ts";
 import MainLayout from "./layout/MainLayout.tsx";
 import Home from "./pages/HomePage/home.tsx";
 import KnowErrorsPage from "./pages/KnowErrorsPage/KnowErrorsPage.tsx";
-import Ticket from "./pages/TicketPage/Ticket.tsx";
+import Ticket from "./pages/TicketPage/TicketPage.tsx";
+import OperationalPanelPage from "./pages/OperationalPanelPage/OperationalPanelPage.tsx";
+import { Toastify } from "./layout/Toastify/Toastify.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -28,23 +30,27 @@ function App() {
   if (!keycloakReady) return <div>Carregando...</div>;
 
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/operationalPanel" element={<OperationalPanelPage />} />
           <Route path="/ticket" element={<Ticket />} />
           {/* <Route path="/user" element={<User />} /> */}
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/knowErrorDatabase" element={<KnowErrorsPage />} />
           {/* <Route path="settings" element={<SettingsPage />}>
-            <Route path="general" element={<GeneralSettings />} />
-            <Route path="profile" element={<ProfileSettings />} />
-            <Route path="sla" element={<SlaSettings />} />
-          </Route> */}
+      <Route path="general" element={<GeneralSettings />} />
+      <Route path="profile" element={<ProfileSettings />} />
+      <Route path="sla" element={<SlaSettings />} />
+    </Route> */}
           {/* <Route path="/test" element={<Test />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
+    <Toastify />
+    </>
   );
 }
 export default App;

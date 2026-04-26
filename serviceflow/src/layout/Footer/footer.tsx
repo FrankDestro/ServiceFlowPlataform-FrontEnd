@@ -14,7 +14,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     <p>
       © {new Date().getFullYear()} Sua Empresa. Todos os direitos reservados.
     </p>
-    <p>Termos de Serviço | Política de Privacidade | Versão 5.2</p>
+    <p>Termos de Serviço | Política de Privacidade | ServiceFlow v5.2 </p>
   </footer>
   );
 };

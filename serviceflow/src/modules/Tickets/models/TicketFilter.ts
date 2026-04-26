@@ -1,5 +1,3 @@
-import type { ChannelTicketDTO } from "../constant/ChannelTicket";
-import type { PriorityTicket } from "../constant/PriorityTicket";
 import type { TicketStatus } from "../constant/TicketStatus";
 
 export type TicketFilter = {
@@ -9,8 +7,7 @@ export type TicketFilter = {
   ticketNumber: string;
 
   statusTicket: TicketStatus | null;
-  priority: PriorityTicket | null;
-  channel: ChannelTicketDTO | null;
+  channel: string | null;
 
   slaBreached: boolean | null;
 

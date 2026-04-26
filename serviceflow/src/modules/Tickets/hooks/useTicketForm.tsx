@@ -5,33 +5,25 @@ import * as TypeRequestService from "../service/type-request";
 import * as UrgencyService from "../service/urgencyTicket-service";
 import * as ImpactService from "../service/impactTicket-service";
 import * as TicketService from "../service/ticket-service";
-import * as AttachmentService from "../../Attachment/service/attachment-service";
+import { uploadAnexos } from "../../Attachment/service/attachment-service";
 import { type CategoryTicketDTO } from "../models/CategoryTicketDTO";
 import { type TypeRequestDTO } from "../models/typeRequestDTO";
 import { type UrgencyTicketDTO } from "../models/UrgencyTicketDTO";
 import { type ImpactTicketDTO } from "../models/ImpactTicketDTO";
+import type { TicketFormDTO } from "../models/ticketDTO";
+import type { SolvingAreaDTO } from "../models/solvingAreaDTO";
+import { showToast } from "../../../layout/Toastify/Toastify";
 
-// ── Type interno do formulário ────────────────────────────
-type TicketFormData = {
-    subject: string;
-    description: string;
-    typeRequest: string;
-    categoryTicket: string;
-    solvingArea: string;
-    urgency: string;
-    impact: string;
-    parentTicketId: string;
-};
-
-const initialFormData: TicketFormData = {
+const initialFormData: TicketFormDTO = {
     subject: "",
     description: "",
-    typeRequest: "",
-    categoryTicket: "",
-    solvingArea: "",
     urgency: "",
     impact: "",
+    channel: "",
     parentTicketId: "",
+    typeRequest: "",
+    solvingArea: "",
+    categoryTicket: "",
 };
 
 export function useTicketForm() {
@@ -40,26 +32,25 @@ export function useTicketForm() {
     const [urgencies, setUrgencies] = useState<UrgencyTicketDTO[]>([]);
     const [impacts, setImpacts] = useState<ImpactTicketDTO[]>([]);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
-    const [formData, setFormData] = useState<TicketFormData>(initialFormData);
+    const [formData, setFormData] = useState<TicketFormDTO>(initialFormData);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [solvingArea, setSolvingArea] = useState<SolvingAreaDTO | null>(null);
 
-    // ── Carrega os dados dos selects ──────────────────────────
     useEffect(() => {
-        TypeRequestService.getAllTypeRequest().then((response) => {
-            setTypeRequests(response.data);
-        });
-        CategoryTicketService.getAllCategoryTicket().then((response) => {
-            setCategories(response.data);
-        });
-        UrgencyService.getAllUrgencyTicket().then((response) => {
-            setUrgencies(response.data);
-        });
-        ImpactService.getAllImpactTicket().then((response) => {
-            setImpacts(response.data);
-        });
+        TypeRequestService.getAllTypeRequest().then((r) => setTypeRequests(r.data));
+        CategoryTicketService.getAllCategoryTicket().then((r) => setCategories(r.data));
+        UrgencyService.getAllUrgencyTicket().then((r) => setUrgencies(r.data));
+        ImpactService.getAllImpactTicket().then((r) => setImpacts(r.data));
     }, []);
 
-    // ── Handle change dos inputs ──────────────────────────────
+    useEffect(() => {
+        if (!formData.categoryTicket) return;
+        CategoryTicketService.getSolvingAreaByCategory(formData.categoryTicket).then((r) => {
+            setSolvingArea(r.data);
+            setFormData(prev => ({ ...prev, solvingArea: String(r.data.id) }));
+        });
+    }, [formData.categoryTicket]);
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -69,56 +60,64 @@ export function useTicketForm() {
         setFormData(prev => ({ ...prev, description: value }));
     }
 
-    // ── Submit ────────────────────────────────────────────────
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setIsSubmitting(true);
 
         const requestBody = {
             subject: formData.subject,
             description: formData.description,
-            typeRequestId: Number(formData.typeRequest),
-            categoryTicketId: Number(formData.categoryTicket),
-            solvingAreaId: Number(formData.solvingArea),   // ← adiciona
-            urgency: Number(formData.urgency),
-            impact: Number(formData.impact),
-            parentTicketId: formData.parentTicketId ? Number(formData.parentTicketId) : null,
+            typeRequest: formData.typeRequest,
+            categoryTicket: formData.categoryTicket,
+            solvingArea: formData.solvingArea,
+            urgency: formData.urgency,
+            impact: formData.impact,
+            parentTicketId: formData.parentTicketId,
             channel: "PORTAL",
         };
 
         const toastId = toast.loading("Salvando dados...");
 
-        TicketService.createTicket(requestBody)
-            .then((response) => {
-                if (response.status === 201) {
-                    toast.update(toastId, {
-                        render: `Ticket ${response.data.ticketNumber} criado com sucesso!`,
-                        type: "success",
-                        isLoading: false,
-                        autoClose: 3000,
-                    });
+        try {
+            const response = await TicketService.createTicket(requestBody);
 
-                    if (attachedFiles.length > 0) {
-                        attachedFiles.forEach((file) => {
-                            const formDataFile = new FormData();
-                            formDataFile.append("file", file);
-                            formDataFile.append("ticketId", String(response.data.id));
-                            formDataFile.append("originalName", file.name);
-                            AttachmentService.addAttachments(formDataFile);
-                        });
-                    }
-                    handleReset();
-                }
-            })
-            .catch(() => {
+            if (response.status === 201) {
                 toast.update(toastId, {
-                    render: "Erro ao criar ticket. Tente novamente.",
-                    type: "error",
+                    render: `Ticket ${response.data.ticketNumber} criado com sucesso!`,
+                    type: "success",
                     isLoading: false,
                     autoClose: 3000,
                 });
-            })
-            .finally(() => setIsSubmitting(false));
+
+                if (attachedFiles.length > 0) {
+                    try {
+                        const uploadPromises = attachedFiles.map((file) => {
+                            const formData = new FormData();
+                            formData.append("file", file);
+                            formData.append("ticketId", String(response.data.id));
+                            formData.append("originalName", file.name);
+                            return uploadAnexos(formData);
+                        });
+                        await Promise.all(uploadPromises);
+                        showToast.success("Anexos enviados com sucesso!");
+                    } catch (error) {
+                        showToast.error("Erro ao enviar um ou mais anexos.");
+                        console.error("Erro no upload dos anexos:", error);
+                    }
+                }
+
+                handleReset();
+            }
+        } catch {
+            toast.update(toastId, {
+                render: "Erro ao criar ticket. Tente novamente.",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     function handleReset() {
@@ -129,6 +128,7 @@ export function useTicketForm() {
     return {
         typeRequests,
         categories,
+        solvingArea,
         urgencies,
         impacts,
         formData,

@@ -33,6 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      console.log("🔍 Pagination chamou onPageChange com:", page - 1); // ✅
       onPageChange?.(page - 1); // backend zero-based
     }
   };
@@ -74,7 +75,7 @@ const Pagination: React.FC<PaginationProps> = ({
           aria-label="Página anterior"
         >
           <ChevronLeft size={20} />
-         <span>Anterior</span>
+          <span>Anterior</span>
         </button>
 
         {renderPageNumbers()}
@@ -85,8 +86,8 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === totalPages}
           aria-label="Próxima página"
         >
-          <ChevronRight size={20}/>
-         <span>Anterior</span>
+          <ChevronRight size={20} />
+          <span>Proximo</span>
         </button>
       </div>
 

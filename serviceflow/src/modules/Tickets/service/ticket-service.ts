@@ -5,11 +5,12 @@ import type { TicketFilter } from "../models/TicketFilter";
 
 export function getAllTicketsByFilters(
   params: TicketFilter,
-  sort = "registrationDate"
+  sort = "ticketNumber"
 ) {
   const cleanParams = Object.fromEntries(
-    Object.entries(params).filter(([_, value]) => {
-      return value !== 0 && value !== "" && value !== false;
+    Object.entries(params).filter(([key, value]) => {
+      if (key === "page" || key === "size") return true;
+      return value !== 0 && value !== "" && value !== false && value !== null;
     })
   );
 
@@ -26,7 +27,7 @@ export function getAllTicketsByFilters(
 }
 
 export function ticketById(id: number) {
-  return requestBackendConfig({ url: `/ticket/getTicketById/${id}` });
+  return requestBackendConfig({ url: `/tickets/${id}` });
 }
 
 export function createTicket(obj: TicketFormDTO) {
@@ -38,3 +39,40 @@ export function createTicket(obj: TicketFormDTO) {
   };
   return requestBackendConfig(config);
 }
+
+export function changeTicketStatus(id: number, status: string, closureReason: string) {
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `/tickets/${id}/status`,
+    params: {
+      status,
+      closureReason
+    }
+  };
+  return requestBackendConfig(config);
+}
+
+export function changeTypeRequesty(id: number, typeRequest: string) {
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `/tickets/${id}/type-request`,
+    params: {
+      typeRequest
+    }
+  };
+  return requestBackendConfig(config);
+}
+
+export function changeAssignment(id: number, categoryId: string, solvingAreaId: string, technicianId: string) {
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `/tickets/${id}/assignment`,
+    params: {
+      categoryId,
+      solvingAreaId,
+      technicianId,
+    }
+  };
+  return requestBackendConfig(config);
+}
+

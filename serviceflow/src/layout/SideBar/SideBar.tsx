@@ -33,8 +33,7 @@ import { Layout, Menu, type MenuProps } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./SideBar.css";
-import Logo from "../../assets/logo.svg";
-
+import Logo from "../../assets/logo-icon.png";
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -52,11 +51,14 @@ export const items: MenuItem[] = [
 
     // ── ATENDIMENTO ───────────────────────────────────────────
     getItem("Atendimento", "atendimento", <CustomerServiceOutlined />, [
+        getItem("Painel Operacional", "/operationalPanel", <DashboardOutlined />),
         getItem("Chamados", "/ticket", <FileTextOutlined />),
         getItem("Aprovações", "/aprovacoes", <InteractionOutlined />),
         getItem("Base de Conhecimento", "/kb", <BookOutlined />),
         getItem("KEDB (Erros Conhecidos)", "/knowErrorDatabase", <DatabaseOutlined />),
     ]),
+
+    { type: "divider" },
 
     // ── OPERAÇÕES DE TI ───────────────────────────────────────
     getItem("Operações de TI", "ops", <ApiOutlined />, [
@@ -66,12 +68,16 @@ export const items: MenuItem[] = [
         getItem("Tarefas Operacionais", "/tarefas-operacionais", <ScheduleOutlined />),
     ]),
 
+    { type: "divider" },
+
     // ── PROJETOS ──────────────────────────────────────────────
     getItem("Projetos", "projetos", <AppstoreOutlined />, [
         getItem("Boards", "/boards", <ColumnWidthOutlined />),
         getItem("Sprints", "/sprints", <DashboardOutlined />),
         getItem("Tarefas", "/tasks", <CheckSquareOutlined />),
     ]),
+
+    { type: "divider" },
 
     // ── ATIVOS & CMDB ─────────────────────────────────────────
     getItem("Ativos & CMDB", "cmdb", <HddOutlined />, [
@@ -82,12 +88,16 @@ export const items: MenuItem[] = [
         getItem("Contratos / Garantias", "/contratos", <SolutionOutlined />),
     ]),
 
+    { type: "divider" },
+
     // ── RELATÓRIOS ────────────────────────────────────────────
     getItem("Relatórios", "relatorios", <LineChartOutlined />, [
         getItem("Dashboards", "/dashboards", <PieChartOutlined />),
         getItem("SLAs", "/slas", <ClockCircleOutlined />),
         getItem("Tendências", "/tendencias", <AreaChartOutlined />),
     ]),
+
+    { type: "divider" },
 
     // ── ADMINISTRAÇÃO ─────────────────────────────────────────
     getItem("Administração", "admin", <SettingOutlined />, [
@@ -119,6 +129,14 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onCollapse }) => {
         >
             <div className="container-logo">
                 <img src={Logo} alt="Logo" />
+                <span className="sidebar-brand" style={{
+                    opacity: collapsed ? 0 : 1,
+                    maxWidth: collapsed ? 0 : 200,
+                    overflow: 'hidden',
+                    transition: 'opacity 0.25s ease, max-width 0.25s ease',
+                }}>
+                    Service<span>Flow</span>
+                </span>
             </div>
             <Menu
                 theme="dark"
@@ -128,6 +146,20 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onCollapse }) => {
                 className="custom-menu"
                 onClick={({ key }) => navigate(key)}
             />
+
+            <div className={`sidebar-user ${collapsed ? "collapsed" : ""}`}>
+                <div className="sidebar-user-avatar">FS</div>
+                <div className="sidebar-user-info" style={{
+                    opacity: collapsed ? 0 : 1,
+                    width: collapsed ? 0 : 'auto',
+                    overflow: 'hidden',
+                    transition: 'opacity 0.25s ease, width 0.25s ease',
+                }}>
+                    <span className="sidebar-user-name">Frank Silva</span>
+                    <span className="sidebar-user-role">Suporte N1</span>
+                </div>
+            </div>
+
         </Sider>
     );
 };

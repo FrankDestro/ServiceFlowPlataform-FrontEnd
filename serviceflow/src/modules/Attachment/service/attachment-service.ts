@@ -1,7 +1,7 @@
 import { type AxiosRequestConfig } from "axios";
 import { requestBackendConfig } from "../../../utils/api/api-service";
 
-export function addAttachments(formData: FormData) {
+export function uploadAnexos(formData: FormData) {
     const config: AxiosRequestConfig = {
         method: "POST",
         url: "/attachments",
@@ -11,9 +11,23 @@ export function addAttachments(formData: FormData) {
         },
     };
     return requestBackendConfig(config);
+
 }
 
 
-export function getAllAttachmentById(id: number) {
-  return requestBackendConfig({ url: `/attachments/${id}` });
+export function getAllAttachmentById(id: string) {
+    return requestBackendConfig({ url: `/attachments/ticket/${id}` });
+}
+
+
+export function downloadAnexo(bucket: string, objectName: string) {
+    const config: AxiosRequestConfig = {
+        method: "GET",
+        url: "/attachments/downloadFile",
+        params: {
+            bucket,
+            objectName,
+        },
+    };
+    return requestBackendConfig(config);
 }

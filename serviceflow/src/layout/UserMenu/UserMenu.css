@@ -1,0 +1,18 @@
+.h-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e1f5ee;
+    color: #0f6e56;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.h-avatar:hover {
+    background: #9fe1cb;
+}

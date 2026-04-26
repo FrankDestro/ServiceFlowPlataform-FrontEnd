@@ -1,4 +1,4 @@
-import { faDatabase } from "@fortawesome/free-solid-svg-icons";
+import { faDatabase, faTicket } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/UI/Button/Button";
 import { useTicketForm } from "../hooks/useTicketForm";
 import "./TicketFormCreate.css";
@@ -7,6 +7,7 @@ function TicketFormCreate() {
     const {
         typeRequests,
         categories,
+        solvingArea,
         urgencies,
         impacts,
         formData,
@@ -46,6 +47,18 @@ function TicketFormCreate() {
                             </select>
                         </div>
 
+                        <div className="ticket-input-container">
+                            <input
+                                type="text"
+                                value={solvingArea?.name ?? ""}
+                                name="solvingArea"
+                                readOnly
+                                placeholder="Área solucionadora (preenchido automaticamente)"
+                                className="floating-input"
+                                onChange={handleChange}
+                            />
+                            <label className="floating-label">Area Solucionadora</label>
+                        </div>
                         <div className="ticket-input-container">
                             <input
                                 type="number"
@@ -134,8 +147,8 @@ function TicketFormCreate() {
                     {/* ── Botão ── */}
                     <div className="group-search-button">
                         <Button
-                            text={isSubmitting ? "Salvando..." : "Criar Ticket"}
-                            icon={faDatabase}
+                            text={isSubmitting ? "Salvando..." : " Abrir Chamado"}
+                            icon={faTicket}
                             background="#0f766e"
                             hoverColor="#0d9488"
                             type="submit"

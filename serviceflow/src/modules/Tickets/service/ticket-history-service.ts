@@ -1,11 +1,11 @@
 import { type AxiosRequestConfig } from "axios";
-import { type TicketHistoryDTO } from "../models/ticketHistoryDTO";
+import { type TicketHistoryFormDTO } from "../models/ticketHistoryDTO";
 import { requestBackendConfig } from "../../../utils/api/api-service";
 
-export function addTicketHistoryNote(obj: TicketHistoryDTO) {
+export function addTicketHistoryNote(obj: TicketHistoryFormDTO) {
   const config: AxiosRequestConfig = {
     method: "POST",
-    url: "/ticketHistory/addHistory",
+    url: "/ticket-history",
     withCredentials: true,
     data: obj,
   };
@@ -13,5 +13,5 @@ export function addTicketHistoryNote(obj: TicketHistoryDTO) {
 }
 
 export function getAllHistoryById(id: number) {
-  return requestBackendConfig({ url: `/ticketHistory/${id}` });
+  return requestBackendConfig({ url: `/ticket-history/ticket/${id}` });
 }

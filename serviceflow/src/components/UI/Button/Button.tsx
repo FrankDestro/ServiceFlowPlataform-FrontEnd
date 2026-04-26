@@ -26,7 +26,7 @@ function Button({
   color,
   background,
   hoverColor,
-  size = "medium",
+  size = "small",
   borderRadius = "12px",
   height = "auto",
   width = "auto",

@@ -27,7 +27,8 @@ type Props = {
 };
 
 const FileIcon: React.FC<Props> = ({ type }) => {
-  return <div className="icone">{getFileIcon(type)}</div>;
+    const fileType = type?.toLowerCase() ?? "";
+    return <div className="icone">{getFileIcon(fileType)}</div>;
 };
 
 export default FileIcon;

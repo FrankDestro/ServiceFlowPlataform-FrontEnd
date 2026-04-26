@@ -1,4 +1,3 @@
-import type { ChannelTicketDTO } from "../constant/ChannelTicket";
 import type { TicketStatus } from "../constant/TicketStatus";
 import type { CategoryTicketDTO } from "./CategoryTicketDTO";
 import type { ImpactTicketDTO } from "./ImpactTicketDTO";
@@ -23,34 +22,55 @@ export type TicketSimpleDTO = {
 };
 
 export type TicketDTO = {
-  id: number;
-  ticketNumber: string;
-  subject: string;
-  description: string;
-  statusTicket: TicketStatus;
-  urgencyTicket: UrgencyTicketDTO;
-  impactTicket: ImpactTicketDTO;
-  channel: ChannelTicketDTO;
-  slaBreached: boolean;
-  registrationDate: string;
-  dueDate: string;
-  updatedAt: string;
-  typeRequest: TypeRequestDTO;
-  sla: SLADTO;
-  solvingArea: SolvingAreaDTO;
-  categoryTicket: CategoryTicketDTO;
-  requester: UserDTO
-  technician: UserDTO
+    id: number;
+    ticketNumber: string;
+    subject: string;
+    description: string;
+    statusTicket: TicketStatus;
+    urgencyTicket: UrgencyTicketDTO;
+    impactTicket: ImpactTicketDTO;
+    priority: string;       
+    channel: string;            
+    slaBreached: boolean;
+    registrationDate: string;
+    firstResponseAt: string | null;  
+    dueDate: string;
+    completionDate: string | null;   
+    updatedAt: string;
+    closureReason: string | null;   
+    parentTicketId: number | null;  
+    typeRequest: TypeRequestDTO;
+    sla: SLADTO;
+    solvingArea: SolvingAreaDTO;
+    categoryTicket: CategoryTicketDTO;
+    requester: UserDTO;
+    technician: UserDTO;
+    resolver: UserDTO | null;      
 };
 
 export type TicketFormDTO = {
     subject: string;
     description: string;
-    urgency: number;
-    impact: number;
+    urgency: string;
+    impact: string;
     channel: string;
-    parentTicketId: number | null;
-    typeRequestId: number;
-    solvingAreaId: number;
-    categoryTicketId: number;
-};
+    parentTicketId:string;
+    typeRequest: string;
+    solvingArea: string;
+    categoryTicket: string;
+}
+
+export type TicketStatusForm = {
+    status: string;
+    closureReason?: string; 
+}
+
+export type TicketTypeRequestForm = {
+    typeRequestId: string;
+}
+
+export type TicketUpdateAssignmetForm = {
+    categoryTicketId : string;
+    solvingArea: string;
+    technicianId: string;
+}

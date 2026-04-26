@@ -4,7 +4,7 @@ import "./InputCustom.css";
 interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
+  label?: string;
   className?: string;
   width?: string | number;
   height?: string | number;

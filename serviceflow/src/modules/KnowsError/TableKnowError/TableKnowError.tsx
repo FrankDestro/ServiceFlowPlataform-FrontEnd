@@ -1,13 +1,11 @@
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { format, parseISO } from "date-fns";
+import { PencilLine } from "lucide-react";
 import * as functions from "../../../utils/helpers/functions.ts";
-import "./TableKnowError.css";
-import {format} from "date-fns";
-import {parseISO} from "date-fns";
 import SearchFilterKnowError from "../components/SearchFilterKnowError/SearchFilterKnowError.tsx";
-import type {KnowErrorSearchParams, KnowErrorSimpleDTO} from "../models/knowErrorDTO.ts";
+import type { KnowErrorSearchParams, KnowErrorSimpleDTO } from "../models/knowErrorDTO.ts";
+import "./TableKnowError.css";
 
 type TableKnowErrorProps = {
     knowerros: KnowErrorSimpleDTO[];
@@ -15,69 +13,74 @@ type TableKnowErrorProps = {
     onReload: () => void;
 };
 
-const TableKnowError = ({onSearch, knowerros}: TableKnowErrorProps) => {
+const TableKnowError = ({ onSearch, knowerros }: TableKnowErrorProps) => {
     return (
         <>
             <div className="container-base">
-                <SearchFilterKnowError onSearch={onSearch}/>
+                <SearchFilterKnowError onSearch={onSearch} />
             </div>
             <table className="container-base">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Root Cause</th>
-                    <th>Solution</th>
-                    <th>Tags</th>
-                    <th>Status</th>
-                    <th>Create Date</th>
-                    <th>Resolution Date</th>
-                    <th>userID</th>
-                    <th>userEmail</th>
-                    <th>Options</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Tags</th>
+                        <th>Sistemas Afetados</th>
+                        <th>Status</th>
+                        <th>Criado por</th>
+                        <th>Criado em</th>
+                        <th>Opções</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {knowerros.map((knowerrosItem) => (
-                    <tr key={knowerrosItem.id}>
-                        <td>{knowerrosItem.id}</td>
-                        <td className="limited-text">{knowerrosItem.title}</td>
-                        <td className="limited-text">{knowerrosItem.rootCause}</td>
-                        <td className="limited-text">{knowerrosItem.solution}</td>
+                    {knowerros.map((ke) => (
+                        <tr key={ke.id}>
 
-                        <td className="limited-text">
-                            {knowerrosItem.tags.map((tag, index) => (
-                                <span key={index} className="tag-td">
-                    {tag}
-                  </span>
-                            ))}
-                        </td>
-                        <td>
-                <span
-                    style={functions.getStatusKnowErrorsBadgeStyle(
-                        knowerrosItem.status
-                    )}
-                >
-                  {knowerrosItem.status}
-                </span>
-                        </td>
-                        <td>
-                            {format(parseISO(knowerrosItem.createDate), "dd/MM/yyyy")}
-                        </td>
-                        <td>
-                            {knowerrosItem.resolutionDate
-                                ? format(parseISO(knowerrosItem.resolutionDate), "dd/MM/yyyy")
-                                : "N/A"}
-                        </td>
-                        <td>TESTE</td>
-                        <td>TESTE</td>
-                        <td>
-                            <div className="container-button-details">
-                                <FontAwesomeIcon icon={faEdit}/>
-                            </div>
-                        </td>
-                    </tr>
-                ))}
+                            {/* ID */}
+                            <td>{ke.id}</td>
+
+                            {/* Título */}
+                            <td className="limited-text">{ke.title}</td>
+
+                            {/* Tags */}
+                            <td>
+                                <div className="tag-list">
+                                    {ke.tags?.slice(0, 2).map((tag, index) => (
+                                        <span key={index} className="tag-td">{tag}</span>
+                                    ))}
+                                    {ke.tags?.length > 2 && (
+                                        <span className="tag-td">+{ke.tags.length - 2}</span>
+                                    )}
+                                </div>
+                            </td>
+
+                            {/* Sistemas Afetados */}
+                            <td className="limited-text">
+                                {ke.affectedSystems ?? "—"}
+                            </td>
+
+                            {/* Status */}
+                            <td>
+                                <span style={functions.getStatusKnowErrorsBadgeStyle(ke.status)}>
+                                    {ke.status}
+                                </span>
+                            </td>
+
+                            {/* Criado por */}
+                            <td>{ke.registratorUserEmail ?? "—"}</td>
+
+                            {/* Criado em */}
+                           <td>{format(parseISO(ke.createDate), "dd/MM/yyyy HH:mm")}</td>
+
+                            {/* Opções */}
+                            <td>
+                                <div className="btn-action">
+                                    <PencilLine size={16} />
+                                </div>
+                            </td>
+
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </>

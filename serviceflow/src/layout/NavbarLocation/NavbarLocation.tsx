@@ -22,6 +22,7 @@ type RouteConfig = {
 
 const routeMap: Record<string, RouteConfig> = {
   "/home": { title: "Home", icon: faHome },
+  "/operationalPanel": { title: "Painel Operacional", icon: faDashboard },
   "/dashboard": { title: "Dashboard", icon: faDashboard },
   "/ticket": { title: "Ticket", icon: faTicket },
   "/ticketdetails": { title: "Detalhes", icon: faTasks, parent: "/ticket" },

@@ -1,38 +1,31 @@
-import { Switch as AntSwitch } from "antd";
+import "./Switch.css";
 
 type SwitchProps = {
-  name: string;
-  checked: boolean;
-  defaultChecked?: boolean;
-  onChange?: (name: string, checked: boolean) => void;
-  colorChecked?: string; 
-  colorUnchecked?: string;
+    name: string;
+    checked: boolean;
+    defaultChecked?: boolean;
+    onChange?: (name: string, checked: boolean) => void;
 };
 
-function Switch({
-  name,
-  checked,
-  defaultChecked,
-  onChange,
-  colorChecked = "#11344d", 
-  colorUnchecked = "#ccc",
-}: SwitchProps) {
-  const handleChange = (checked: boolean) => {
-    if (onChange) {
-      onChange(name, checked);
-    }
-  };
+function Switch({ name, checked, defaultChecked, onChange }: SwitchProps) {
+    const handleChange = () => {
+        onChange?.(name, !checked);
+    };
 
-  return (
-    <AntSwitch
-      checked={checked}
-      defaultChecked={defaultChecked}
-      onChange={handleChange}
-      style={{
-        backgroundColor: checked ? colorChecked : colorUnchecked,
-      }}
-    />
-  );
+    return (
+        <label className="sw-wrap">
+            <input
+                type="checkbox"
+                className="sw-input"
+                checked={checked}
+                defaultChecked={defaultChecked}
+                onChange={handleChange}
+            />
+            <span className="sw-track">
+                <span className="sw-thumb" />
+            </span>
+        </label>
+    );
 }
 
 export default Switch;

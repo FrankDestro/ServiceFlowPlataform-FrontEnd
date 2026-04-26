@@ -2,144 +2,134 @@ import React, { useEffect, useState } from "react";
 import "./TicketDetails.css";
 import DetalhesChamado from "../DetalhesChamado/DetalhesChamado.tsx";
 import AndamentoTab from "../AndamentoTicket/AndamentoTab.tsx";
-import AnexoTab from "../AnexoTicket/AnexoTab.tsx";
+import AnexoTab from "../AnexoTab/AnexoTab.tsx";
+import AtualizacaoTicket from "../AtualizacaoTicket/AtualizacaoTicket.tsx";
 import { type TicketDTO } from "../models/ticketDTO.ts";
 import { getAllHistoryById } from "../service/ticket-history-service.ts";
-import { getAllAttachmentById } from "../../Attachment/service/attachment-service.ts"
-import Button from "../../../components/UI/Button/Button.tsx";
-import { faChartLine } from "@fortawesome/free-solid-svg-icons";
+import { getAllAttachmentById } from "../../Attachment/service/attachment-service.ts";
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import TicketTimelineChart from "../TicketTimelineChart/TicketTimelineChart.tsx";
+import { getSeverityBadgeStyle, getStatusTicketBadgeStyle } from "../../../utils/helpers/functions.ts";
 
 type Aba = "detalhes" | "andamento" | "anexo";
 
 interface Props {
-  ticket: TicketDTO;
+    ticket: TicketDTO;
 }
 
 const TicketDetails: React.FC<Props> = ({ ticket }) => {
-  const [abaAtiva, setAbaAtiva] = useState<Aba>("detalhes");
-  const [andamentos, setAndamentos] = useState<any[]>([]);
-  const [anexos, setAnexos] = useState<any[]>([]);
-  const [carregandoAndamentos, setCarregandoAndamentos] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+    const [abaAtiva, setAbaAtiva] = useState<Aba>("detalhes");
+    const [andamentos, setAndamentos] = useState<any[]>([]);
+    const [anexos, setAnexos] = useState<any[]>([]);
+    const [carregandoAndamentos, setCarregandoAndamentos] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    if (abaAtiva === "andamento") {
-      setCarregandoAndamentos(true);
-      getAllHistoryById(ticket.id)
-        .then((response) => {
-          setAndamentos(response.data);
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar histórico de andamento:", error);
-        })
-        .finally(() => setCarregandoAndamentos(false));
-    }
-  }, [abaAtiva, ticket.id]);
+    useEffect(() => {
+        if (abaAtiva === "andamento") {
+            setCarregandoAndamentos(true);
+            getAllHistoryById(ticket.id)
+                .then((response) => setAndamentos(response.data))
+                .catch((error) => console.error("Erro ao buscar histórico:", error))
+                .finally(() => setCarregandoAndamentos(false));
+        }
+    }, [abaAtiva, ticket.id]);
 
-  useEffect(() => {
-    if (abaAtiva === "anexo" && anexos.length === 0) {
-      setCarregandoAndamentos(true);
-      getAllAttachmentById(ticket.id)
-        .then((response) => {
-          setAnexos(response.data);
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar histórico de andamento:", error);
-        })
-        .finally(() => setCarregandoAndamentos(false));
-    }
-  }, [abaAtiva, ticket.id]);
+    useEffect(() => {
+        if (abaAtiva === "anexo" && anexos.length === 0) {
+            setCarregandoAndamentos(true);
+            getAllAttachmentById(ticket.id.toString())
+                .then((response) => setAnexos(response.data))
+                .catch((error) => console.error("Erro ao buscar anexos:", error))
+                .finally(() => setCarregandoAndamentos(false));
+        }
+    }, [abaAtiva, ticket.id]);
 
-  return (
-    <div className="chamado-container">
-      <div className="tabs">
-        <button
-          onClick={() => setAbaAtiva("detalhes")}
-          className={abaAtiva === "detalhes" ? "tab ativa" : "tab"}
-        >
-          Detalhes do Chamado
-        </button>
-        <button
-          onClick={() => setAbaAtiva("andamento")}
-          className={abaAtiva === "andamento" ? "tab ativa" : "tab"}
-        >
-          Andamento
-        </button>
-        <button
-          onClick={() => setAbaAtiva("anexo")}
-          className={abaAtiva === "anexo" ? "tab ativa" : "tab"}
-        >
-          Anexo (4)
-        </button>
-      </div>
+    return (
+        <div className="td-wrap">
 
-      <div className="conteudo">
-        {abaAtiva === "detalhes" && (
-          <div>
-            <DetalhesChamado ticket={ticket} />
-          </div>
-        )}
+            {/* CONTEÚDO PRINCIPAL */}
+            <div className="td-main">
 
-        {abaAtiva === "andamento" && (
-          <div>
-            <h3
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
+                <div className="dc-hd-container">
+                    <div className="dc-hd-top">
+                        <span className="dc-hd-num">{ticket.ticketNumber}</span>
+                        <span style={getStatusTicketBadgeStyle(ticket.statusTicket)}>{ticket.statusTicket}</span>
+                        <span style={getSeverityBadgeStyle(ticket.sla.severity)}>{ticket.sla.severity}</span>
+                        {ticket.solvingArea?.name && (
+                            <span className="dc-pill-gray">{ticket.solvingArea.name}</span>
+                        )}
+                    </div>
+                    <div className="dc-hd-title">{ticket.subject}</div>
+                </div>
+
+                {/* ABAS */}
+                <div className="td-tabs">
+                    <button
+                        className={`td-tab ${abaAtiva === "detalhes" ? "active" : ""}`}
+                        onClick={() => setAbaAtiva("detalhes")}
+                    >
+                        Detalhes do chamado
+                    </button>
+                    <button
+                        className={`td-tab ${abaAtiva === "andamento" ? "active" : ""}`}
+                        onClick={() => setAbaAtiva("andamento")}
+                    >
+                        Andamento
+                    </button>
+                    <button
+                        className={`td-tab ${abaAtiva === "anexo" ? "active" : ""}`}
+                        onClick={() => setAbaAtiva("anexo")}
+                    >
+                        Anexos
+                    </button>
+                </div>
+
+                {/* CONTEÚDO */}
+                <div className="td-content">
+                    {abaAtiva === "detalhes" && (
+                        <DetalhesChamado ticket={ticket} />
+                    )}
+
+                    {abaAtiva === "andamento" && (
+                        <div>
+                            {carregandoAndamentos ? (
+                                <p className="td-loading">Carregando andamento...</p>
+                            ) : (
+                                <AndamentoTab ticket={ticket} />
+                            )}
+                        </div>
+                    )}
+                    {abaAtiva === "anexo" && (
+                        <div>
+                            {carregandoAndamentos ? (
+                                <p className="td-loading">Carregando anexos...</p>
+                            ) : (
+                                <AnexoTab ticket={ticket} />
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* SIDEBAR FIXA */}
+            <div className="td-sidebar">
+                <AtualizacaoTicket ticket={ticket} />
+            </div>
+
+            <Modal
+                title="TimeLine Ticket"
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                footer=""
+                width="100%"
+                maxBodyHeight="60vh"
             >
-              Histórico de Andamento
-              <div onClick={() => setShowModal(true)}>
-                <Button
-                  text="Ver histórico"
-                  icon={faChartLine}
-                  background="white"
-                  hoverColor="#d3d3d3"
-                  type="submit"
-                  borderRadius="5px"
-                  size="small"
-                  color="black"
-                  fontWeight="600"
-                  fontSize="12px"
+                <TicketTimelineChart
+                    data={andamentos.filter((e) => e.noteType === "SYSTEM_GENERATED")}
                 />
-              </div>
-            </h3>
-            {carregandoAndamentos ? (
-              <p>Carregando andamento...</p>
-            ) : (
-              <AndamentoTab andamentos={andamentos} idTicket={ticket.id} />
-            )}
-          </div>
-        )}
-        {abaAtiva === "anexo" && (
-          <div>
-            <h3>Anexos</h3>
-            {carregandoAndamentos ? (
-              <p>Carregando andamento...</p>
-            ) : (
-              <AnexoTab anexos={anexos} idTicket={ticket.id} />
-            )}
-          </div>
-        )}
-      </div>
-
-      <Modal
-        title="TimeLine Ticket"
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        footer=""
-        width="100%"
-        maxBodyHeight="60vh"
-      >
-        <TicketTimelineChart
-          data={andamentos.filter((e) => e.noteType === "SYSTEM_GENERATED")}
-        />
-      </Modal>
-    </div>
-  );
+            </Modal>
+        </div>
+    );
 };
 
 export default TicketDetails;

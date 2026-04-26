@@ -125,6 +125,57 @@ export const getStatusTicketBadgeStyle = (
   }
 };
 
+export const getPriorityBadgeStyle = (
+    value: string
+): React.CSSProperties => {
+    switch (value?.toUpperCase()) {
+        case "LOW":
+            return {
+                backgroundColor: "#f0fdf4",
+                color: "#16a34a",
+                padding: "3px 10px",
+                borderRadius: "999px",
+                fontSize: "11px",
+                fontWeight: 500,
+            };
+        case "MEDIUM":
+            return {
+                backgroundColor: "#f0fdfa",
+                color: "#0f6e56",
+                padding: "3px 10px",
+                borderRadius: "999px",
+                fontSize: "11px",
+                fontWeight: 500,
+            };
+        case "HIGH":
+            return {
+                backgroundColor: "#fffbeb",
+                color: "#d97706",
+                padding: "3px 10px",
+                borderRadius: "999px",
+                fontSize: "11px",
+                fontWeight: 500,
+            };
+        case "CRITICAL":
+            return {
+                backgroundColor: "#fef2f2",
+                color: "#dc2626",
+                padding: "3px 10px",
+                borderRadius: "999px",
+                fontSize: "11px",
+                fontWeight: 500,
+            };
+        default:
+            return {
+                backgroundColor: "#f8fafc",
+                color: "#64748b",
+                padding: "3px 10px",
+                borderRadius: "999px",
+                fontSize: "11px",
+                fontWeight: 500,
+            };
+    }
+};
 
 export const getStatusKnowErrorsBadgeStyle = (
   knowErrorStatus: string
@@ -251,8 +302,8 @@ export function calculateRemainingTime(dueDate: string): string {
 
   // Formata a diferença em uma string no formato "x dias, x horas e x minutos"
   const daysString = differenceDays > 0 ? `${differenceDays} dias, ` : "";
-  const hoursString = `${Math.abs(differenceHours)} horas `;
-  const minutesString = `${remainingMinutes} minutos`;
+  const hoursString = `${Math.abs(differenceHours)} h `;
+  const minutesString = `${remainingMinutes} min`;
 
   const sign = differenceMinutes < 0 ? "-" : "";
 

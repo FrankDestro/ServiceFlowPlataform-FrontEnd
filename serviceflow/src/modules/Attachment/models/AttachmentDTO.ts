@@ -13,6 +13,8 @@ export type AttachmentDTO = {
 
 export type AttachmentFormDTO = {
     file: File;
-    ticketId : number;
+    id : string;
     originalName : string;
 };
+
+

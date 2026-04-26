@@ -14,6 +14,7 @@ type TicketsProps = {
   onActiveTabChange: (isTabOneActive: boolean) => void;
   currentPage: number;
   totalPages: number;
+  totalItems: number;
   onPageChange: (page: number) => void;
   size: number;
   onRowsPerPageChange: (size: number) => void;
@@ -29,6 +30,7 @@ function TicketTabsContainer({
   onActiveTabChange,
   currentPage,
   totalPages,
+  totalItems,
   onPageChange,
   size,
   onRowsPerPageChange,
@@ -41,7 +43,9 @@ function TicketTabsContainer({
   const handleSelect = (key: string | null) => {
     if (key) {
       setActiveKey(key);
-      onActiveTabChange(key === "1");
+      if (key === "1" || activeKey === "1") {
+        onActiveTabChange(key === "1");
+      }
     }
   };
 
@@ -49,7 +53,11 @@ function TicketTabsContainer({
     const filteredTabs = openTabs.filter((tab) => tab.key !== key);
     setOpenTabs(filteredTabs);
     if (activeKey === key) {
-      setActiveKey(filteredTabs.length > 0 ? filteredTabs[0].key : "1");
+      const newActiveKey = filteredTabs.length > 0 ? filteredTabs[0].key : "1";
+      setActiveKey(newActiveKey);
+      if (newActiveKey === "1") {
+        onActiveTabChange(true); // ✅ volta o filtro ao fechar todos os tickets
+      }
     }
   };
 
@@ -62,9 +70,13 @@ function TicketTabsContainer({
       setActiveKey(existingTab.key);
     } else {
       const newKey = `chamado-${ticketData.id}`;
-      setOpenTabs([...openTabs, { key: newKey, ticket: ticketData }]);
+      const newTabs = [...openTabs, { key: newKey, ticket: ticketData }];
+      setOpenTabs(newTabs);
       setActiveKey(newKey);
-      onActiveTabChange(false);
+      // ✅ só notifica se era a primeira aba de ticket abrindo
+      if (!openTabs.some(tab => tab.ticket !== null)) {
+        onActiveTabChange(false);
+      }
     }
   };
 
@@ -101,29 +113,28 @@ function TicketTabsContainer({
           title={
             <>
               <FontAwesomeIcon icon={faList} color="#757575ec" />
-              <span style={{ marginLeft: "10px" }}>Tickets</span>
+              <span style={{ marginLeft: "10px", fontSize: "12px" }}>Tickets</span>
             </>
           }
         >
           <div className="table-tickets-container">
             <TableTicket
-              key={activeKey}
               tickets={tickets}
               onFilter={onFilter}
             />
           </div>
           <div className="container-pagination">
-          <Pagination
-    totalItems={totalPages}
-    itemsPerPageOptions={[10, 20, 50]}
-    selectedSize={size}
-    initialPage={currentPage + 1}
-    onPageSizeChange={onRowsPerPageChange}
-    onPageChange={(page) => {
-        onPageChange(page - 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }}
-/>
+            <Pagination
+              totalItems={totalItems}
+              itemsPerPageOptions={[10, 20, 50]}
+              selectedSize={size}
+              initialPage={currentPage + 1}
+              onPageSizeChange={onRowsPerPageChange}
+              onPageChange={(page) => {
+                onPageChange(page);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            />
           </div>
         </Tab>
 
@@ -135,7 +146,7 @@ function TicketTabsContainer({
               title={
                 <>
                   <div className="container-title-tab">
-                    <div># {tab.ticket ? tab.ticket.id : "Novo Ticket"}</div>
+                    <div># {tab.ticket ? tab.ticket.ticketNumber : "Novo Ticket"}</div>
                     <div className="close-icon">
                       <span
                         onClick={() => handleCloseTab(tab.key)}
@@ -159,7 +170,7 @@ function TicketTabsContainer({
           title={
             <>
               <FontAwesomeIcon icon={faPlus} color="#757575ec" />
-              <span style={{ marginLeft: "10px" }}>Novo Ticket</span>
+              <span style={{ marginLeft: "10px", fontSize: "12px" }}>Novo Ticket</span>
             </>
           }
         >

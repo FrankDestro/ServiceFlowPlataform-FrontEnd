@@ -1,181 +1,134 @@
-import {
-    faCircleInfo,
-    faRotate,
-    faUsers,
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
-import semDados from "../../../assets/sem-dados.png";
-import {type TicketDTO} from "../models/ticketDTO.ts";
-import {
-    getSeverityBadgeStyle,
-    getStatusTicketBadgeStyle,
-} from "../../../utils/helpers/functions.ts";
+import { type TicketDTO } from "../models/ticketDTO.ts";
 import "./DetalhesChamado.css";
-import AtualizacaoTicket from "../AtualizacaoTicket/AtualizacaoTicket.tsx";
+import { getPriorityBadgeStyle } from "../../../utils/helpers/functions.ts";
 
 type Props = {
     ticket: TicketDTO;
 };
 
-const DetalhesChamado: React.FC<Props> = ({ticket}) => {
+function getInitials(firstName: string, lastName: string): string {
+    return `${firstName?.[0] ?? ""}${lastName?.[0] ?? ""}`.toUpperCase();
+}
+
+const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
     return (
-        <div className="container-detalhes">
-            <div className="coluna">
-                <h4>
-                    <FontAwesomeIcon icon={faCircleInfo} color="#11344d"/> Dados do Chamado
-                </h4>
-                <p>
-                    <strong>Assunto:</strong> {ticket.subject}
-                </p>
-                <p>
-                    <strong>Descrição:</strong> {ticket.description}
-                </p>
-                <p>
-                    <strong>Status:</strong>{" "}
-                    <span style={getStatusTicketBadgeStyle(ticket.statusTicket)}>
-            {ticket.statusTicket}
-          </span>
-                </p>
+        <div className="dc-body">
 
-                <p>
-                    <strong>Tipo de Requisição:</strong> {ticket.typeRequest.name}
-                </p>
-                <p>
-                    <strong>Data Registro:</strong>{" "}
-                    {new Date(ticket.registrationDate).toLocaleString()}
-                </p>
-                <p>
-                    <strong>Data Conclusão:</strong>{" "}
-                    {ticket.completionDate === null
-                        ? "Não finalizado"
-                        : new Date(ticket.completionDate).toLocaleString()}
-                </p>
-                <p>
-                    <strong>Data final:</strong>{" "}
-                    {new Date(ticket.dueDate).toLocaleString()}
-                </p>
-                <p>
-                    <strong>Categoria:</strong> {ticket.categoryTicket.name}
-                </p>
-                <p>
-                    <strong>Área Solucionadora:</strong> {ticket.solvingArea.name}
-                </p>
-                <p>
-                    <strong>Severidade:</strong>{" "}
-                    <span style={getSeverityBadgeStyle(ticket.sla.severity)}>
-            {ticket.sla.severity}
-          </span>
-                </p>
-                <p>
-                    <strong>Tempo de resposta:</strong> {ticket.sla.responseTime} horas{" "}
-                </p>
-                <p>
-                    {ticket.parentTicketId ? (
-                        <>
-                            <strong>Ticket pai:</strong> {ticket.parentTicketId}
-                        </>
-                    ) : (
-                        <>
-                            <strong>Ticket pai:</strong>
-                            <em> Não possui ticket pai</em>
-                        </>
-                    )}
-                </p>
-            </div>
-
-            <div className="coluna">
-                <h4>
-                    <FontAwesomeIcon icon={faUsers} color="#11344d"/> Participantes do Chamado
-                </h4>
-
-                <div className="container-participantes-chamado">
-                    <div className="container-solicitante">
-                        <div>
-                            <p style={{fontWeight: 600, color: "gray"}}>Solicitante</p>
-                        </div>
-
-                        <div style={{padding: "10px", display: "flex", alignItems: "center"}}>
-                            <div>
-                                <img
-                                    src={ticket.requester.imgProfile}
-                                    alt="Solicitante"
-                                    className="foto"
-                                />
-                            </div>
-                            <div>
-                                <p>
-                                    <strong>Nome:</strong> {ticket.requester.firstName}{" "}
-                                    {ticket.requester.lastName}
-                                </p>
-                                <p>
-                                    <strong>Email:</strong> {ticket.requester.email}
-                                </p>
-                                <p>
-                                    <strong>Telefone:</strong> {ticket.requester.contactNumber}
-                                </p>
-                                <p>
-                                    <strong>Departamento:</strong>{" "}
-                                    {ticket.requester.department.description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="container-tecnico">
-                        <div>
-                            <p style={{fontWeight: 600, color: "gray"}}>Analista</p>
-
-                        </div>
-                        <div style={{padding: "10px", display: "flex", alignItems: "center"}}>
-                            {ticket.technician ? (
-                                <>
-                                    <div>
-                                        <img
-                                            src={ticket.technician.imgProfile}
-                                            alt="Técnico"
-                                            className="foto"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <p>
-                                            <strong>Nome:</strong> {ticket.technician.firstName}{" "}
-                                            {ticket.technician.lastName}
-                                        </p>
-                                        <p>
-                                            <strong>Email:</strong> {ticket.technician.email}
-                                        </p>
-                                        <p>
-                                            <strong>Telefone:</strong> {ticket.technician.contactNumber}
-                                        </p>
-                                        <p>
-                                            <strong>Departamento:</strong>{" "}
-                                            {ticket.technician.department.description}
-                                        </p>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="container-nao-atribuido">
-                                    <img src={semDados} alt="sem-dados"></img>
-                                    <p>
-                                        <em>Não atribuído</em>
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-
-                    </div>
-
+            {/* INFORMAÇÕES */}
+            <div className="dc-card">
+                <div className="dc-sec-lbl">Informações do chamado</div>
+                <div className="dc-row"><span className="dc-lbl">Solicitante</span><span className="dc-val">{ticket.requester.firstName} {ticket.requester.lastName}</span></div>
+                <div className="dc-row"><span className="dc-lbl">Área solucionadora</span><span className="dc-val">{ticket.solvingArea?.name ?? "—"}</span></div>
+                <div className="dc-row"><span className="dc-lbl">Canal</span><span className="dc-val">{ticket.channel ?? "—"}</span></div>
+                <div className="dc-row"><span className="dc-lbl">Tipo</span><span className="dc-val">{ticket.typeRequest?.name ?? "—"}</span></div>
+                <div className="dc-row"><span className="dc-lbl">Categoria</span><span className="dc-val">{ticket.categoryTicket?.name ?? "—"}</span></div>
+                <div className="dc-row">
+                    <span className="dc-lbl">Urgência</span>
+                    <span style={getPriorityBadgeStyle(ticket.urgencyTicket?.name)}>{ticket.urgencyTicket?.name ?? "—"}</span>
                 </div>
+                <div className="dc-row">
+                    <span className="dc-lbl">Impacto</span>
+                    <span style={getPriorityBadgeStyle(ticket.impactTicket?.name)}>{ticket.impactTicket?.name ?? "—"}</span>
+                </div>
+                <div className="dc-row">
+                    <span className="dc-lbl">Prioridade</span>
+                    <span style={getPriorityBadgeStyle(ticket.priority)}>{ticket.priority ?? "—"}</span>
+                </div>
+                <div className="dc-row">
+                    <span className="dc-lbl">Abertura</span>
+                    <span className="dc-val">{new Date(ticket.registrationDate).toLocaleString("pt-BR")}</span>
+                </div>
+                {ticket.firstResponseAt && (
+                    <div className="dc-row">
+                        <span className="dc-lbl">Primeira resposta</span>
+                        <span className="dc-val">{new Date(ticket.firstResponseAt).toLocaleString("pt-BR")}</span>
+                    </div>
+                )}
+                <div className="dc-row">
+                    <span className="dc-lbl">Prazo SLA</span>
+                    <span className="dc-val" style={{ color: "#dc2626" }}>{new Date(ticket.dueDate).toLocaleString("pt-BR")}</span>
+                </div>
+                {ticket.completionDate && (
+                    <div className="dc-row">
+                        <span className="dc-lbl">Conclusão</span>
+                        <span className="dc-val">{new Date(ticket.completionDate).toLocaleString("pt-BR")}</span>
+                    </div>
+                )}
+                <div className="dc-row">
+                    <span className="dc-lbl">Status do SLA</span>
+                    <span style={ticket.slaBreached ?
+                        { backgroundColor: "#fef2f2", color: "#dc2626", padding: "3px 10px", borderRadius: "999px", fontSize: "11px", fontWeight: 500 } :
+                        { backgroundColor: "#f0fdf4", color: "#16a34a", padding: "3px 10px", borderRadius: "999px", fontSize: "11px", fontWeight: 500 }
+                    }>
+                        {ticket.slaBreached ? "Estourado" : "Dentro do prazo"}
+                    </span>
+                </div>
+                {ticket.parentTicketId && (
+                    <div className="dc-row">
+                        <span className="dc-lbl">Ticket pai</span>
+                        <span className="dc-val">#{ticket.parentTicketId}</span>
+                    </div>
+                )}
+                {ticket.closureReason && (
+                    <div className="dc-row">
+                        <span className="dc-lbl">Motivo de encerramento</span>
+                        <span className="dc-val">{ticket.closureReason}</span>
+                    </div>
+                )}
             </div>
 
-            <div className="coluna">
-                <h4>
-                    <FontAwesomeIcon icon={faRotate} color="#11344d"/> Atualização chamado
-                </h4>
-                <AtualizacaoTicket/>
+            {/* DESCRIÇÃO */}
+            <div className="dc-card">
+                <div className="dc-sec-lbl">Descrição</div>
+                <div className="dc-desc">{ticket.description}</div>
+            </div>
+
+            {/* PARTICIPANTES */}
+            <div className="dc-card">
+                <div className="dc-sec-lbl">Participantes</div>
+                <div className="dc-part-role">Solicitante</div>
+                <div className="dc-part-item">
+                    <div className="dc-av dc-av-blue">
+                        {getInitials(ticket.requester.firstName, ticket.requester.lastName)}
+                    </div>
+                    <div>
+                        <div className="dc-part-name">{ticket.requester.firstName} {ticket.requester.lastName}</div>
+                        <div className="dc-part-email">{ticket.requester.email}</div>
+                    </div>
+                </div>
+
+                <div className="dc-part-role">Analista responsável</div>
+                {ticket.technician ? (
+                    <div className="dc-part-item">
+                        <div className="dc-av dc-av-teal">
+                            {getInitials(ticket.technician.firstName, ticket.technician.lastName)}
+                        </div>
+                        <div>
+                            <div className="dc-part-name">{ticket.technician.firstName} {ticket.technician.lastName}</div>
+                            <div className="dc-part-email">{ticket.technician.email}</div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="dc-part-item">
+                        <span style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>Não atribuído</span>
+                    </div>
+                )}
+
+                {ticket.resolver && (
+                    <>
+                        <div className="dc-part-role">Resolvido por</div>
+                        <div className="dc-part-item">
+                            <div className="dc-av dc-av-amber">
+                                {getInitials(ticket.resolver.firstName, ticket.resolver.lastName)}
+                            </div>
+                            <div>
+                                <div className="dc-part-name">{ticket.resolver.firstName} {ticket.resolver.lastName}</div>
+                                <div className="dc-part-email">{ticket.resolver.email}</div>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

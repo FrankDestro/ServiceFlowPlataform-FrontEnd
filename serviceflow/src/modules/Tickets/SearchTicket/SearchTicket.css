@@ -22,7 +22,6 @@
 }
 
 
-
 /* CARD SEM ACCORDION */
 .ticket-search-card {
     background: #ffffff;
@@ -90,8 +89,7 @@
     padding: 10px;
     border-radius: 10px;
     background: #ffffff;
-    border: 1px dashed #e2e8f0;
-    width: 100%;
+    border: 1px dashed #e2e8f0;   
 }
 
 .group-search-date-register span {
@@ -109,7 +107,7 @@
     color: #334155;        /* ← mesma cor */
     background: #fff;
     cursor: pointer;
-    flex: 1;               /* ← ocupa o espaço disponível */
+    flex: 1; 
 }
 
 .date-input-ticker:focus {
@@ -127,3 +125,24 @@
         align-items: flex-start;
     }
 }
+
+
+.group-search-date-register .react-datepicker-wrapper {
+    width: 100%;
+}
+
+.group-search-date-register .react-datepicker__input-container {
+    width: 100%;
+}
+
+.group-search-date-register .react-datepicker__input-container input {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #334155;
+    background: #fff;
+}
+

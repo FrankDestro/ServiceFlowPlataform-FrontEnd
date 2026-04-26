@@ -1,15 +1,14 @@
-  .header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffff;
+    background-color: #ffffff;
     padding: 10px 20px;
-    color: black;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    box-shadow: none;
-    border-bottom: 1px solid #d5d5d5;
-  }
+    color: #334155;
+    font-family: system-ui, sans-serif;
+    border-bottom: 1px solid #f1f5f9;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
 
   .logo {
     display: flex;

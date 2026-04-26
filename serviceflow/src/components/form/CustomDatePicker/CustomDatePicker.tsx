@@ -1,48 +1,24 @@
-import React, { useState } from "react";
-import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./CustomDatePicker.css";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
+import "./CustomDatePicker.css"
 
 interface CustomDatePickerProps {
-  value: Date | null;
-  onChange: (date: Date | null) => void;
-  label: string;
-  className?: string;
-  width?: string | number;
-  height?: string | number;
-  placeholder?: string;
+    value: string;
+    onChange: (value: string) => void;
+    label?: string;
+    placeholder?: string;
 }
 
-const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
-  value,
-  onChange,
-  label,
-  className = "",
-  width,
-  height,
-  placeholder = "",
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const shouldFloat = isFocused || !!value;
-
-  const containerStyle: React.CSSProperties = { width, height };
-
-  return (
-    <div className={`custom-datepicker-wrapper ${className}`} style={containerStyle}>
-      <ReactDatePicker
-        selected={value}
-        onChange={onChange}
-        onCalendarOpen={() => setIsFocused(true)}
-        onCalendarClose={() => setIsFocused(false)}
-        placeholderText={placeholder}
-        className="custom-datepicker-input"
-        dateFormat="yyyy-MM-dd"
-      />
-      <label className={`custom-datepicker-label ${shouldFloat ? "float" : ""}`}>
-        {label}
-      </label>
-    </div>
-  );
-};
+function CustomDatePicker({ value, onChange, placeholder }: CustomDatePickerProps) {
+    return (
+        <DatePicker
+            value={value ? dayjs(value) : null}
+            onChange={(date) => onChange(date ? date.format("YYYY-MM-DD") : "")}
+            format="DD/MM/YYYY"
+            placeholder={placeholder ?? "Selecione a data"}
+            style={{ width: "100%", height: 40, borderRadius: 10 }}
+        />
+    );
+}
 
 export default CustomDatePicker;
