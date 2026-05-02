@@ -137,6 +137,29 @@
     justify-content: flex-end;
 }
 
+/* ── UPLOAD BUTTON ── */
+.ticket-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px dashed #e2e8f0;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: fit-content;
+}
+
+.ticket-upload-btn:hover {
+    border-color: #14b8a6;
+    color: #0f766e;
+    background: #f0fdf9;
+}
+
 /* ── RESPONSIVO ── */
 @media (max-width: 1024px) {
     .ticket-form-row {

@@ -1,0 +1,54 @@
+/* KnowledgeBaseListing.css */
+.kb-limited-text {
+    max-width: 200px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kb-tag-td {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e0f7fa;
+    padding: 4px 8px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #00796b;
+}
+
+.kb-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.kb-container-btn-new {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: end;
+}
+
+.kb-container-base {
+    width: 100%;
+}
+
+.kb-btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+}
+
+.kb-btn-action:hover {
+    background: #f1f5f9;
+}
+
+.kb-modal-scroll-content {
+    max-height: 70vh;
+    overflow-y: auto;
+}

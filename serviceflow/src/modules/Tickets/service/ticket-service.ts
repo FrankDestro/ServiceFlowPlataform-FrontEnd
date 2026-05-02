@@ -76,3 +76,30 @@ export function changeAssignment(id: number, categoryId: string, solvingAreaId: 
   return requestBackendConfig(config);
 }
 
+
+export function getAwaitingApprovalRequest(page: number, size: number) {
+    const config: AxiosRequestConfig = {
+        method: "GET",
+        url: "/tickets/awaiting-approval",
+        params: { page, size },
+    };
+    return requestBackendConfig(config);
+}
+
+
+export function approveTicketRequest(id: number) {
+    const config: AxiosRequestConfig = {
+        method: "PATCH",
+        url: `/tickets/${id}/approve`,
+    };
+    return requestBackendConfig(config);
+}
+
+export function rejectTicketRequest(id: number, reason: string) {
+    const config: AxiosRequestConfig = {
+        method: "PATCH",
+        url: `/tickets/${id}/reject`,
+        params: { reason },
+    };
+    return requestBackendConfig(config);
+}

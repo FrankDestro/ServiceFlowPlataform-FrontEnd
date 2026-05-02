@@ -1,61 +1,60 @@
-.custom-file-upload {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+.custom-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.custom-upload-button {
-  display: inline-block;
-  padding: 10px 18px;
-  background-color: #11344d;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: fit-content;
+.custom-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px dashed #e2e8f0;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: fit-content;
 }
 
-.custom-upload-button:hover {
-  background-color: #11344dc7;
+.custom-upload-btn:hover {
+    border-color: #14b8a6;
+    color: #0f766e;
+    background: #f0fdf9;
 }
 
-.hidden-file-input {
-  display: none;
+.custom-upload-file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
-.attached-files-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+.custom-upload-file-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0fdf9;
+    border: 1px solid #ccfbf1;
+    color: #0f766e;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
 }
 
-.file-preview {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f2f2f2;
-  padding: 0.6rem 1rem;
-  border-radius: 5px;
-  font-size: 14px;
-  color: #444;
+.custom-upload-remove-btn {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    padding: 0;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
 }
 
-.file-icon {
-  margin-right: 8px;
-  color: #666;
-}
-
-.remove-file-button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.remove-file-button:hover {
-  background-color: #c0392b;
+.custom-upload-remove-btn:hover {
+    color: #b91c1c;
 }

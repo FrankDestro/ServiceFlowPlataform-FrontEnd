@@ -1,7 +1,7 @@
 import { type IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Bars} from "react-loader-spinner";
+import { Bars } from "react-loader-spinner";
 import "./button.css";
 
 type Props = {
@@ -18,6 +18,7 @@ type Props = {
   color?: string;
   fontWeight?: string;
   fontSize?: string;
+  onClick?: () => void;
 };
 
 function Button({
@@ -31,14 +32,14 @@ function Button({
   height = "auto",
   width = "auto",
   type = "button",
-  isLoading = false, 
+  isLoading = false,
   fontWeight = "",
-  fontSize = ""
+  fontSize = "",
+  onClick,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div>
       <button
         className={`button-container ${size}`}
         type={type}
@@ -53,7 +54,8 @@ function Button({
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        disabled={isLoading} 
+        onClick={onClick}
+        disabled={isLoading}
       >
         {isLoading ? (
           <div className="container-spiner-button-login">
@@ -77,7 +79,6 @@ function Button({
           </>
         )}
       </button>
-    </div>
   );
 }
 

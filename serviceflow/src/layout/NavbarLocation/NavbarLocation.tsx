@@ -1,4 +1,6 @@
 import {
+  faBook,
+  faClipboardCheck,
   faClock,
   faDashboard,
   faDatabase,
@@ -28,8 +30,9 @@ const routeMap: Record<string, RouteConfig> = {
   "/ticketdetails": { title: "Detalhes", icon: faTasks, parent: "/ticket" },
   "/user": { title: "User", icon: faUser },
   "/abas": { title: "Abas", icon: faDatabase },
-  "/knowErrorDatabase": { title: "KEDB", icon: faDatabase },
-
+  "/KnowledgeBase": { title: "Knowledge Data Base", icon: faBook },
+  "/knowErrorDatabase": { title: "Know Error Data Base", icon: faDatabase },
+  "/approvals": { title: "Aprovações", icon: faClipboardCheck },
   "/settings/general": { title: "General", icon: faGears, parent: "/settings" },
   "/settings/profile": { title: "Profile", icon: faUser, parent: "/settings" },
   "/settings/sla": { title: "SLA", icon: faClock, parent: "/settings" },

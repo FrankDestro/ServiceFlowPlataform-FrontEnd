@@ -7,6 +7,9 @@ export type TicketHistoriesDTO = {
   registrationDate: string;
   visibleToRequester: boolean;
   systemGenerated: boolean;
+  changedField: string;
+  oldValue: string;
+  newValue : string;
   noteType: string;
   ticketId: number;
   user :  UserDTO;

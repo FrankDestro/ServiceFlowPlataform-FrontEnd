@@ -1,0 +1,45 @@
+.group-approvals-button {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.modal-scroll-content {
+    overflow-y: auto;
+    max-height: 600px;
+    padding-right: 4px; /* evita cortar scrollbar */
+}
+
+/* scrollbar discreta no padrão do projeto */
+.modal-scroll-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.modal-header h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* número do ticket em destaque */
+.modal-header h2 span.ticket-number {
+    color: #0f766e;
+    font-weight: 700;
+    margin-right: 6px;
+}

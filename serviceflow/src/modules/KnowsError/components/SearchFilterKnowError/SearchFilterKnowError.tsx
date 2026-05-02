@@ -3,17 +3,16 @@ import { useState } from "react";
 import { Accordion } from "react-bootstrap";
 import "./SearchFilterKnowError.css";
 import Button from "../../../../components/UI/Button/Button.tsx";
+import CustomDatePicker from "../../../../components/form/CustomDatePicker/CustomDatePicker.tsx";
 
 type Props = {
   onSearch: (formData: {
     title: string;
     status: string;
     affectedSystems: string;
-    tags: string[];
+    tags: string;
     initialDate: string;
     finalDate: string;
-    initialDateResolution: string;
-    finalDateResolution: string;
   }) => void;
 };
 
@@ -21,11 +20,10 @@ function SearchFilterKnowError({ onSearch }: Props) {
   const [filters, setFilters] = useState({
     title: "",
     status: "",
+    tags: "",
     affectedSystems: "",
     initialDate: "",
     finalDate: "",
-    initialDateResolution: "",
-    finalDateResolution: "",
   });
 
   const [words, setWords] = useState<string[]>([]);
@@ -40,20 +38,19 @@ function SearchFilterKnowError({ onSearch }: Props) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    console.log("words no submit:", words); // ← adiciona aqui
     onSearch({
       title: filters.title,
       status: filters.status,
       affectedSystems: filters.affectedSystems,
-      tags: words,
+      tags: words.join(","), // ← words está vazio?
       initialDate: filters.initialDate,
       finalDate: filters.finalDate,
-      initialDateResolution: filters.initialDateResolution,
-      finalDateResolution: filters.finalDateResolution,
     });
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === " ") {
       e.preventDefault();
       const trimmedValue = inputValue.trim();
       if (trimmedValue && !words.includes(trimmedValue)) {
@@ -68,16 +65,20 @@ function SearchFilterKnowError({ onSearch }: Props) {
   };
 
   function handleClearFilters(): void {
-    setFilters({
+    const cleared = {
       title: "",
       status: "",
+      tags: "",
       affectedSystems: "",
       initialDate: "",
       finalDate: "",
-      initialDateResolution: "",
-      finalDateResolution: "",
-    });
+    };
+    setFilters(cleared);
     setWords([]);
+    onSearch({
+      ...cleared,
+      tags: "",
+    });
   }
 
   return (
@@ -109,7 +110,7 @@ function SearchFilterKnowError({ onSearch }: Props) {
                     onChange={handleInputChange}
                     className="floating-input"
                   />
-                  <label className="floating-label">Sistemas Afetados</label>
+                  <label className="floating-label">Recursos Afetados</label>
                 </div>
 
                 <div className="kedb-select-container">
@@ -132,48 +133,17 @@ function SearchFilterKnowError({ onSearch }: Props) {
               <div className="group-search-date">
                 <div className="group-search-date-register">
                   <span>Data de registro inicial</span>
-                  <div className="date-select-kedb-container">
-                    <input
-                      type="date"
-                      name="initialDate"
-                      value={filters.initialDate}
-                      onChange={handleInputChange}
-                      className="date-input-ticker"
-                    />
-                  </div>
-                  <span>Data de registro final</span>
-                  <div className="date-select-kedb-container">
-                    <input
-                      type="date"
-                      name="finalDate"
-                      value={filters.finalDate}
-                      onChange={handleInputChange}
-                      className="date-input-ticker"
-                    />
-                  </div>
+                  <CustomDatePicker
+                    value={filters.initialDate}
+                    onChange={(value) => setFilters(prev => ({ ...prev, initialDate: value }))}
+                  />
                 </div>
-
-                <div className="group-search-date-solution">
-                  <span>Data de solução inicial</span>
-                  <div className="date-select-kedb-container">
-                    <input
-                      type="date"
-                      name="initialDateResolution"
-                      value={filters.initialDateResolution}
-                      onChange={handleInputChange}
-                      className="date-input-ticker"
-                    />
-                  </div>
-                  <span>Data de solução final</span>
-                  <div className="date-select-kedb-container">
-                    <input
-                      type="date"
-                      name="finalDateResolution"
-                      value={filters.finalDateResolution}
-                      onChange={handleInputChange}
-                      className="date-input-ticker"
-                    />
-                  </div>
+                <div className="group-search-date-register">
+                  <span>Data de registro final</span>
+                  <CustomDatePicker
+                    value={filters.finalDate}
+                    onChange={(value) => setFilters(prev => ({ ...prev, finalDate: value }))}
+                  />
                 </div>
               </div>
 

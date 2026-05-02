@@ -1,0 +1,92 @@
+/* KnowledgeBaseDetail.css */
+.kb-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kb-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.kb-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kb-detail-id {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0f766e;
+}
+
+.kb-detail-category {
+    font-size: 12px;
+    background: #f0fdf9;
+    color: #0f766e;
+    border: 1px solid #ccfbf1;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.kb-detail-visibility {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.kb-detail-visibility.public {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.kb-detail-visibility.internal {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.kb-detail-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.kb-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.kb-detail-card {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kb-detail-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+
+.kb-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    border-bottom: 1px solid #f8fafc;
+    padding-bottom: 6px;
+}
+
+.kb-detail-label { color: #64748b; }
+.kb-detail-value { color: #334155; font-weight: 500; }

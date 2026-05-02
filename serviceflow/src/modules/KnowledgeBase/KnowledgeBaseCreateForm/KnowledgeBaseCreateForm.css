@@ -1,0 +1,111 @@
+/* KnowledgeBaseCreateForm.css */
+.kb-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.kb-form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.kb-form-row > * {
+    flex: 1;
+}
+
+.kb-tags-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kb-floating-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.kb-floating-input:focus {
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+.kb-word-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.kb-word-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.kb-remove-word-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #ef4444;
+    padding: 0;
+    line-height: 1;
+}
+
+.kb-editor-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.kb-editor-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.kb-editor-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #334155;
+    outline: none;
+    resize: vertical;
+    font-family: Georgia, serif;
+    line-height: 1.8;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.kb-editor-textarea:focus {
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+.kb-form-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+}
+
+@media (max-width: 768px) {
+    .kb-form-row {
+        flex-direction: column;
+    }
+}

@@ -1,33 +1,32 @@
-.custom2-input-wrapper {
-  position: relative;
-  display: inline-block;
-  margin: 0!important;
+.ticket-input-container {
+    position: relative;
+    flex: 1;
 }
 
-.custom2-input {
-  width: 100%;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
-  border: 1px solid #888;
-  border-radius: 4px;
-  outline: none;
-  font-size: 1rem;
+.floating-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    font-size: 13px;
+    color: #334155;
+    transition: all 0.2s ease;
 }
 
-.custom2-label {
-  position: absolute;
-  top: 0.9rem;
-  left: 0.5rem;
-  font-size: 0.9rem;
-  color: #666;
-  background: white;
-  padding: 0 0.25rem;
-  transition: 0.2s ease all;
-  pointer-events: none;
+.floating-input:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
 }
 
-.custom2-label.float {
-  top: -0.5rem;
-  left: 0.4rem;
-  font-size: 0.75rem;
-  color: #007bff;
+.floating-label {
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-size: 11px;
+    color: #64748b;
+    background: #ffffff;
+    padding: 0 6px;
 }

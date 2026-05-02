@@ -1,0 +1,36 @@
+/* ── KnowErrorForm ── */
+.ke-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.ke-tags-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ke-form-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+}
+
+/* ── duas colunas para campos curtos ── */
+.ke-form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.ke-form-row > * {
+    flex: 1;
+}
+
+/* ── responsivo ── */
+@media (max-width: 768px) {
+    .ke-form-row {
+        flex-direction: column;
+    }
+}

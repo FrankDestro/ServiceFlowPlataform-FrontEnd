@@ -263,7 +263,7 @@ table {
 th {
   text-align: left;
   padding: 12px 16px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -637,4 +637,31 @@ td:first-child {
 
 .anx-btn-save:hover {
   background: #085041;
+}
+
+
+
+.modal-scroll-content {
+    overflow-y: auto;
+    max-height: 600px;
+    padding-right: 4px; /* evita cortar scrollbar */
+}
+
+/* scrollbar discreta no padrão do projeto */
+.modal-scroll-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.modal-scroll-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }

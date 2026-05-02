@@ -9,6 +9,9 @@ import "./AndamentoTab.css";
 import { showToast } from "../../../layout/Toastify/Toastify.tsx";
 import { TicketStatus } from "../constant/TicketStatus";
 import type { TicketDTO } from "../models/ticketDTO.ts";
+import { getNoteTypeLabel } from "../../../utils/helpers/functions.ts";
+import TicketTimeline from "../components/TicketTimeline.tsx";
+import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 
 
 type Props = {
@@ -20,8 +23,12 @@ function getInitials(firstName: string, lastName: string): string {
 }
 
 const AndamentoTab: React.FC<Props> = ({ ticket }) => {
-    const comentariosEndRef = useRef<HTMLDivElement | null>(null);
 
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const comentariosEndRef = useRef<HTMLDivElement | null>(null);
+    const [showTimeline, setShowTimeline] = useState(false);
     const [andamentos, setAndamentos] = useState<TicketHistoriesDTO[]>([]);
     const [carregando, setCarregando] = useState(false);
     const [formData, setFormData] = useState({
@@ -90,9 +97,38 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
 
     const agrupados = groupByDate(andamentos);
 
+
+    const handleOpenModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalVisible(false);
+    };
+
     return (
         <div className="at-wrap">
+           
+            <div className="container-timeline-ticket">
+                <button
+                    type="button"
+                    className="at-btn-timeline"
+                    onClick={handleOpenModal}
+                >
+                    {showTimeline ? "Ocultar linha do tempo" : "Ver linha do tempo"}
+                </button>
 
+                <Modal
+                    isOpen={isModalVisible}
+                    onClose={handleCloseModal}
+                    title="Ciclo de Vida do Chamado"
+                    footer=""
+                    width="100%"
+                    maxBodyHeight="600px"
+                >
+                    <TicketTimeline andamentos={andamentos} />
+                </Modal>
+            </div>
             {/* HISTÓRICO */}
             <div className="at-history scroll-content">
                 {carregando ? (
@@ -108,11 +144,14 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                             </div>
 
                             {itens.map((andamento) => (
-                                <div key={andamento.id} className="at-item">
-                                    <div className="at-av">
-                                        {getInitials(andamento.user.firstName, andamento.user.lastName)}
+                                <div key={andamento.id} className={`at-item ${andamento.systemGenerated ? "at-item-system" : "at-item-user"}`}>
+                                    <div className={`at-av ${andamento.systemGenerated ? "at-av-system" : ""}`}>
+                                        {andamento.systemGenerated
+                                            ? "⚙"
+                                            : getInitials(andamento.user.firstName, andamento.user.lastName)
+                                        }
                                     </div>
-                                    <div className="at-card">
+                                    <div className={`at-card ${andamento.systemGenerated ? "at-card-system" : ""}`}>
                                         <div className="at-card-head">
                                             <div className="at-author">
                                                 <div className="at-author-name">
@@ -133,11 +172,16 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                                                     day: "2-digit", month: "2-digit", year: "numeric",
                                                     hour: "2-digit", minute: "2-digit",
                                                 })}
+                                                <div className="at-note-type">{getNoteTypeLabel(andamento.noteType)}</div>
                                             </div>
                                         </div>
                                         <div className="at-desc">
-                                            {andamento.systemGenerated && andamento.noteType === "STATUS_CHANGE" ? (
-                                                <span className="at-tag-status">{andamento.description}</span>
+                                            {andamento.noteType === "STATUS_CHANGE" ? (
+                                                <div className="at-status-change">
+                                                    <span className="at-status-old">{andamento.oldValue}</span>
+                                                    <span className="at-status-arrow">→</span>
+                                                    <span className="at-status-new">{andamento.newValue}</span>
+                                                </div>
                                             ) : andamento.noteType === "OBSERVATION" ? (
                                                 <>
                                                     <span className="at-tag-obs">Observação: </span>
@@ -157,52 +201,56 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
             </div>
 
 
-            {(ticket.statusTicket === TicketStatus.FINISHED || ticket.statusTicket === TicketStatus.CANCELED) ? (
-                <div className="at-blocked-msg">
-                    🚫 Não é possível adicionar notas para tickets finalizados
-                </div>
-            ) : (
-                <form onSubmit={handleSubmitNote} className="at-form">
-                    <div className="at-textarea-wrap">
-                        <textarea
-                            id="description"
-                            className="at-textarea"
-                            placeholder="Adicionar uma nota ao chamado..."
-                            value={formData.description}
-                            onChange={handleChange}
-                            rows={3}
-                        />
-                        <div className="at-form-footer">
-                            <div className="at-checks">
-                                <label className="at-check-item">
-                                    <input
-                                        type="checkbox"
-                                        id="annotationPublic"
-                                        checked={formData.annotationPublic}
-                                        onChange={handleChange}
-                                        className="at-checkbox"
-                                    />
-                                    Nota pública
-                                </label>
-                                <label className="at-check-item">
-                                    <input
-                                        type="checkbox"
-                                        id="visibleToRequester"
-                                        checked={formData.visibleToRequester}
-                                        onChange={handleChange}
-                                        className="at-checkbox"
-                                    />
-                                    Visível ao solicitante
-                                </label>
-                            </div>
-                            <button type="submit" className="at-btn-save">
-                                <FontAwesomeIcon icon={faSave} style={{ fontSize: 11 }} />
-                                Salvar nota
-                            </button>
-                        </div>
+            {
+                (ticket.statusTicket === TicketStatus.FINISHED || ticket.statusTicket === TicketStatus.CANCELED) ? (
+                    <div className="at-blocked-msg">
+                        🚫 Não é possível adicionar notas para tickets finalizados
                     </div>
-                </form>
-            )}
+                ) : (
+                    <form onSubmit={handleSubmitNote} className="at-form">
+                        <div className="at-textarea-wrap">
+                            <textarea
+                                id="description"
+                                className="at-textarea"
+                                placeholder="Adicionar uma nota ao chamado..."
+                                value={formData.description}
+                                onChange={handleChange}
+                                rows={3}
+                            />
+                            <div className="at-form-footer">
+                                <div className="at-checks">
+                                    <label className="at-check-item">
+                                        <input
+                                            type="checkbox"
+                                            id="annotationPublic"
+                                            checked={formData.annotationPublic}
+                                            onChange={handleChange}
+                                            className="at-checkbox"
+                                        />
+                                        Nota pública
+                                    </label>
+                                    <label className="at-check-item">
+                                        <input
+                                            type="checkbox"
+                                            id="visibleToRequester"
+                                            checked={formData.visibleToRequester}
+                                            onChange={handleChange}
+                                            className="at-checkbox"
+                                        />
+                                        Visível ao solicitante
+                                    </label>
+                                </div>
+                                <button type="submit" className="at-btn-save">
+                                    <FontAwesomeIcon icon={faSave} style={{ fontSize: 11 }} />
+                                    Salvar nota
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                )
+            }
         </div >
     );
 };

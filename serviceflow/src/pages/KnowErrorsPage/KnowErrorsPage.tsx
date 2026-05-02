@@ -1,13 +1,15 @@
-import {faDatabase} from "@fortawesome/free-solid-svg-icons";
+import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../../components/UI/NoData/NoData.tsx";
-import TableKnowError from "../../modules/KnowsError/TableKnowError/TableKnowError.tsx";
 import Pagination from "../../components/UI/Pagination/Pagination.tsx";
 import useKnowError from "../../modules/KnowsError/hooks/useKnowError.tsx";
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import LoadingOverlay from "../../layout/LoadingOverlay/LoadingOverlay.tsx";
+import { useState } from "react";
+import Modal from "../../components/UI/ModalDefault/Modal.tsx";
+import KnowErrorListing from "../../modules/KnowsError/KnowErrorListing/KnowErrorListing.tsx";
 
 function KnowErrorsPage() {
-    const {knowErrors,
+    const { knowErrors,
         isLoading,
         totalItems,
         queryParams,
@@ -17,18 +19,18 @@ function KnowErrorsPage() {
         reload
     } = useKnowError();
 
+    const [isNewModalOpen, setIsNewModalOpen] = useState(false);
     const pageSizeOptions = [2, 10, 20];
 
     return (
         <div className="">
-            {isLoading && <LoadingOverlay/>}
+            {isLoading && <LoadingOverlay />}
 
             {!isLoading && (
                 <>
-                    <TableKnowError onSearch={search} knowerros={knowErrors} onReload={reload}/>
-
+                    <KnowErrorListing onSearch={search} knowerros={knowErrors} onReload={reload} />
                     {knowErrors.length === 0 ? (
-                        <NoData icon={faDatabase} message="Não há dados disponíveis"/>
+                        <NoData icon={faDatabase} message="Não há dados disponíveis" />
                     ) : (
                         <div className="container-pagination">
                             <Pagination
@@ -39,14 +41,24 @@ function KnowErrorsPage() {
                                 onPageSizeChange={changePageSize}
                                 onPageChange={(page) => {
                                     changePage(page);
-                                    window.scrollTo({top: 0, behavior: "smooth"});
+                                    window.scrollTo({ top: 0, behavior: "smooth" });
                                 }}
                             />
                         </div>
                     )}
                 </>
             )}
-            <Outlet/>
+            {isNewModalOpen && (
+                <Modal
+                    title="Novo KnowError"
+                    isOpen={isNewModalOpen}
+                    onClose={() => setIsNewModalOpen(false)}
+                    width="800px"
+                >
+                    <div>corpo</div>
+                </Modal>
+            )}
+            <Outlet />
         </div>
     );
 }

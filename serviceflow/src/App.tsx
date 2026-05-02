@@ -16,6 +16,8 @@ import KnowErrorsPage from "./pages/KnowErrorsPage/KnowErrorsPage.tsx";
 import Ticket from "./pages/TicketPage/TicketPage.tsx";
 import OperationalPanelPage from "./pages/OperationalPanelPage/OperationalPanelPage.tsx";
 import { Toastify } from "./layout/Toastify/Toastify.tsx";
+import ApprovalsPage from "./pages/ApprovalsPage/ApprovalsPage.tsx";
+import KnowledgeBasePage from "./pages/KnowledgeBasePage/KnowledgeBasePage.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -31,25 +33,25 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/operationalPanel" element={<OperationalPanelPage />} />
-          <Route path="/ticket" element={<Ticket />} />
-          {/* <Route path="/user" element={<User />} /> */}
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-          <Route path="/knowErrorDatabase" element={<KnowErrorsPage />} />
-          {/* <Route path="settings" element={<SettingsPage />}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/operationalPanel" element={<OperationalPanelPage />} />
+            <Route path="/ticket" element={<Ticket />} />
+            <Route path="/approvals" element={<ApprovalsPage />} />
+            <Route path="//KnowledgeBase" element={<KnowledgeBasePage />} />
+            <Route path="/knowErrorDatabase" element={<KnowErrorsPage />} />
+            {/* <Route path="settings" element={<SettingsPage />}>
       <Route path="general" element={<GeneralSettings />} />
       <Route path="profile" element={<ProfileSettings />} />
       <Route path="sla" element={<SlaSettings />} />
     </Route> */}
-          {/* <Route path="/test" element={<Test />} /> */}
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    <Toastify />
+            {/* <Route path="/test" element={<Test />} /> */}
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <Toastify />
     </>
   );
 }

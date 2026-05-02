@@ -1,0 +1,245 @@
+/* ── WRAP ── */
+.ai-assistant-wrap {
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    width: 320px;
+    /* ← era 360px */
+    max-height: 500px;
+    /* ← limita altura */
+    z-index: 998;
+    border-radius: 14px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── HEADER ── */
+.ai-assistant-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+}
+
+.ai-assistant-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.ai-assistant-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.ai-assistant-subtitle {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 1px;
+}
+
+
+/* ── CHAT ── */
+.ai-assistant-chat {
+    height: 360px;
+    /* ← era 420px */
+}
+
+
+.ai-assistant-chat .cs-main-container {
+    border: none !important;
+    height: 500px;
+}
+
+.ai-assistant-chat .cs-message-input {
+    border-top: 1px solid #f1f5f9 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
+
+.ai-assistant-chat .cs-message-input__content-editor {
+    font-size: 13px !important;
+    color: #334155 !important;
+}
+
+.ai-assistant-chat .cs-button--send {
+    color: #0f766e !important;
+}
+
+.ai-assistant-chat .cs-typing-indicator__text {
+    font-size: 11px !important;
+    color: #94a3b8 !important;
+}
+
+/* ── BOTÃO FLUTUANTE ── */
+.ai-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.4);
+    z-index: 999;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-fab:hover {
+    transform: scale(1.1);
+}
+
+/* ── WRAP ── */
+.ai-assistant-wrap {
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    width: 360px;
+    z-index: 998;
+    border-radius: 14px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── HEADER ── */
+.ai-assistant-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+}
+
+.ai-assistant-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.ai-assistant-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.ai-assistant-subtitle {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 1px;
+}
+
+.ai-close-btn {
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.ai-close-btn:hover {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+/* ── CHAT ── */
+.ai-assistant-chat {
+    height: 420px;
+}
+
+.ai-assistant-chat .cs-main-container {
+    border: none !important;
+    height: 100%;
+}
+
+.ai-assistant-chat .cs-message-input {
+    border-top: 1px solid #f1f5f9 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
+
+.ai-assistant-chat .cs-message-input__content-editor {
+    font-size: 13px !important;
+    color: #334155 !important;
+}
+
+.ai-assistant-chat .cs-button--send {
+    color: #0f766e !important;
+}
+
+.ai-assistant-chat .cs-typing-indicator__text {
+    font-size: 11px !important;
+    color: #94a3b8 !important;
+}
+
+.ai-fab-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.ai-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* remove o gradiente do botão pq agora tem imagem */
+.ai-fab {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0;
+    overflow: hidden;
+}
+
+/* remove o gradiente do avatar */
+.ai-assistant-avatar {
+    background: transparent;
+    padding: 0;
+    overflow: hidden;
+}

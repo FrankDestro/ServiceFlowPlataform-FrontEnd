@@ -68,7 +68,6 @@ function TicketPage() {
                     <SearchTicket onSearch={handleSearchAdapted} />
                 </div>
             )}
-
             {isLoading ? (
                 <div className="spinner-container">
                     <div className="spinner-border" role="status"></div>

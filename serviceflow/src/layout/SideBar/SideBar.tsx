@@ -53,8 +53,8 @@ export const items: MenuItem[] = [
     getItem("Atendimento", "atendimento", <CustomerServiceOutlined />, [
         getItem("Painel Operacional", "/operationalPanel", <DashboardOutlined />),
         getItem("Chamados", "/ticket", <FileTextOutlined />),
-        getItem("Aprovações", "/aprovacoes", <InteractionOutlined />),
-        getItem("Base de Conhecimento", "/kb", <BookOutlined />),
+        getItem("Aprovações", "/approvals", <InteractionOutlined />),
+        getItem("Base de Conhecimento", "/KnowledgeBase", <BookOutlined />),
         getItem("KEDB (Erros Conhecidos)", "/knowErrorDatabase", <DatabaseOutlined />),
     ]),
 

@@ -1,0 +1,113 @@
+.ke-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ke-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ke-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 👈 adiciona isso */
+}
+
+.ke-detail-id {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f766e;
+    font-size: 18px;
+}
+
+.ke-detail-pill {
+    font-size: 12px;
+    background: #f0fdf9;
+    color: #0f766e;
+    border: 1px solid #ccfbf1;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.ke-detail-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.ke-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ke-detail-card {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ke-detail-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+
+.ke-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    border-bottom: 1px solid #f8fafc;
+    padding-bottom: 6px;
+}
+
+.ke-detail-label {
+    color: #64748b;
+}
+
+.ke-detail-value {
+    color: #334155;
+    font-weight: 500;
+}
+
+.ke-detail-text {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.ke-detail-attachments {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ke-detail-attachment-chip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.ke-detail-attachment-size {
+    font-size: 11px;
+    color: #94a3b8;
+}

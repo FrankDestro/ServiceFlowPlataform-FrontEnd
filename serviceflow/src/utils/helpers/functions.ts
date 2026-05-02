@@ -126,55 +126,55 @@ export const getStatusTicketBadgeStyle = (
 };
 
 export const getPriorityBadgeStyle = (
-    value: string
+  value: string
 ): React.CSSProperties => {
-    switch (value?.toUpperCase()) {
-        case "LOW":
-            return {
-                backgroundColor: "#f0fdf4",
-                color: "#16a34a",
-                padding: "3px 10px",
-                borderRadius: "999px",
-                fontSize: "11px",
-                fontWeight: 500,
-            };
-        case "MEDIUM":
-            return {
-                backgroundColor: "#f0fdfa",
-                color: "#0f6e56",
-                padding: "3px 10px",
-                borderRadius: "999px",
-                fontSize: "11px",
-                fontWeight: 500,
-            };
-        case "HIGH":
-            return {
-                backgroundColor: "#fffbeb",
-                color: "#d97706",
-                padding: "3px 10px",
-                borderRadius: "999px",
-                fontSize: "11px",
-                fontWeight: 500,
-            };
-        case "CRITICAL":
-            return {
-                backgroundColor: "#fef2f2",
-                color: "#dc2626",
-                padding: "3px 10px",
-                borderRadius: "999px",
-                fontSize: "11px",
-                fontWeight: 500,
-            };
-        default:
-            return {
-                backgroundColor: "#f8fafc",
-                color: "#64748b",
-                padding: "3px 10px",
-                borderRadius: "999px",
-                fontSize: "11px",
-                fontWeight: 500,
-            };
-    }
+  switch (value?.toUpperCase()) {
+    case "LOW":
+      return {
+        backgroundColor: "#f0fdf4",
+        color: "#16a34a",
+        padding: "3px 10px",
+        borderRadius: "999px",
+        fontSize: "11px",
+        fontWeight: 500,
+      };
+    case "MEDIUM":
+      return {
+        backgroundColor: "#f0fdfa",
+        color: "#0f6e56",
+        padding: "3px 10px",
+        borderRadius: "999px",
+        fontSize: "11px",
+        fontWeight: 500,
+      };
+    case "HIGH":
+      return {
+        backgroundColor: "#fffbeb",
+        color: "#d97706",
+        padding: "3px 10px",
+        borderRadius: "999px",
+        fontSize: "11px",
+        fontWeight: 500,
+      };
+    case "CRITICAL":
+      return {
+        backgroundColor: "#fef2f2",
+        color: "#dc2626",
+        padding: "3px 10px",
+        borderRadius: "999px",
+        fontSize: "11px",
+        fontWeight: 500,
+      };
+    default:
+      return {
+        backgroundColor: "#f8fafc",
+        color: "#64748b",
+        padding: "3px 10px",
+        borderRadius: "999px",
+        fontSize: "11px",
+        fontWeight: 500,
+      };
+  }
 };
 
 export const getStatusKnowErrorsBadgeStyle = (
@@ -415,7 +415,6 @@ export function getFileType(mimeType: string): FileType | null {
   }
 }
 
-
 export function isSlaCritical(dueDate: string): boolean {
   const now = new Date().getTime();
   const due = new Date(dueDate).getTime();
@@ -426,3 +425,41 @@ export function isSlaCritical(dueDate: string): boolean {
   return diffMs <= fortyFiveMinutesMs;
 }
 
+export const noteTypeLabels: Record<string, string> = {
+  COMMENT: "Comentário",
+  STATUS_CHANGE: "Mudança de Status",
+  REASSIGNMENT: "Redirecionamento",
+  PRIORITY_CHANGE: "Mudança de Prioridade",
+  SLA_BREACH: "Violação de SLA",
+  ATTACHMENT: "Anexo Adicionado",
+  SYSTEM_GENERATED: "Sistema",
+  TICKET_OPENED: "Ticket criado",
+  AWAITING_APPROVAL: "Ticket aguardando aprovação",
+  TICKET_APPROVAL : "Ticket aprovado"
+};
+
+export function getNoteTypeLabel(noteType: string): string {
+  return noteTypeLabels[noteType] ?? noteType;
+}
+
+function colorByNoteType(noteType: string): string {
+  const map: Record<string, string> = {
+    AWAITING_APPROVAL: "#767a80",
+    TICKET_OPENED: "#3b82f6",
+    REASSIGNMENT: "#8b5cf6",
+    PRIORITY_CHANGE: "#f59e0b",
+    SLA_BREACH: "#ef4444",
+    SYSTEM_GENERATED: "#94a3b8",
+  };
+  return map[noteType] ?? "#94a3b8";
+}
+
+// Badge de status
+export function getStatusKnowledgeBadgeStyle(status: string): React.CSSProperties {
+    const styles: Record<string, React.CSSProperties> = {
+        DRAFT: { background: "#fef9c3", color: "#854d0e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+        PUBLISHED: { background: "#dcfce7", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+        ARCHIVED: { background: "#1e293b", color: "#f8fafc", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    };
+    return styles[status] ?? styles["DRAFT"];
+}

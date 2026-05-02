@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type {KnowErrorDTO} from "../models/knowErrorDTO.ts";
+import type { KnowErrorDTO } from "../models/knowErrorDTO.ts";
 import * as knowErrorService from "../services/knowError-service.ts";
 
 type QueryParams = {
@@ -8,12 +8,13 @@ type QueryParams = {
     title: string;
     status: string;
     affectedSystems: string;
-    tags: string[];
+    tags: string;
     initialDate: string;
     finalDate: string;
-    initialDateResolution: string;
-    finalDateResolution: string;
 };
+
+
+type SearchParams = Omit<QueryParams, "page" | "size">;
 
 function useKnowError() {
     const [knowErrors, setKnowErrors] = useState<KnowErrorDTO[]>([]);
@@ -21,52 +22,40 @@ function useKnowError() {
     const [totalItems, setTotalItems] = useState(0);
     const [refreshFlag, setRefreshFlag] = useState(false);
 
-    const [title, setTitle] = useState("");
-    const [status, setStatus] = useState("");
-    const [affectedSystems, setAffectedSystems] = useState("");
-    const [tags, setTags] = useState<string[]>([]);
-    const [initialDate, setInitialDate] = useState("");
-    const [finalDate, setFinalDate] = useState("");
-    const [initialDateResolution, setInitialDateResolution] = useState("");
-    const [finalDateResolution, setFinalDateResolution] = useState("");
-
     const [queryParams, setQueryParams] = useState<QueryParams>({
         page: 0,
         size: 10,
         title: "",
         status: "",
         affectedSystems: "",
-        tags: [],
+        tags: "",
         initialDate: "",
         finalDate: "",
-        initialDateResolution: "",
-        finalDateResolution: "",
     });
 
-    function search() {
-        setQueryParams({
+    function search(formData: SearchParams) {
+        console.log("formData recebido:", formData); // ← adiciona aqui
+        setQueryParams(prev => ({
+            ...prev,
             page: 0,
-            size: 10,
-            title,
-            status,
-            affectedSystems,
-            tags,
-            initialDate,
-            finalDate,
-            initialDateResolution,
-            finalDateResolution,
-        });
+            ...formData,
+        }));
     }
 
     function changePage(page: number) {
-        setQueryParams({ ...queryParams, page });
+        setQueryParams(prev => ({ ...prev, page }));
     }
 
     function changePageSize(size: number) {
-        setQueryParams({ ...queryParams, size, page: 0 });
+        setQueryParams(prev => ({ ...prev, size, page: 0 }));
+    }
+
+    function reload() {
+        setRefreshFlag(prev => !prev);
     }
 
     useEffect(() => {
+        console.log("queryParams:", queryParams); // ← adiciona aqui
         setIsLoading(true);
         knowErrorService
             .allKnowErrorRequest(
@@ -78,8 +67,6 @@ function useKnowError() {
                 queryParams.tags,
                 queryParams.initialDate,
                 queryParams.finalDate,
-                queryParams.initialDateResolution,
-                queryParams.finalDateResolution
             )
             .then((response) => {
                 const { content, totalElements } = response.data;
@@ -89,23 +76,11 @@ function useKnowError() {
             .finally(() => setIsLoading(false));
     }, [queryParams, refreshFlag]);
 
-    function reload() {
-        setRefreshFlag((prev) => !prev);
-    }
-
     return {
         knowErrors,
         isLoading,
         totalItems,
         queryParams,
-        title, setTitle,
-        status, setStatus,
-        affectedSystems, setAffectedSystems,
-        tags, setTags,
-        initialDate, setInitialDate,
-        finalDate, setFinalDate,
-        initialDateResolution, setInitialDateResolution,
-        finalDateResolution, setFinalDateResolution,
         search,
         changePage,
         changePageSize,

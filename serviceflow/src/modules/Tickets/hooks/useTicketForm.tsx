@@ -62,6 +62,9 @@ export function useTicketForm() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        if (!validate()) return;
+
         setIsSubmitting(true);
 
         const requestBody = {
@@ -123,6 +126,34 @@ export function useTicketForm() {
     function handleReset() {
         setFormData(initialFormData);
         setAttachedFiles([]);
+    }
+
+    function validate(): boolean {
+        if (!formData.subject.trim()) {
+            toast.warning("Informe o assunto do chamado.");
+            return false;
+        }
+        if (!formData.categoryTicket) {
+            toast.warning("Selecione a categoria.");
+            return false;
+        }
+        if (!formData.typeRequest) {
+            toast.warning("Selecione o tipo de solicitação.");
+            return false;
+        }
+        if (!formData.urgency) {
+            toast.warning("Selecione a urgência.");
+            return false;
+        }
+        if (!formData.impact) {
+            toast.warning("Selecione o impacto.");
+            return false;
+        }
+        if (!formData.description.trim()) {
+            toast.warning("Informe a descrição.");
+            return false;
+        }
+        return true;
     }
 
     return {

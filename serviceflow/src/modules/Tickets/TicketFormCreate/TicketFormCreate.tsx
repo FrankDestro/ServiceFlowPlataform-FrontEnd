@@ -34,6 +34,7 @@ function TicketFormCreate() {
                                 value={formData.subject}
                                 onChange={handleChange}
                                 className="floating-input"
+
                             />
                             <label className="floating-label">Assunto / Título</label>
                         </div>
@@ -44,6 +45,7 @@ function TicketFormCreate() {
                                 {categories.map(c => (
                                     <option key={c.id} value={String(c.id)}>{c.name}</option>
                                 ))}
+
                             </select>
                         </div>
 
@@ -56,7 +58,7 @@ function TicketFormCreate() {
                                 placeholder="Área solucionadora (preenchido automaticamente)"
                                 className="floating-input"
                                 onChange={handleChange}
-                            />
+                             />
                             <label className="floating-label">Area Solucionadora</label>
                         </div>
                         <div className="ticket-input-container">
@@ -113,19 +115,23 @@ function TicketFormCreate() {
                             rows={8}
                         />
                     </div>
-
                     {/* ── Anexos ── */}
                     <div className="ticket-upload-container">
                         <label className="ticket-upload-label">Anexos</label>
-                        <input
-                            type="file"
-                            multiple
-                            onChange={(e) => {
-                                const files = Array.from(e.target.files || []);
-                                setAttachedFiles(prev => [...prev, ...files]);
-                            }}
-                            className="ticket-file-input"
-                        />
+
+                        <label className="ticket-upload-btn">
+                            <input
+                                type="file"
+                                multiple
+                                hidden
+                                onChange={(e) => {
+                                    const files = Array.from(e.target.files || []);
+                                    setAttachedFiles(prev => [...prev, ...files]);
+                                }}
+                            />
+                            📎 Selecionar arquivos
+                        </label>
+
                         {attachedFiles.length > 0 && (
                             <div className="ticket-file-list">
                                 {attachedFiles.map((file, index) => (
@@ -143,7 +149,6 @@ function TicketFormCreate() {
                             </div>
                         )}
                     </div>
-
                     {/* ── Botão ── */}
                     <div className="group-search-button">
                         <Button

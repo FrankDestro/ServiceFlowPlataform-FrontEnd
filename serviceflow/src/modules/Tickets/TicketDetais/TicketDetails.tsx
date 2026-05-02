@@ -46,7 +46,6 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
 
     return (
         <div className="td-wrap">
-
             {/* CONTEÚDO PRINCIPAL */}
             <div className="td-main">
 
