@@ -63,7 +63,7 @@ export const items: MenuItem[] = [
     // ── OPERAÇÕES DE TI ───────────────────────────────────────
     getItem("Operações de TI", "ops", <ApiOutlined />, [
         getItem("Problemas", "/problemas", <BugOutlined />),
-        getItem("Mudanças", "/mudancas", <ToolOutlined />),
+        getItem("Mudanças", "/changes", <ToolOutlined />),
         getItem("Releases", "/releases", <RocketOutlined />),
         getItem("Tarefas Operacionais", "/tarefas-operacionais", <ScheduleOutlined />),
     ]),

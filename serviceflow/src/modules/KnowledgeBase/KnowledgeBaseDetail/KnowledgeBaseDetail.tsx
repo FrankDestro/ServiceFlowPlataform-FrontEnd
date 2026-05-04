@@ -27,7 +27,7 @@ function KnowledgeBaseDetail({ id }: Props) {
             <div className="kb-detail-header">
                 <div className="kb-detail-top">
                     <span className="kb-detail-id">#{article.id}</span>
-                    <span className="kb-detail-category">{article.category}</span>
+                    <span className="kb-detail-category">{article.categoryName}</span>
                     <span className={`kb-detail-visibility ${article.visibility === "PUBLICO" ? "public" : "internal"}`}>
                         {article.visibility === "PUBLICO" ? "🌐 Público" : "🔒 Interno"}
                     </span>

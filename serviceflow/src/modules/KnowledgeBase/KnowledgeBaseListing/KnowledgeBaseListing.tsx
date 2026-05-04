@@ -1,4 +1,3 @@
-// KnowledgeBaseListing.tsx
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { format, parseISO } from "date-fns";
@@ -135,7 +134,6 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
                 </Modal>
             )}
 
-
             {/* Modal Visualizar */}
             {isViewModalOpen && selectedId && (
                 <Modal
@@ -234,7 +232,5 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
         </>
     );
 };
-
-
 
 export default KnowledgeBaseListing;

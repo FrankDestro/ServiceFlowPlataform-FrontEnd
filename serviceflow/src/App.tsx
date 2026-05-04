@@ -18,6 +18,8 @@ import OperationalPanelPage from "./pages/OperationalPanelPage/OperationalPanelP
 import { Toastify } from "./layout/Toastify/Toastify.tsx";
 import ApprovalsPage from "./pages/ApprovalsPage/ApprovalsPage.tsx";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage/KnowledgeBasePage.tsx";
+import ChangePage from "./pages/ChangePage/ChangePage.tsx";
+import ChangeDetailPage from "./pages/ChangePageDetail/ChangeDetailPage.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -42,6 +44,9 @@ function App() {
             <Route path="/approvals" element={<ApprovalsPage />} />
             <Route path="//KnowledgeBase" element={<KnowledgeBasePage />} />
             <Route path="/knowErrorDatabase" element={<KnowErrorsPage />} />
+            {/* //MODULO CHANGE */}
+            <Route path="/changes" element={<ChangePage />} />
+            <Route path="/changes/:id" element={<ChangeDetailPage />} />
             {/* <Route path="settings" element={<SettingsPage />}>
       <Route path="general" element={<GeneralSettings />} />
       <Route path="profile" element={<ProfileSettings />} />

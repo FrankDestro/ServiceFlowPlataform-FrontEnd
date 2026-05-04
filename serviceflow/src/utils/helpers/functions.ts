@@ -435,7 +435,7 @@ export const noteTypeLabels: Record<string, string> = {
   SYSTEM_GENERATED: "Sistema",
   TICKET_OPENED: "Ticket criado",
   AWAITING_APPROVAL: "Ticket aguardando aprovação",
-  TICKET_APPROVAL : "Ticket aprovado"
+  TICKET_APPROVAL: "Ticket aprovado"
 };
 
 export function getNoteTypeLabel(noteType: string): string {
@@ -456,10 +456,127 @@ function colorByNoteType(noteType: string): string {
 
 // Badge de status
 export function getStatusKnowledgeBadgeStyle(status: string): React.CSSProperties {
-    const styles: Record<string, React.CSSProperties> = {
-        DRAFT: { background: "#fef9c3", color: "#854d0e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
-        PUBLISHED: { background: "#dcfce7", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
-        ARCHIVED: { background: "#1e293b", color: "#f8fafc", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
-    };
-    return styles[status] ?? styles["DRAFT"];
+  const styles: Record<string, React.CSSProperties> = {
+    DRAFT: { background: "#fef9c3", color: "#854d0e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    PUBLISHED: { background: "#dcfce7", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    ARCHIVED: { background: "#1e293b", color: "#f8fafc", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+  };
+  return styles[status] ?? styles["DRAFT"];
 }
+
+
+// MODULO DE MUDANÇAS
+export const getStatusBadgeStyle = (status: string): React.CSSProperties => {
+  const styles: Record<string, React.CSSProperties> = {
+    REQUESTED: { background: "#e0f2fe", color: "#075985", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    APPROVED: { background: "#dcfce7", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    IN_PROGRESS: { background: "#fef9c3", color: "#854d0e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    COMPLETED: { background: "#1e293b", color: "#f8fafc", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    CANCELLED: { background: "#fee2e2", color: "#991b1b", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+  };
+  return styles[status] ?? styles["REQUESTED"];
+};
+
+export const getTypeBadgeStyle = (type: string): React.CSSProperties => {
+  const styles: Record<string, React.CSSProperties> = {
+    STANDARD: { background: "#e0f2fe", color: "#075985", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    NORMAL: { background: "#ede9fe", color: "#5b21b6", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    MAJOR: { background: "#fee2e2", color: "#991b1b", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    MINOR: { background: "#f0fdf4", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    EMERGENCY: { background: "#fef3c7", color: "#92400e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+  };
+  return styles[type] ?? styles["STANDARD"];
+};
+
+export const getPriorityStyle = (priority: string): React.CSSProperties => {
+  const styles: Record<string, React.CSSProperties> = {
+    CRITICAL: { color: "#7c2d12", fontWeight: 700 },
+    HIGH: { color: "#dc2626", fontWeight: 700 },
+    MEDIUM: { color: "#d97706", fontWeight: 600 },
+    LOW: { color: "#16a34a", fontWeight: 600 },
+  };
+  return styles[priority] ?? {};
+};
+
+
+// MODULO DE CHANGES 
+export const getTypeBadgeClass = (type: string) => {
+  const map: Record<string, string> = {
+    STANDARD: "badge badge-standard",
+    NORMAL: "badge badge-normal",
+    MAJOR: "badge badge-major",
+    MINOR: "badge badge-minor",
+    EMERGENCY: "badge badge-emergency",
+  };
+  return map[type] ?? "badge";
+};
+
+export const getStatusBadgeClass = (status: string) => {
+  const map: Record<string, string> = {
+    REQUESTED: "badge badge-requested",
+    APPROVED: "badge badge-approved",
+    IN_PROGRESS: "badge badge-progress",
+    COMPLETED: "badge badge-completed",
+    CANCELLED: "badge badge-cancelled",
+  };
+  return map[status] ?? "badge";
+};
+
+export const getApproverBadgeClass = (status: string) => {
+  const map: Record<string, string> = {
+    APPROVED: "badge badge-approved",
+    PENDING: "badge badge-pending",
+    REJECTED: "badge badge-rejected",
+  };
+  return map[status] ?? "badge";
+};
+
+export const getPriorityClass = (level: string) => {
+  const map: Record<string, string> = {
+    CRITICAL: "priority-critical",
+    HIGH: "priority-high",
+    MEDIUM: "priority-medium",
+    LOW: "priority-low",
+  };
+  return map[level] ?? "";
+};
+
+export const getLevelClass = (level: string) => {
+  const map: Record<string, string> = {
+    HIGH: "level-indicator level-high",
+    MEDIUM: "level-indicator level-medium",
+    LOW: "level-indicator level-low",
+  };
+  return map[level] ?? "level-indicator";
+};
+
+export const getTaskCheckClass = (status: string) => {
+  const map: Record<string, string> = {
+    COMPLETED: "task-check done",
+    IN_PROGRESS: "task-check progress",
+    PENDING: "task-check pending",
+  };
+  return map[status] ?? "task-check pending";
+};
+
+export const getTaskStatusClass = (status: string) => {
+  const map: Record<string, string> = {
+    COMPLETED: "task-status ts-done",
+    IN_PROGRESS: "task-status ts-progress",
+    PENDING: "task-status ts-pending",
+  };
+  return map[status] ?? "task-status ts-pending";
+};
+
+export const getTaskStatusLabel = (status: string) => {
+  const map: Record<string, string> = {
+    COMPLETED: "Concluída",
+    IN_PROGRESS: "Em andamento",
+    PENDING: "Pendente",
+  };
+  return map[status] ?? status;
+};
+
+export const getInitials = (email: string) => {
+  return email?.substring(0, 2).toUpperCase() ?? "??";
+};
