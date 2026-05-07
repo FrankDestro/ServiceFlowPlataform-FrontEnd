@@ -1,9 +1,10 @@
 import type { TicketStatus } from "../constant/TicketStatus";
 import type { CategoryTicketDTO } from "./CategoryTicketDTO";
 import type { ImpactTicketDTO } from "./ImpactTicketDTO";
-import type { UserDTO, UserSimpleDTO } from "./RequesterDTO";
+import type { UserDTO} from "./RequesterDTO";
 import type { SLADTO } from "./slaDTO";
 import type { SolvingAreaDTO } from "./solvingAreaDTO";
+import type { SubCategoryTicketDTO } from "./SubCategoryDTO";
 import type { TypeRequestDTO } from "./typeRequestDTO";
 import type { UrgencyTicketDTO } from "./UrgencyTicketDTO";
 
@@ -14,11 +15,13 @@ export type TicketSimpleDTO = {
     statusTicket: TicketStatus;
     registrationDate: string;
     dueDate: string;
-    sla: SLADTO;
-    categoryTicket: CategoryTicketDTO;
-    solvingArea: SolvingAreaDTO;
-    requester: UserSimpleDTO;
-    technician: UserSimpleDTO | null;
+    updatedAt: string | null;
+    slaSeverity: string | null;
+    solvingAreaName: string | null;
+    categoryTicketName: string | null;
+    subCategoryName: string | null;
+    requesterName: string;
+    technicianName: string | null;
 };
 
 export type TicketDTO = {
@@ -43,6 +46,7 @@ export type TicketDTO = {
     sla: SLADTO;
     solvingArea: SolvingAreaDTO;
     categoryTicket: CategoryTicketDTO;
+    subCategoryTicket : SubCategoryTicketDTO;
     requester: UserDTO;
     technician: UserDTO;
     resolver: UserDTO | null;      

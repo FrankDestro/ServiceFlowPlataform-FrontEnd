@@ -73,7 +73,7 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                             <th>Status</th>
                             <th>SLA</th>
                             <th>Tempo Restante</th>
-                            <th>Categoria</th>
+                            <th>SubCategoria</th>
                             <th>Solicitante</th>
                             <th>Área Solucionadora</th>
                             <th>Em Atendimento por</th>
@@ -94,7 +94,7 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                                     </span>
                                 </td>
 
-                                <td>{ticket.sla?.severity ?? "—"}</td>
+                                <td>{ticket.slaSeverity ? ticket.slaSeverity : "—"}</td>
 
                                 <td>
                                     <span style={{
@@ -108,14 +108,13 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                                         {functions.calculateRemainingTime(ticket.dueDate)}
                                     </span>
                                 </td>
-
-                                <td>{ticket.categoryTicket?.name ?? "—"}</td>
-                                <td>{`${ticket.requester?.firstName} ${ticket.requester?.lastName}`}</td>
-                                <td>{ticket.solvingArea?.name ?? "—"}</td>
+                                <td>{ticket.subCategoryName ?? "—"}</td>
+                                <td>{ticket.requesterName ?? "—"}</td>
+                                <td>{ticket.solvingAreaName ?? "—"}</td>
 
                                 <td>
-                                    {ticket.technician ? (
-                                        `${ticket.technician.firstName} ${ticket.technician.lastName}`
+                                    {ticket.technicianName ? (
+                                        `${ticket.technicianName}`
                                     ) : (
                                         <span style={{ color: "gray" }}>Não Atribuído</span>
                                     )}

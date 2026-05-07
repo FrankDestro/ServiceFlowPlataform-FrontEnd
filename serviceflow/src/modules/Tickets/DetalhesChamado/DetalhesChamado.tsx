@@ -23,6 +23,7 @@ const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
                 <div className="dc-row"><span className="dc-lbl">Canal</span><span className="dc-val">{ticket.channel ?? "—"}</span></div>
                 <div className="dc-row"><span className="dc-lbl">Tipo</span><span className="dc-val">{ticket.typeRequest?.name ?? "—"}</span></div>
                 <div className="dc-row"><span className="dc-lbl">Categoria</span><span className="dc-val">{ticket.categoryTicket?.name ?? "—"}</span></div>
+                 <div className="dc-row"><span className="dc-lbl">Serviço</span><span className="dc-val">{ticket.subCategoryTicket?.name ?? "—"}</span></div>
                 <div className="dc-row">
                     <span className="dc-lbl">Urgência</span>
                     <span style={getPriorityBadgeStyle(ticket.urgencyTicket?.name)}>{ticket.urgencyTicket?.name ?? "—"}</span>
