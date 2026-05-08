@@ -9,11 +9,16 @@ import { useState } from "react";
 import Modal from "../../../components/UI/ModalDefault/Modal";
 import DetalhesChamado from "../DetalhesChamado/DetalhesChamado";
 import Button from "../../../components/UI/Button/Button";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPaperclip, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./TableTicket.css";
 import { getSeverityBadgeStyle, getStatusTicketBadgeStyle } from "../../../utils/helpers/functions";
 import useApprovalSubmit from "../hooks/userApprovalSubmmit";
 import ModalAnnotation from "../../../components/UI/ModalAnnotation/ModalAnnotation";
+import { FiDownload } from "react-icons/fi";
+import type { AttachmentDTO } from "../../Attachment/models/AttachmentDTO";
+import { useAttachmentDownload } from "../../Attachment/hooks/useAttachmentDownload";
+import NoData from "../../../components/UI/NoData/NoData";
+import * as attachmentService from "../../Attachment/service/attachment-service"
 
 type TableTicketProps = {
     tickets: TicketSimpleDTO[];
@@ -22,7 +27,6 @@ type TableTicketProps = {
 };
 
 function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
-
     const { isSubmitting, rejectReason, setRejectReason, approveTicket, rejectTicket } =
         useApprovalSubmit(() => {
             setIsModalOpen(false);
@@ -32,6 +36,12 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedTicket, setSelectedTicket] = useState<TicketDTO | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // BUSCAR ANEXOS
+    const [ticketAttachments, setTicketAttachments] = useState<AttachmentDTO[]>([]);
+
+    // BAIXAR ANEXO
+    const { download } = useAttachmentDownload();
 
     const handleChamadoClick = (ticket: TicketSimpleDTO) => {
         ticketService
@@ -50,7 +60,10 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
             .ticketById(ticket.id)
             .then((response) => {
                 setSelectedTicket(response.data);
-                setIsModalOpen(true); // ← abre o modal
+                setIsModalOpen(true);
+                attachmentService.getAllAttachmentById(ticket.id.toString()).then((res) => {
+                    setTicketAttachments(res.data);
+                });
             })
             .catch((error) => {
                 console.error("Erro ao buscar ticket:", error);
@@ -194,6 +207,34 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                             <div className="dc-hd-title">{selectedTicket.subject}</div>
                         </div>
                         <DetalhesChamado ticket={selectedTicket} />
+
+                        {/* Anexos */}
+                        {ticketAttachments?.length > 0 ? (
+
+                            <div className="TESTE">
+                            <div className="ke-detail-card">
+                                <span className="ke-detail-section-title">ANEXOS</span>
+                                <div className="ke-detail-attachments">
+                                    {ticketAttachments.map((att: AttachmentDTO) => (
+                                        <div key={att.id} className="ke-detail-attachment-chip">
+                                            <span>📎 {att.originalName}</span>
+                                            <span className="ke-detail-attachment-size">{att.sizeInMb} MB</span>
+                                            <div className="anx-download"
+                                                onClick={() => download({ bucket: att.bucket, objectName: att.objectName })}
+                                            >
+                                                <FiDownload size={15} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                             </div>
+                        ) : (
+                            <div className="ke-detail-card">
+                                <span className="ke-detail-section-title">ANEXOS</span>
+                                <NoData icon={faPaperclip} message="Nenhum anexo disponível" />
+                            </div>
+                        )}
                     </div>
                 </Modal>
             )}

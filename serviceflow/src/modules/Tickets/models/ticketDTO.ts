@@ -1,7 +1,7 @@
 import type { TicketStatus } from "../constant/TicketStatus";
 import type { CategoryTicketDTO } from "./CategoryTicketDTO";
 import type { ImpactTicketDTO } from "./ImpactTicketDTO";
-import type { UserDTO} from "./RequesterDTO";
+import type { UserDTO } from "./RequesterDTO";
 import type { SLADTO } from "./slaDTO";
 import type { SolvingAreaDTO } from "./solvingAreaDTO";
 import type { SubCategoryTicketDTO } from "./SubCategoryDTO";
@@ -32,24 +32,24 @@ export type TicketDTO = {
     statusTicket: TicketStatus;
     urgencyTicket: UrgencyTicketDTO;
     impactTicket: ImpactTicketDTO;
-    priority: string;       
-    channel: string;            
+    priority: string;
+    channel: string;
     slaBreached: boolean;
     registrationDate: string;
-    firstResponseAt: string | null;  
+    firstResponseAt: string | null;
     dueDate: string;
-    completionDate: string | null;   
+    completionDate: string | null;
     updatedAt: string;
-    closureReason: string | null;   
-    parentTicketId: number | null;  
+    closureReason: string | null;
+    parentTicketId: number | null;
     typeRequest: TypeRequestDTO;
     sla: SLADTO;
     solvingArea: SolvingAreaDTO;
     categoryTicket: CategoryTicketDTO;
-    subCategoryTicket : SubCategoryTicketDTO;
+    subCategoryTicket: SubCategoryTicketDTO;
     requester: UserDTO;
     technician: UserDTO;
-    resolver: UserDTO | null;      
+    resolver: UserDTO | null;
 };
 
 export type TicketFormDTO = {
@@ -58,15 +58,16 @@ export type TicketFormDTO = {
     urgency: string;
     impact: string;
     channel: string;
-    parentTicketId:string;
+    parentTicketId: string;
     typeRequest: string;
     solvingArea: string;
     categoryTicket: string;
+    subCategoryTicket: string;
 }
 
 export type TicketStatusForm = {
     status: string;
-    closureReason?: string; 
+    closureReason?: string;
 }
 
 export type TicketTypeRequestForm = {
@@ -74,7 +75,7 @@ export type TicketTypeRequestForm = {
 }
 
 export type TicketUpdateAssignmetForm = {
-    categoryTicketId : string;
+    categoryTicketId: string;
     solvingArea: string;
     technicianId: string;
 }

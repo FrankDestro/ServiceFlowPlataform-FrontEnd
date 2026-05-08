@@ -1,12 +1,14 @@
-import { faDatabase, faTicket } from "@fortawesome/free-solid-svg-icons";
+import { faTicket } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/UI/Button/Button";
 import { useTicketForm } from "../hooks/useTicketForm";
 import "./TicketFormCreate.css";
+import CustomSelect from "../../../components/form/CustomSelect/CustomSelect";
 
 function TicketFormCreate() {
     const {
         typeRequests,
         categories,
+        subCategories,
         solvingArea,
         urgencies,
         impacts,
@@ -17,6 +19,7 @@ function TicketFormCreate() {
         handleDescriptionChange,
         handleSubmit,
         setAttachedFiles,
+        loadingSubCategories
     } = useTicketForm();
 
     return (
@@ -40,13 +43,20 @@ function TicketFormCreate() {
                         </div>
 
                         <div className="ticket-select-container">
-                            <select name="categoryTicket" value={formData.categoryTicket} onChange={handleChange}>
-                                <option value="">Categoria do Chamado</option>
-                                {categories.map(c => (
-                                    <option key={c.id} value={String(c.id)}>{c.name}</option>
-                                ))}
-
-                            </select>
+                            <CustomSelect
+                                label="Categoria"
+                                name="categoryTicket"
+                                value={formData.categoryTicket ?? ""}
+                                onChange={handleChange}
+                                options={
+                                    loadingSubCategories
+                                        ? [{ value: "", label: "Carregando..." }]
+                                        : (categories ?? []).map((cat: any) => ({
+                                            value: String(cat.id),
+                                            label: cat.name,
+                                        }))
+                                }
+                            />
                         </div>
 
                         <div className="ticket-input-container">
@@ -58,7 +68,7 @@ function TicketFormCreate() {
                                 placeholder="Área solucionadora (preenchido automaticamente)"
                                 className="floating-input"
                                 onChange={handleChange}
-                             />
+                            />
                             <label className="floating-label">Area Solucionadora</label>
                         </div>
                         <div className="ticket-input-container">
@@ -74,33 +84,75 @@ function TicketFormCreate() {
                         </div>
                     </div>
 
+                    {/* DESENVOLVENDO */}
+                    <CustomSelect
+                        label="Serviços"
+                        name="subCategoryTicket"
+                        value={formData.subCategoryTicket ?? ""}
+                        onChange={handleChange}
+                        options={
+                            loadingSubCategories
+                                ? [{ value: "", label: "Carregando..." }]
+                                : (subCategories ?? []).map((subCat: any) => ({
+                                    value: String(subCat.id),
+                                    label: subCat.name,
+                                }))
+                        }
+                    />
+
                     {/* ── Linha 2 — Tipo + Urgência + Impacto ── */}
                     <div className="ticket-form-row">
                         <div className="ticket-select-container">
-                            <select name="typeRequest" value={formData.typeRequest} onChange={handleChange}>
-                                <option value="">Tipo de Solicitação</option>
-                                {typeRequests.map(t => (
-                                    <option key={t.id} value={String(t.id)}>{t.name}</option>
-                                ))}
-                            </select>
+                            <CustomSelect
+                                label="Tipo de Solicitação"
+                                name="typeRequest"
+                                value={formData.typeRequest ?? ""}
+                                onChange={handleChange}
+                                options={
+                                    loadingSubCategories
+                                        ? [{ value: "", label: "Carregando..." }]
+                                        : (typeRequests ?? []).map((type: any) => ({
+                                            value: String(type.id),
+                                            label: type.requiresApproval
+                                                ? `${type.name} ⚠️ Requer Aprovação`
+                                                : type.name,
+                                        }))
+                                }
+                            />
                         </div>
 
                         <div className="ticket-select-container">
-                            <select name="urgency" value={formData.urgency} onChange={handleChange}>
-                                <option value="">Urgência</option>
-                                {urgencies.map(u => (
-                                    <option key={u.id} value={String(u.id)}>{u.name}</option>
-                                ))}
-                            </select>
+                            <CustomSelect
+                                label="Urgência"
+                                name="urgency"
+                                value={formData.urgency ?? ""}
+                                onChange={handleChange}
+                                options={
+                                    loadingSubCategories
+                                        ? [{ value: "", label: "Carregando..." }]
+                                        : (urgencies ?? []).map((urgency: any) => ({
+                                            value: String(urgency.id),
+                                            label: urgency.name,
+                                        }))
+                                }
+                            />
                         </div>
 
                         <div className="ticket-select-container">
-                            <select name="impact" value={formData.impact} onChange={handleChange}>
-                                <option value="">Impacto</option>
-                                {impacts.map(i => (
-                                    <option key={i.id} value={String(i.id)}>{i.name}</option>
-                                ))}
-                            </select>
+                            <CustomSelect
+                                label="Impacto"
+                                name="impact"
+                                value={formData.impact ?? ""}
+                                onChange={handleChange}
+                                options={
+                                    loadingSubCategories
+                                        ? [{ value: "", label: "Carregando..." }]
+                                        : (impacts ?? []).map((impact: any) => ({
+                                            value: String(impact.id),
+                                            label: impact.name,
+                                        }))
+                                }
+                            />
                         </div>
                     </div>
 

@@ -3,4 +3,5 @@ export type TypeRequestDTO = {
   name: string;
   description: string;
   active: boolean;
+  requiresApproval: boolean;
 };

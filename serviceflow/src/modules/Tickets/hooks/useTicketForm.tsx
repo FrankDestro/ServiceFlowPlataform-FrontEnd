@@ -13,6 +13,8 @@ import { type ImpactTicketDTO } from "../models/ImpactTicketDTO";
 import type { TicketFormDTO } from "../models/ticketDTO";
 import type { SolvingAreaDTO } from "../models/solvingAreaDTO";
 import { showToast } from "../../../layout/Toastify/Toastify";
+import type { SubCategoryTicketDTO } from "../models/SubCategoryTicketDTO";
+import * as subCategoryService from "../service/subCategory-service"
 
 const initialFormData: TicketFormDTO = {
     subject: "",
@@ -24,17 +26,21 @@ const initialFormData: TicketFormDTO = {
     typeRequest: "",
     solvingArea: "",
     categoryTicket: "",
+    subCategoryTicket: ""
 };
 
 export function useTicketForm() {
     const [typeRequests, setTypeRequests] = useState<TypeRequestDTO[]>([]);
     const [categories, setCategories] = useState<CategoryTicketDTO[]>([]);
+    const [subCategories, setSubCategories] = useState<SubCategoryTicketDTO[]>([]);
     const [urgencies, setUrgencies] = useState<UrgencyTicketDTO[]>([]);
     const [impacts, setImpacts] = useState<ImpactTicketDTO[]>([]);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
     const [formData, setFormData] = useState<TicketFormDTO>(initialFormData);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [solvingArea, setSolvingArea] = useState<SolvingAreaDTO | null>(null);
+    const [loadingSubCategories, setLoadingSubCategories] = useState(false);
+
 
     useEffect(() => {
         TypeRequestService.getAllTypeRequest().then((r) => setTypeRequests(r.data));
@@ -45,14 +51,31 @@ export function useTicketForm() {
 
     useEffect(() => {
         if (!formData.categoryTicket) return;
-        CategoryTicketService.getSolvingAreaByCategory(formData.categoryTicket).then((r) => {
-            setSolvingArea(r.data);
-            setFormData(prev => ({ ...prev, solvingArea: String(r.data.id) }));
+
+        setLoadingSubCategories(true);
+        setSubCategories([]);
+
+        Promise.all([
+            CategoryTicketService.getSolvingAreaByCategory(formData.categoryTicket),
+            subCategoryService.getSubCategoriesByCategory(formData.categoryTicket)
+        ]).then(([solvingAreaRes, subCategoriesRes]) => {
+            setSolvingArea(solvingAreaRes.data);
+            setFormData(prev => ({
+                ...prev,
+                solvingArea: String(solvingAreaRes.data.id),
+                subCategoryTicket: String(subCategoriesRes.data[0]?.id ?? '')
+            }));
+            setSubCategories(subCategoriesRes.data);
+        }).finally(() => {
+            setLoadingSubCategories(false);
         });
+
     }, [formData.categoryTicket]);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
         const { name, value } = e.target;
+        console.log("handleChange disparado:", name, value); // <- aqui
+
         setFormData(prev => ({ ...prev, [name]: value }));
     }
 
@@ -63,6 +86,8 @@ export function useTicketForm() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+        console.log("formData no submit:", formData);
+
         if (!validate()) return;
 
         setIsSubmitting(true);
@@ -72,6 +97,7 @@ export function useTicketForm() {
             description: formData.description,
             typeRequest: formData.typeRequest,
             categoryTicket: formData.categoryTicket,
+            subCategoryTicket: formData.subCategoryTicket,
             solvingArea: formData.solvingArea,
             urgency: formData.urgency,
             impact: formData.impact,
@@ -126,6 +152,9 @@ export function useTicketForm() {
     function handleReset() {
         setFormData(initialFormData);
         setAttachedFiles([]);
+        setSolvingArea(null);
+        setSubCategories([]);
+        setAttachedFiles([]);
     }
 
     function validate(): boolean {
@@ -135,6 +164,10 @@ export function useTicketForm() {
         }
         if (!formData.categoryTicket) {
             toast.warning("Selecione a categoria.");
+            return false;
+        }
+        if (!formData.subCategoryTicket) {
+            toast.warning("Selecione um serviço.");
             return false;
         }
         if (!formData.typeRequest) {
@@ -159,6 +192,7 @@ export function useTicketForm() {
     return {
         typeRequests,
         categories,
+        subCategories,
         solvingArea,
         urgencies,
         impacts,
@@ -170,5 +204,6 @@ export function useTicketForm() {
         handleSubmit,
         handleReset,
         setAttachedFiles,
+        loadingSubCategories
     };
 }
