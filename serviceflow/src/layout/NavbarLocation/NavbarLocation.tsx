@@ -6,6 +6,7 @@ import {
   faDatabase,
   faGears,
   faHome,
+  faNewspaper,
   faRefresh,
   faTasks,
   faTicket,
@@ -34,6 +35,7 @@ const routeMap: Record<string, RouteConfig> = {
   "/KnowledgeBase": { title: "Knowledge Data Base", icon: faBook },
   "/changes": { title: "Solicitações de Mudanças", icon: faRefresh },
   "/changes/:id": { title: "Detalhes da Mudança", icon: faRefresh },
+  "/changes/new": { title: "Nova da Mudança", icon: faNewspaper },
   "/knowErrorDatabase": { title: "Know Error Data Base", icon: faDatabase },
   "/approvals": { title: "Aprovações", icon: faClipboardCheck },
   "/settings/general": { title: "General", icon: faGears, parent: "/settings" },
@@ -54,26 +56,26 @@ const NavbarLocation = () => {
 
     // se não achou, tenta match dinâmico com :id
     if (!current) {
-        const matchedKey = Object.keys(routeMap).find((key) => {
-            const pattern = key.replace(/:[\w]+/g, "[^/]+");
-            const regex = new RegExp(`^${pattern}$`);
-            return regex.test(path);
-        });
-        if (matchedKey) current = routeMap[matchedKey];
+      const matchedKey = Object.keys(routeMap).find((key) => {
+        const pattern = key.replace(/:[\w]+/g, "[^/]+");
+        const regex = new RegExp(`^${pattern}$`);
+        return regex.test(path);
+      });
+      if (matchedKey) current = routeMap[matchedKey];
     }
 
     if (!current) {
-        return [{ title: "Unknown", icon: null }];
+      return [{ title: "Unknown", icon: null }];
     }
 
     const breadcrumb = [current];
 
     if (current.parent && routeMap[current.parent]) {
-        breadcrumb.unshift(routeMap[current.parent]);
+      breadcrumb.unshift(routeMap[current.parent]);
     }
 
     return breadcrumb;
-};
+  };
 
   const breadcrumb = buildBreadcrumb();
 

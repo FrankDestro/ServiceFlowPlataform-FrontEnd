@@ -262,7 +262,12 @@ function ChangeDetail({ id }: Props) {
             <div className="ch-detail-side-row"><span className="ch-detail-side-label">Prioridade</span><span className={getPriorityClass(article.priority)}>{article.priority}</span></div>
             <div className="ch-detail-side-row"><span className="ch-detail-side-label">Risco</span><span className={getPriorityClass(article.riskLevel)}>{article.riskLevel}</span></div>
             <div className="ch-detail-side-row"><span className="ch-detail-side-label">Impacto</span><span className={getPriorityClass(article.impactLevel)}>{article.impactLevel}</span></div>
-            <div className="ch-detail-side-row"><span className="ch-detail-side-label">Responsável</span><span>{article.changeOwnerEmail ?? "—"}</span></div>
+            <div className="ch-detail-side-row">
+              <span className="ch-detail-side-label">Responsável</span>
+              <span style={{ wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "60%" }}>
+                {article.changeOwnerEmail ?? "—"}
+              </span>
+            </div>
             <div className="ch-detail-side-row"><span className="ch-detail-side-label">Criado em</span><span>{article.createdAt ?? "—"}</span></div>
           </div>
 

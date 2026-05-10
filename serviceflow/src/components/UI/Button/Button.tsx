@@ -18,6 +18,7 @@ type Props = {
   color?: string;
   fontWeight?: string;
   fontSize?: string;
+  className?: string;
   onClick?: () => void;
 };
 
@@ -26,6 +27,7 @@ function Button({
   icon,
   color,
   background,
+  className,
   hoverColor,
   size = "small",
   borderRadius = "12px",
@@ -40,45 +42,45 @@ function Button({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-      <button
-        className={`button-container ${size}`}
-        type={type}
-        style={{
-          background: isHovered && hoverColor ? hoverColor : background,
-          borderRadius,
-          height,
-          width,
-          color,
-          fontWeight,
-          fontSize,
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={onClick}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <div className="container-spiner-button-login">
-            <Bars
-              visible={true}
-              height="30"
-              width="30"
-              color="white"
-              ariaLabel="oval-loading"
-              wrapperStyle={{}}
-              wrapperClass="oval-spinner"
-            />
-            <span>Logando...</span>
-          </div>
-        ) : (
-          <>
-            {icon && (
-              <FontAwesomeIcon icon={icon} style={{ marginRight: "8px" }} />
-            )}
-            {text}
-          </>
-        )}
-      </button>
+    <button
+      className={`button-container ${size} ${className ?? ""}`}
+      type={type}
+      style={{
+        background: isHovered && hoverColor ? hoverColor : background,
+        borderRadius,
+        height,
+        width,
+        color,
+        fontWeight,
+        fontSize,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <div className="container-spiner-button-login">
+          <Bars
+            visible={true}
+            height="30"
+            width="30"
+            color="white"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass="oval-spinner"
+          />
+          <span>Logando...</span>
+        </div>
+      ) : (
+        <>
+          {icon && (
+            <FontAwesomeIcon icon={icon} style={{ marginRight: "8px" }} />
+          )}
+          {text}
+        </>
+      )}
+    </button>
   );
 }
 

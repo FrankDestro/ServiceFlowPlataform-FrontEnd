@@ -83,3 +83,52 @@ export type ChangeSearchParams = {
     scheduledStartFrom: string;
     scheduledStartTo: string;
 };
+
+
+
+export type ChangeFormDTO = {
+    // IDENTIFICACAO
+    title: string;
+    description: string;
+    reasonChange: string;
+    affectedServices: string[];
+
+    //PLANEJAMENTO
+    scheduledStart: string;
+    scheduledEnd: string;
+    prerequisite: string;
+    implementationPlan: string;
+    rollbackPlan: string;
+
+    // RISCO E IMPACTO
+    riskLevel: string;
+    riskDescription: string;
+    impactLevel: string;
+    impactDescription: string;
+
+    //CLASSIFICACAO
+    changeType: string;
+    priority: string;
+
+    //RESPONSAVEL 
+    changeOwner: string;
+
+    //ASSOCIACOES
+    relatedTicketNumber: string | null;
+    relatedProblemNumber: string | null;
+
+    //TASK
+    tasks: ChangeTaskFormDTO[];
+
+    // APPROVALS
+    changeApprovals: number[];
+}
+
+export type ChangeTaskFormDTO = {
+    title: string;
+    description: string;
+    assignedToUserId: number;
+    estimatedHours: number;
+    taskOrder: number; 
+    //status: string; // AUTOMATICO BACKEND
+}

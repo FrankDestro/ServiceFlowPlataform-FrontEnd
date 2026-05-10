@@ -20,6 +20,7 @@ import ApprovalsPage from "./pages/ApprovalsPage/ApprovalsPage.tsx";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage/KnowledgeBasePage.tsx";
 import ChangePage from "./pages/ChangePage/ChangePage.tsx";
 import ChangeDetailPage from "./pages/ChangePageDetail/ChangeDetailPage.tsx";
+import ChangeCreate from "./modules/Change/ChangeCreate/ChangeCreate.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -47,6 +48,7 @@ function App() {
             {/* //MODULO CHANGE */}
             <Route path="/changes" element={<ChangePage />} />
             <Route path="/changes/:id" element={<ChangeDetailPage />} />
+            <Route path="/changes/new" element={<ChangeCreate />} />
             {/* <Route path="settings" element={<SettingsPage />}>
       <Route path="general" element={<GeneralSettings />} />
       <Route path="profile" element={<ProfileSettings />} />
