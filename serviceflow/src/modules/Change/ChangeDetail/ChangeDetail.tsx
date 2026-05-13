@@ -4,6 +4,8 @@ import useChangeDetail from "../hooks/useChangeDetail";
 import "./ChangeDetails.css";
 import { getApproverBadgeClass, getInitials, getLevelClass, getPriorityClass, getStatusBadgeClass, getTaskCheckClass, getTaskStatusClass, getTaskStatusLabel, getTypeBadgeClass } from "../../../utils/helpers/functions";
 import { useChangeTasks, useChangeApprovers, useChangeHistory } from "../hooks/useChangeTabs";
+import Button from "../../../components/UI/Button/Button";
+import { faCheck, faPen, faX } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   id: number;
@@ -12,6 +14,8 @@ type Props = {
 type Tab = "detalhes" | "tarefas" | "aprovadores" | "historico";
 
 function ChangeDetail({ id }: Props) {
+
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>("detalhes");
 
@@ -22,6 +26,9 @@ function ChangeDetail({ id }: Props) {
 
   if (isLoading) return <p>Carregando...</p>;
   if (error || !article) return <p>Erro ao carregar</p>;
+
+  const canApprove = article.status === "REQUESTED";
+  const isReadOnly = article.status === "COMPLETED" || article.status === "CANCELLED";
 
   const stages = ["SUBMISSION", "IMPLEMENTATION", "REVIEW", "CLOSE"];
   const stageLabels: Record<string, string> = {
@@ -69,9 +76,8 @@ function ChangeDetail({ id }: Props) {
           </div>
         </div>
         <div className="ch-detail-topbar-actions">
-          <button className="ch-detail-btn">✓ Aprovar</button>
-          <button className="ch-detail-btn ch-detail-btn-primary" onClick={() => navigate(`/changes/${id}/edit`)}>✏ Editar</button>
-          <button className="ch-detail-btn ch-detail-btn-danger">✕ Cancelar</button>
+          <Button text="Aprovar" icon={faCheck} type="button" borderRadius="8px" hoverColor="" disabled={!canApprove}  className="cc-btn-approve" />
+          <Button text="Rejeitar" icon={faX} type="button" borderRadius="8px" hoverColor=""disabled={!canApprove}  className="cc-btn-reject" />
         </div>
       </div>
 
@@ -316,7 +322,16 @@ function ChangeDetail({ id }: Props) {
               )}
             </div>
           )}
+
+          <div className="ch-detail-card">
+            <div className="ch-detail-section-title">Ações</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <Button text="Editar" icon={faPen} type="button" borderRadius="8px" background="#0f766e" hoverColor="#0d9488" className="cc-btn-editar" onClick={() => navigate(`/changes/${id}/edit`)} disabled={isReadOnly} />
+              <Button text="Cancelar" icon={faX} type="button" borderRadius="8px" hoverColor="" className="cc-btn-cancel" disabled={isReadOnly} />
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );

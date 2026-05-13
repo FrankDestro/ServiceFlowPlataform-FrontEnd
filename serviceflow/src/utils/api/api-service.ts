@@ -18,6 +18,8 @@ export function requestBackendConfig(config: AxiosRequestConfig) {
     config.headers = {
         ...(config.headers || {}),
         Authorization: "Bearer " + authService.getAccessToken(),
+         // @ts-ignore
+        silent: config.silent  // ← repassa o silent
     };
     return axios({ ...config, baseURL: BASE_URL, headers: config.headers });
 }
@@ -68,9 +70,13 @@ axios.interceptors.response.use(
         return response;
     },
     (err: unknown) => {
-        const error = err as AxiosError<{ message?: string }>;
+    const error = err as AxiosError<{ message?: string }> & { config?: { silent?: boolean } };
         const backendMessage = error.response?.data?.message;
         const status = error.response?.status;
+
+     if (error.config?.silent) {
+        return Promise.reject(error);
+    }
 
         switch (status) {
             case 400:

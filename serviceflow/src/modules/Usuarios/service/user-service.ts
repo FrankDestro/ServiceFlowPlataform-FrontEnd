@@ -11,3 +11,15 @@ export function getAllUserBySolvingArea(solvingAreaId: string) {
     }
     return requestBackendConfig(config);
 }
+
+
+export function getUserNameOrEmail(q: string) {
+    const config: AxiosRequestConfig = {
+        method: "GET",
+        url: '/users/search/name-or-email',
+        params: {
+            q
+        }
+    }
+    return requestBackendConfig(config);
+}

@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import { requestBackendConfig } from "../../../utils/api/api-service.ts";
+import type { ChangeFormDTO } from "../models/ChangeDTO.ts";
 
 export function getAllChanges(
     page: number,
@@ -59,6 +60,23 @@ export function historyByChangeId(id: number) {
     const config: AxiosRequestConfig = {
         method: "GET",
         url: `/changes/${id}/history`,
+    };
+    return requestBackendConfig(config);
+}
+
+export function createChange(dto: ChangeFormDTO) {
+    const config: AxiosRequestConfig = {
+        method: "POST",
+        url: "/changes",
+        data: dto,
+    };
+    return requestBackendConfig(config);
+}
+
+export function getAllChangeTypes() {
+    const config: AxiosRequestConfig = {
+        method: "GET",
+        url: "/changes/types",
     };
     return requestBackendConfig(config);
 }

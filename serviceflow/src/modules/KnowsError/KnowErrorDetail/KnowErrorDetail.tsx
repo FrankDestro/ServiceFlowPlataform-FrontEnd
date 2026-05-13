@@ -17,6 +17,7 @@ type Props = {
 function KnowErrorDetail({ id }: Props) {
 
     const { data: knowError, isLoading, error } = useKnowErrorDetail(id);
+
     const { download } = useAttachmentDownload();
 
     useEffect(() => {

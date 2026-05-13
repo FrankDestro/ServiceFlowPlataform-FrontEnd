@@ -1359,3 +1359,33 @@
     background: #fef3c7;
     color: #92400e;
 }
+
+.cc-btn-approve {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #16a34a;
+}
+
+.cc-btn-approve:hover {
+    background: #dcfce7;
+}
+
+.cc-btn-reject {
+    background: #fff1f2;
+    color: #dc2626;
+    border: 1px solid #dc2626;
+}
+
+.cc-btn-reject:hover {
+    background: #fee2e2;
+}
+
+.cc-btn-approve:disabled,
+.cc-btn-reject:disabled,
+.cc-btn-editar:disabled,
+.cc-btn-cancel:disabled {
+    color: #edebeb;
+    background: #94a3b8 !important;
+    cursor: not-allowed !important;
+    border: 1px solid #94a3b8;
+}

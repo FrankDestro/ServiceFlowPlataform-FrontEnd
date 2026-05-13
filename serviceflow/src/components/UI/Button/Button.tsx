@@ -19,6 +19,7 @@ type Props = {
   fontWeight?: string;
   fontSize?: string;
   className?: string;
+  disabled?: boolean
   onClick?: () => void;
 };
 
@@ -37,6 +38,7 @@ function Button({
   isLoading = false,
   fontWeight = "",
   fontSize = "",
+  disabled=false,
   onClick,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
@@ -57,7 +59,7 @@ function Button({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {isLoading ? (
         <div className="container-spiner-button-login">

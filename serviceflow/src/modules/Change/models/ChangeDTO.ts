@@ -107,7 +107,7 @@ export type ChangeFormDTO = {
     impactDescription: string;
 
     //CLASSIFICACAO
-    changeType: string;
+   changeType: number | null;
     priority: string;
 
     //RESPONSAVEL 
@@ -131,4 +131,12 @@ export type ChangeTaskFormDTO = {
     estimatedHours: number;
     taskOrder: number; 
     //status: string; // AUTOMATICO BACKEND
+}
+
+
+export interface ChangeTypeDTO {
+    id: number;
+    name: string;
+    description?: string;
+    color: string;
 }

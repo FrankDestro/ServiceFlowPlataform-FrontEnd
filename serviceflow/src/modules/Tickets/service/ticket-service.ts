@@ -30,6 +30,16 @@ export function ticketById(id: number) {
   return requestBackendConfig({ url: `/tickets/${id}` });
 }
 
+export function TicketByTicketNumber(ticketNumber: string) {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `/tickets/by-number/${ticketNumber}`,
+    // @ts-ignore
+    silent: true  // ← parâmetro customizado na config
+  }
+  return requestBackendConfig(config);
+}
+
 export function createTicket(obj: TicketFormDTO) {
   const config: AxiosRequestConfig = {
     method: "POST",
@@ -103,3 +113,4 @@ export function rejectTicketRequest(id: number, reason: string) {
   };
   return requestBackendConfig(config);
 }
+
