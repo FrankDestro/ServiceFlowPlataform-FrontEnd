@@ -123,7 +123,8 @@ export function useTicketForm() {
                         const uploadPromises = attachedFiles.map((file) => {
                             const formData = new FormData();
                             formData.append("file", file);
-                            formData.append("ticketId", String(response.data.id));
+                            formData.append("entityType", "TICKET")
+                            formData.append("entityId", String(response.data.id));
                             formData.append("originalName", file.name);
                             return uploadAnexos(formData);
                         });

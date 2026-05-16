@@ -6,14 +6,15 @@ import { getFileType } from "../../../utils/helpers/functions";
 import { useAttachmentUpload } from "../hooks/useAttachmentUpload";
 
 type Props = {
+    entityType: string;
     id: string;
 };
 
-function AnexoUpload({ id }: Props) {
+function AnexoUpload({ entityType, id }: Props) {
     const [showModal, setShowModal] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const { upload, isUploading } = useAttachmentUpload(id);
+    const { upload, isUploading } = useAttachmentUpload(entityType, id);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {

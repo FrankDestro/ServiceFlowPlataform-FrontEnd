@@ -1,0 +1,17 @@
+.prb-limited-text {
+    max-width: 220px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prb-container-btn-new {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: end;
+}
+
+.prb-container-base {
+    width: 100%;
+}

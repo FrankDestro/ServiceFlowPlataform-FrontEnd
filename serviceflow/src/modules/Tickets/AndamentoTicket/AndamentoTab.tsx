@@ -108,7 +108,6 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
 
     return (
         <div className="at-wrap">
-           
             <div className="container-timeline-ticket">
                 <button
                     type="button"

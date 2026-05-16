@@ -1,4 +1,5 @@
-import AnexoTicket from "../../Attachment/modules/Tickets/AnexoTicket"
+import AnexoTabGeral from "../../Attachment/modules/AnexoTabGeral/AnexoTabGeral";
+import { TicketStatus } from "../constant/TicketStatus";
 import type { TicketDTO } from "../models/ticketDTO";
 
 type Props = {
@@ -7,13 +8,17 @@ type Props = {
 
 const AnexoTab: React.FC<Props> = ({ ticket }) => {
     return (
-        <div>
-            <AnexoTicket ticket={ticket} />
-        </div>
-    )
-}
+        <AnexoTabGeral
+            entityType="TICKET"
+            entityId={ticket.id.toString()}
+            isReadOnly={ticket.statusTicket === TicketStatus.FINISHED || ticket.statusTicket === TicketStatus.CANCELED}
+            readOnlyMessage="Não é possível adicionar anexos para tickets finalizados"
+        />
+    );
+};
 
-export default AnexoTab
+export default AnexoTab;
+
 
 
 

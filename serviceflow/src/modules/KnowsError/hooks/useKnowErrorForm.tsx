@@ -77,7 +77,8 @@ function useKnowErrorForm(onSuccess: () => void) {
                         const data = new FormData();
                         data.append("file", file);
                         data.append("originalName", file.name);
-                        data.append("knownErrorId", String(knowErrorId));
+                        data.append("entityType", "KNOW_ERROR")
+                        data.append("entityId", String(knowErrorId));
                         return attachmentService.uploadAnexos(data);
                     });
                     await Promise.all(uploads);

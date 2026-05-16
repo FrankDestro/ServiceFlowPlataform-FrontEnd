@@ -37,7 +37,7 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
     useEffect(() => {
         if (abaAtiva === "anexo" && anexos.length === 0) {
             setCarregandoAndamentos(true);
-            getAllAttachmentById(ticket.id.toString())
+            getAllAttachmentById("TICKET", ticket.id.toString())
                 .then((response) => setAnexos(response.data))
                 .catch((error) => console.error("Erro ao buscar anexos:", error))
                 .finally(() => setCarregandoAndamentos(false));

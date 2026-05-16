@@ -25,24 +25,33 @@ type RouteConfig = {
 };
 
 const routeMap: Record<string, RouteConfig> = {
+  // ── GERAL ──────────────────────────────────────────────
   "/home": { title: "Home", icon: faHome },
-  "/operationalPanel": { title: "Painel Operacional", icon: faDashboard },
   "/dashboard": { title: "Dashboard", icon: faDashboard },
-  "/ticket": { title: "Ticket", icon: faTicket },
-  "/ticketdetails": { title: "Detalhes", icon: faTasks, parent: "/ticket" },
-  "/user": { title: "User", icon: faUser },
-  "/abas": { title: "Abas", icon: faDatabase },
-  "/KnowledgeBase": { title: "Knowledge Data Base", icon: faBook },
-  "/changes": { title: "Solicitações de Mudanças", icon: faRefresh },
-  "/changes/:id": { title: "Detalhes da Mudança", icon: faRefresh },
-  "/changes/new": { title: "Nova da Mudança", icon: faNewspaper },
-  "/knowErrorDatabase": { title: "Know Error Data Base", icon: faDatabase },
-  "/approvals": { title: "Aprovações", icon: faClipboardCheck },
   "/settings/general": { title: "General", icon: faGears, parent: "/settings" },
   "/settings/profile": { title: "Profile", icon: faUser, parent: "/settings" },
   "/settings/sla": { title: "SLA", icon: faClock, parent: "/settings" },
 
-  "/test": { title: "Testes", icon: faWarning }
+  // ── TICKET ─────────────────────────────────────────────
+  "/operationalPanel": { title: "Painel Operacional", icon: faDashboard },
+  "/ticket": { title: "Gerenciamento de Tickets", icon: faTicket },
+  "/ticketdetails": { title: "Detalhes", icon: faTasks, parent: "/ticket" },
+  "/approvals": { title: "Aprovações", icon: faClipboardCheck },
+  "/KnowledgeBase": { title: "Base de Conhecimento", icon: faBook },
+  "/knowErrorDatabase": { title: "Erros Conhecidos", icon: faDatabase },
+
+  // ── CHANGE ─────────────────────────────────────────────
+  "/changes": { title: "Gerenciamento de Mudanças", icon: faRefresh },
+  "/changes/:id": { title: "Detalhes da Mudança", icon: faRefresh },
+  "/changes/new": { title: "Nova Mudança", icon: faNewspaper },
+
+  // ── PROBLEM ────────────────────────────────────────────
+  "/problems": { title: "Gerenciamento de Problemas", icon: faDatabase },
+  "/problems/:id": { title: "Detalhes do Problema", icon: faDatabase },
+
+  // ── OUTROS ─────────────────────────────────────────────
+  "/abas": { title: "Abas", icon: faDatabase },
+  "/test": { title: "Testes", icon: faWarning },
 };
 
 const NavbarLocation = () => {

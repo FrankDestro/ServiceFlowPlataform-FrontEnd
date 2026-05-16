@@ -580,3 +580,38 @@ export const getTaskStatusLabel = (status: string) => {
 export const getInitials = (email: string) => {
   return email?.substring(0, 2).toUpperCase() ?? "??";
 };
+
+// MODULO DE PROBLEM
+export const getUrgencyStyle = (urgency: string): React.CSSProperties => {
+  const styles: Record<string, React.CSSProperties> = {
+    CRITICAL: { color: "#7c2d12", fontWeight: 700 },
+    HIGH: { color: "#dc2626", fontWeight: 700 },
+    MEDIUM: { color: "#d97706", fontWeight: 600 },
+    LOW: { color: "#16a34a", fontWeight: 600 },
+  };
+  return styles[urgency] ?? {};
+};
+
+export const getProblemStatusBadgeStyle = (status: string): React.CSSProperties => {
+  const styles: Record<string, React.CSSProperties> = {
+    OPEN: { background: "#e0f2fe", color: "#075985", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    IN_INVESTIGATION: { background: "#fef9c3", color: "#854d0e", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    KNOWN_ERROR: { background: "#ede9fe", color: "#5b21b6", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    RESOLVED: { background: "#dcfce7", color: "#166534", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    CLOSED: { background: "#1e293b", color: "#f8fafc", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+    OVERDUE: { background: "#fee2e2", color: "#991b1b", borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 700 },
+  };
+  return styles[status] ?? styles["OPEN"];
+};
+
+export const getProblemStatusBadgeClass = (status: string) => {
+  const map: Record<string, string> = {
+    OPEN: "badge badge-open",
+    IN_INVESTIGATION: "badge badge-investigation",
+    KNOWN_ERROR: "badge badge-known-error",
+    RESOLVED: "badge badge-resolved",
+    CLOSED: "badge badge-closed",
+    OVERDUE: "badge badge-overdue",
+  };
+  return map[status] ?? "badge";
+};

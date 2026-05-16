@@ -11,14 +11,11 @@ export function uploadAnexos(formData: FormData) {
         },
     };
     return requestBackendConfig(config);
-
 }
 
-
-export function getAllAttachmentById(id: string) {
-    return requestBackendConfig({ url: `/attachments/ticket/${id}` });
+export function getAllAttachmentById(entityType: string, id: string) {
+    return requestBackendConfig({ url: `/attachments/${entityType.toLowerCase()}/${id}` });
 }
-
 
 export function downloadAnexo(bucket: string, objectName: string) {
     const config: AxiosRequestConfig = {
