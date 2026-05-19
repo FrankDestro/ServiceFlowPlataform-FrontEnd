@@ -1,57 +1,37 @@
-import {
-  faBook,
-  faClipboardCheck,
-  faClock,
-  faDashboard,
-  faDatabase,
-  faGears,
-  faHome,
-  faNewspaper,
-  faRefresh,
-  faTasks,
-  faTicket,
-  faUser,
-  faWarning
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Rocket, ClipboardList } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 import "./NavbarLocation.css";
+import { HexIcon } from "../../components/UI/HexIcon/HexIcon";
 
 type RouteConfig = {
   title: string;
-  icon: any;
+  icon?: any;
+  hexIcon?: { icon: any; color: string; bg: string };
   parent?: string;
 };
 
 const routeMap: Record<string, RouteConfig> = {
-  // ── GERAL ──────────────────────────────────────────────
-  "/home": { title: "Home", icon: faHome },
-  "/dashboard": { title: "Dashboard", icon: faDashboard },
-  "/settings/general": { title: "General", icon: faGears, parent: "/settings" },
-  "/settings/profile": { title: "Profile", icon: faUser, parent: "/settings" },
-  "/settings/sla": { title: "SLA", icon: faClock, parent: "/settings" },
+  "/operationalPanel": { title: "Painel Operacional", hexIcon: { icon: Activity, color: "#475569", bg: "#f1f5f9" } },
 
-  // ── TICKET ─────────────────────────────────────────────
-  "/operationalPanel": { title: "Painel Operacional", icon: faDashboard },
-  "/ticket": { title: "Gerenciamento de Tickets", icon: faTicket },
-  "/ticketdetails": { title: "Detalhes", icon: faTasks, parent: "/ticket" },
-  "/approvals": { title: "Aprovações", icon: faClipboardCheck },
-  "/KnowledgeBase": { title: "Base de Conhecimento", icon: faBook },
-  "/knowErrorDatabase": { title: "Erros Conhecidos", icon: faDatabase },
+  "/ticket": { title: "Gerenciamento de Tickets", hexIcon: { icon: Ticket, color: "#0369a1", bg: "#dbeafe" } },
+  "/ticketdetails": { title: "Detalhes", hexIcon: { icon: Ticket, color: "#0369a1", bg: "#dbeafe" }, parent: "/ticket" },
 
-  // ── CHANGE ─────────────────────────────────────────────
-  "/changes": { title: "Gerenciamento de Mudanças", icon: faRefresh },
-  "/changes/:id": { title: "Detalhes da Mudança", icon: faRefresh },
-  "/changes/new": { title: "Nova Mudança", icon: faNewspaper },
+  "/approvals": { title: "Aprovações", hexIcon: { icon: CheckSquare, color: "#0369a1", bg: "#dbeafe" } },
 
-  // ── PROBLEM ────────────────────────────────────────────
-  "/problems": { title: "Gerenciamento de Problemas", icon: faDatabase },
-  "/problems/:id": { title: "Detalhes do Problema", icon: faDatabase },
+  "/KnowledgeBase": { title: "Base de Conhecimento", hexIcon: { icon: BookOpen, color: "#d97706", bg: "#fef3c7" } },
 
-  // ── OUTROS ─────────────────────────────────────────────
-  "/abas": { title: "Abas", icon: faDatabase },
-  "/test": { title: "Testes", icon: faWarning },
+  "/knowErrorDatabase": { title: "Erros Conhecidos", hexIcon: { icon: AlertTriangle, color: "#d97706", bg: "#fef3c7" } },
+
+  "/changes": { title: "Gerenciamento de Mudanças", hexIcon: { icon: RefreshCw, color: "#0f766e", bg: "#ccfbf1" } },
+  "/changes/:id": { title: "Detalhes da Mudança", hexIcon: { icon: RefreshCw, color: "#0f766e", bg: "#ccfbf1" }, parent: "/changes" },
+  "/changes/new": { title: "Nova Mudança", hexIcon: { icon: RefreshCw, color: "#0f766e", bg: "#ccfbf1" }, parent: "/changes" },
+
+  "/problems": { title: "Gerenciamento de Problemas", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" } },
+  "/problems/:id": { title: "Detalhes do Problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
+
+  "/home": { title: "Home" },
+  "/dashboard": { title: "Dashboard" },
 };
 
 const NavbarLocation = () => {
@@ -93,14 +73,13 @@ const NavbarLocation = () => {
       <div className="container-content-navbar-location">
         {breadcrumb.map((item, index) => (
           <div key={index} className="breadcrumb-item">
-            {item.icon && index === breadcrumb.length - 1 && (
-              <FontAwesomeIcon icon={item.icon} className="navbar-icon" />
-            )}
 
+            {item.hexIcon && index === 0 && (
+              <HexIcon icon={item.hexIcon.icon} color={item.hexIcon.color} bg={item.hexIcon.bg} />
+            )}
             <span className={index === breadcrumb.length - 1 ? "active" : ""}>
               {item.title}
             </span>
-
             {index < breadcrumb.length - 1 && (
               <span className="separator">/</span>
             )}

@@ -29,8 +29,8 @@ type Props = {
         typeRequestId: string;
         categoryTicketId: string;
         slaId: string;
-        initialDate: string,   // ← era registrationDate
-        finalDate: string,     // ← novo
+        initialDate: string,   
+        finalDate: string,     
         myTickets: boolean;
         myAreaTickets: boolean;
         assignedToMe: boolean;
@@ -52,8 +52,8 @@ function SearchTicket({ onSearch }: Props) {
         typeRequestId: "",
         categoryTicketId: "",
         slaId: "",
-        initialDate: "",   // ← era registrationDate
-        finalDate: "",     // ← novo
+        initialDate: "",  
+        finalDate: "",     
     });
 
     const [switches, setSwitches] = useState<Switches>({

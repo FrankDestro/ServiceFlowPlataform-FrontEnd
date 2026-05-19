@@ -8,6 +8,7 @@ import TableTicket from "../TableTicket/TableTicket.tsx";
 import "./TicketTabsContainer.css";
 import TicketFormCreate from "../TicketFormCreate/TicketFormCreate.tsx";
 import Pagination from "../../../components/UI/Pagination/Pagination.tsx";
+import { Plus } from "lucide-react";
 
 type TicketsProps = {
   tickets: TicketSimpleDTO[];
@@ -29,7 +30,6 @@ function TicketTabsContainer({
   tickets,
   onActiveTabChange,
   currentPage,
-  totalPages,
   totalItems,
   onPageChange,
   size,
@@ -175,7 +175,16 @@ function TicketTabsContainer({
           }
         >
           <div className="table-tickets-container">
-            <h3># Novo ticket</h3>
+            <div style={{
+              fontSize: 18,
+              fontWeight: 600,
+              color: "#1e293b",
+              marginBottom: 24,
+              paddingBottom: 12,
+              borderBottom: "1px solid #f1f5f9"
+            }}>
+              Nova solicitação
+            </div>
             <TicketFormCreate />
           </div>
         </Tab>

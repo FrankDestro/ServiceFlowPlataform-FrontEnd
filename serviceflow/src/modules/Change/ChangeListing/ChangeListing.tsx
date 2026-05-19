@@ -22,9 +22,7 @@ const ChangeListing = ({ onSearch, changes, onReload }: ChangeListingProps) => {
 
     return (
         <>
-            <div className="ch-container-base">
-                <SearchFilterChange onSearch={onSearch} />
-            </div>
+            <SearchFilterChange onSearch={onSearch} />
             <div className="ch-container-btn-new">
                 <Button
                     text="Abrir nova mudança"
@@ -37,7 +35,7 @@ const ChangeListing = ({ onSearch, changes, onReload }: ChangeListingProps) => {
                     onClick={() => navigate("/changes/new")}
                 />
             </div>
-            <table className="ch-container-base">
+            <table>
                 <thead>
                     <tr>
                         <th>Nº</th>

@@ -9,10 +9,6 @@ import type {
 import SearchOperationalPanel from "./components/SearchSummary/SearchOperationalPanel";
 import "./OperationalPanel.css"
 
-type OperationalPanelParams = {
-  solvingAreaId: string;
-}
-
 type OperationalPanelProps = {
   summary: summaryDTO | null;
   unassigned: unassignedDTO[];

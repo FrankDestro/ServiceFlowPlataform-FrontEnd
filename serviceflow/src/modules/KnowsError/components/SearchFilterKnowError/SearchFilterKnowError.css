@@ -29,10 +29,12 @@
 /* CARD PRINCIPAL */
 .accordion-body {
   background: #ffffff;
-  border-radius: 14px;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
   padding: 20px;
   border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  margin-bottom: 10px;
 }
 
 /* CONTAINER */

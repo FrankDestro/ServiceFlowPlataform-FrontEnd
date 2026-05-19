@@ -31,9 +31,7 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
 
     return (
         <>
-            <div className="kb-container-base">
-                <SearchFilterKnowledgeBase onSearch={onSearch} />
-            </div>
+            <SearchFilterKnowledgeBase onSearch={onSearch} />
             <div className="kb-container-btn-new">
                 <Button
                     text="Adicionar novo"
@@ -46,7 +44,7 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
                     onClick={() => setIsNewModalOpen(true)}
                 />
             </div>
-            <table className="kb-container-base">
+            <table>
                 <thead>
                     <tr>
                         <th>ID</th>

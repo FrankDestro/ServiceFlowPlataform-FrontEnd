@@ -77,8 +77,8 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
 
     return (
         <div>
-            <div className="ticket-table-container">
-                <table className="container-base">
+            <div>
+                <table>
                     <thead>
                         <tr>
                             <th>Nº</th>

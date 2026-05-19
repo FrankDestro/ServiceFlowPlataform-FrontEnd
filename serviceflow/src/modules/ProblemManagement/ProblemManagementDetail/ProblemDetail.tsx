@@ -76,7 +76,7 @@ function ProblemDetail({ id }: Props) {
                   {tab === "detalhes" && "Detalhes"}
                   {tab === "tickets" && <>Tickets vinculados {relatedTickets.length > 0 && <span className="prb-detail-tab-badge">{relatedTickets.length}</span>}</>}
                   {tab === "historico" && "Histórico"}
-                  {tab === "anexos" && "Anexos"}
+                  {tab === "anexos" && "Anexos"} 
                 </div>
               ))}
             </div>

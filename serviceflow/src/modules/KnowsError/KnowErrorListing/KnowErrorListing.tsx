@@ -33,9 +33,7 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
 
     return (
         <>
-            <div className="container-base">
-                <SearchFilterKnowError onSearch={onSearch} />
-            </div>
+            <SearchFilterKnowError onSearch={onSearch} />
             <div className="container-btn-new-knowerror">
                 <Button
                     text="Adicionar novo"
@@ -48,7 +46,7 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                     onClick={() => setIsNewModalOpen(true)}
                 />
             </div>
-            <table className="container-base">
+            <table>
                 <thead>
                     <tr>
                         <th>ID</th>

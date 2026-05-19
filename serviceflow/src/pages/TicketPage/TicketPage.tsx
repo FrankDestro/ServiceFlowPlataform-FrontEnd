@@ -24,7 +24,7 @@ function TicketPage() {
     const handleSearchAdapted = (filters: {
         ticketNumber: string;
         status: string;
-        channel : string;
+        channel: string;
         slaBreached: boolean;
         solvingAreaId: string;
         typeRequestId: string;
@@ -40,7 +40,7 @@ function TicketPage() {
             page: 0,
             ticketNumber: filters.ticketNumber,
             statusTicket: filters.status as TicketStatus | null,
-            channel : filters.channel,
+            channel: filters.channel,
             slaBreached: filters.slaBreached,
             solvingAreaId: filters.solvingAreaId ? Number(filters.solvingAreaId) : null,
             typeRequestId: filters.typeRequestId ? Number(filters.typeRequestId) : null,
@@ -64,9 +64,7 @@ function TicketPage() {
     return (
         <div>
             {!ticketOpen && (
-                <div className="container-base">
-                    <SearchTicket onSearch={handleSearchAdapted} />
-                </div>
+                <SearchTicket onSearch={handleSearchAdapted} />
             )}
             {isLoading ? (
                 <div className="spinner-container">

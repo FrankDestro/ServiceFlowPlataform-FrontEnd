@@ -1,4 +1,3 @@
-/* ChangeListing.css */
 .ch-limited-text {
     max-width: 220px !important;
     white-space: nowrap;
@@ -11,8 +10,4 @@
     width: 100%;
     padding: 10px;
     justify-content: end;
-}
-
-.ch-container-base {
-    width: 100%;
 }
