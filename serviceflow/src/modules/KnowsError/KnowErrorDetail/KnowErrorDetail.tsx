@@ -138,7 +138,9 @@ function KnowErrorDetail({ id }: Props) {
                     <div className="ke-detail-attachments">
                         {knowError.attachments.map((att: AttachmentDTO) => (
                             <div key={att.id} className="ke-detail-attachment-chip">
-                                <span>📎 {att.originalName}</span>
+                                <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                    📎 {att.originalName}
+                                </span>
                                 <span className="ke-detail-attachment-size">{att.sizeInMb} MB</span>
                                 <div className="anx-download"
                                     onClick={() => download({ bucket: att.bucket, objectName: att.objectName })}

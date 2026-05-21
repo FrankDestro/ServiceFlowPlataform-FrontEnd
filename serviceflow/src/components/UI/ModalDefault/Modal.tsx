@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Modal.css";
 import { FiX } from "react-icons/fi";
 
@@ -22,20 +22,30 @@ const Modal: React.FC<ModalProps> = ({
   width = "600px",
   maxBodyHeight
 }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  function handleClose() {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 500);
+  }
+
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div className={`modal-overlay ${isClosing ? "closing" : ""}`}>
       <div
-        className="modal-content-app"
+        className={`modal-content-app ${isClosing ? "closing" : ""}`}
         style={{
           width,
-          ...(maxBodyHeight ? { maxHeight: maxBodyHeight} : {}),
+          ...(maxBodyHeight ? { maxHeight: maxBodyHeight } : {}),
         }}
       >
         <header className="modal-header">
           <h2>{title}</h2>
-          <button onClick={onClose} className="close-button">
+          <button onClick={handleClose} className="close-button">
             <FiX size={20} />
           </button>
         </header>
@@ -45,7 +55,6 @@ const Modal: React.FC<ModalProps> = ({
         {footer && <footer className="modal-footer">{footer}</footer>}
       </div>
     </div>
-
   );
 };
 

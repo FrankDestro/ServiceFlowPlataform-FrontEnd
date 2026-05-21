@@ -46,3 +46,22 @@ export type ProblemSearchParams = {
     finalDate: string;
     myProblems: boolean;
 };
+
+export type TicketSummaryDTO = {
+    ticketNumber: string;
+    subject: string;
+    status: string;
+    priority: string;
+    requesterName: string;
+    createdAt: string;
+};
+
+export type ChangeSummaryDTO = {
+    id: number;
+    changeNumber: string;
+    title: string;
+    status: string;
+    priority: string;
+    changeOwner: string | null;
+    createdAt: string;
+};

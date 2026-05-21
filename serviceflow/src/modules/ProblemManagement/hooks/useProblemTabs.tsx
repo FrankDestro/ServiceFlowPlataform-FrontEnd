@@ -13,6 +13,17 @@ function useProblemRelatedTickets(id: number, enabled: boolean) {
     });
 }
 
+function useProblemRelatedChanges(id: number, enabled: boolean) {
+    return useQuery({
+        queryKey: ["problems", id, "changes"],
+        queryFn: async () => {
+            const res = await problemService.relatedChangesByProblemId(id);
+            return res.data;
+        },
+        enabled: !!id && enabled,
+    });
+}
+
 function useProblemHistory(id: number, enabled: boolean) {
     return useQuery({
         queryKey: ["problems", id, "history"],
@@ -35,5 +46,5 @@ function useProblemAttachments(id: number, enabled: boolean) {
     });
 }
 
-export { useProblemRelatedTickets, useProblemAttachments, useProblemHistory };
+export { useProblemRelatedTickets, useProblemAttachments, useProblemHistory, useProblemRelatedChanges };
 

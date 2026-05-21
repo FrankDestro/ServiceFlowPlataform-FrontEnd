@@ -11,11 +11,11 @@ type Props = {
 
 function AnexoTabGeral({ entityType, entityId, isReadOnly, readOnlyMessage }: Props) {
 
-    const { attachments } = useAttachment(entityType, entityId);
+    const { attachments, refetch } = useAttachment(entityType, entityId);
 
     return (
         <div className="anx-wrap">
-            <AnexosList anexos={attachments} isLoading={false} />
+            <AnexosList anexos={attachments} isLoading={false} onDelete={refetch} />
             {isReadOnly ? (
                 <div className="at-blocked-msg">
                     🚫 {readOnlyMessage ?? "Não é possível adicionar anexos"}

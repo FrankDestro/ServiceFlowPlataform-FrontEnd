@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProblemDetail.css";
 import { getPriorityClass, getProblemStatusBadgeClass } from "../../../utils/helpers/functions";
-import { useProblemHistory, useProblemRelatedTickets } from "../hooks/useProblemTabs";
+import { useProblemHistory, useProblemRelatedTickets, useProblemRelatedChanges } from "../hooks/useProblemTabs";
 import useProblemDetail from "../hooks/useProblemDetail";
 import Button from "../../../components/UI/Button/Button";
 import { faCheck, faX, faSearch, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import AnexoTabProblem from "../components/AnexoTabProblem/AnexoTabProblem";
+import RelatedTicketsTable from "../components/RelatedTicketsTable/RelatedTicketsTable";
+import RelatedChangesTable from "../components/RelatedChangesTable/RelatedChangesTable";
 
 type Props = {
   id: number;
 };
 
-type Tab = "detalhes" | "tickets" | "anexos" | "historico";
+type Tab = "detalhes" | "tickets" | "mudancas" | "anexos" | "historico";
+
 
 function ProblemDetail({ id }: Props) {
 
@@ -22,6 +25,7 @@ function ProblemDetail({ id }: Props) {
   const { data: problem, isLoading, error } = useProblemDetail(id);
   const { data: relatedTickets = [] } = useProblemRelatedTickets(id, activeTab === "tickets");
   const { data: history = [] } = useProblemHistory(id, activeTab === "historico");
+  const { data: relatedChanges = [] } = useProblemRelatedChanges(id, activeTab === "mudancas");
 
   if (isLoading) return <p>Carregando...</p>;
   if (error || !problem) return <p>Erro ao carregar</p>;
@@ -29,7 +33,6 @@ function ProblemDetail({ id }: Props) {
   const isOpen = problem.status === "OPEN";
   const isInInvestigation = problem.status === "IN_INVESTIGATION";
   const isResolved = problem.status === "RESOLVED";
-  const isReadOnly = problem.status === "CLOSED" || problem.status === "RESOLVED";
 
   const canInvestigate = isOpen;
   const canResolve = isInInvestigation || problem.status === "KNOWN_ERROR";
@@ -67,7 +70,7 @@ function ProblemDetail({ id }: Props) {
         <div className="prb-detail-main">
           <div className="prb-detail-tabs-wrapper">
             <div className="prb-detail-tabs">
-              {(["detalhes", "tickets", "anexos", "historico"] as Tab[]).map((tab) => (
+              {(["detalhes", "tickets", "mudancas", "anexos", "historico"] as Tab[]).map((tab) => (
                 <div
                   key={tab}
                   className={`prb-detail-tab ${activeTab === tab ? "active" : ""}`}
@@ -75,8 +78,9 @@ function ProblemDetail({ id }: Props) {
                 >
                   {tab === "detalhes" && "Detalhes"}
                   {tab === "tickets" && <>Tickets vinculados {relatedTickets.length > 0 && <span className="prb-detail-tab-badge">{relatedTickets.length}</span>}</>}
+                  {tab === "mudancas" && <>Mudanças associadas {relatedChanges.length > 0 && <span className="prb-detail-tab-badge">{relatedChanges.length}</span>}</>}
                   {tab === "historico" && "Histórico"}
-                  {tab === "anexos" && "Anexos"} 
+                  {tab === "anexos" && "Anexos"}
                 </div>
               ))}
             </div>
@@ -132,22 +136,21 @@ function ProblemDetail({ id }: Props) {
                   </div>
                   <button className="prb-detail-btn prb-detail-btn-primary prb-detail-btn-sm">+ Vincular ticket</button>
                 </div>
-                {relatedTickets.length === 0 ? (
-                  <div className="prb-detail-text-block" style={{ textAlign: "center", color: "#94a3b8" }}>Nenhum ticket vinculado</div>
-                ) : (
-                  relatedTickets.map((ticket: any) => (
-                    <div key={ticket.id} className="prb-detail-ticket-item">
-                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <span className="prb-detail-ticket-number">{ticket.ticketNumber}</span>
-                        <span className="prb-detail-ticket-title">{ticket.subject}</span>
-                      </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <span className={getPriorityClass(ticket.priority)} style={{ fontSize: 11 }}>{ticket.priority}</span>
-                        <span className="prb-detail-ticket-status">{ticket.status}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
+                <RelatedTicketsTable tickets={relatedTickets} />
+              </div>
+            )}
+
+
+            {/* Aba Mudancas vinculados */}
+            {activeTab === "mudancas" && (
+              <div className="prb-detail-tab-content">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                  <div className="prb-detail-section-title" style={{ marginBottom: 0 }}>
+                    Mudanças associadas <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{relatedChanges.length} mudança(s)</span>
+                  </div>
+                  <button className="prb-detail-btn prb-detail-btn-primary prb-detail-btn-sm">+ Vincular mudança</button>
+                </div>
+                <RelatedChangesTable changes={relatedChanges} />
               </div>
             )}
 

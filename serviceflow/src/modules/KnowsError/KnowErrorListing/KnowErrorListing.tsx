@@ -8,13 +8,15 @@ import type { KnowErrorSearchParams, KnowErrorSimpleDTO } from "../models/knowEr
 import "./KnowErrorListing.css";
 import { useRef, useState } from "react";
 import Button from "../../../components/UI/Button/Button.tsx";
-import { faClose, faPlus, faSave, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faBoxArchive, faClose, faPlus, faSave, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import KnowErrorDetail from "../KnowErrorDetail/KnowErrorDetail.tsx";
 import KnowErrorEditWrapper from "../KnowErrorEditWrapper/KnowErrorEditWrapper.tsx";
 import * as KnowErrorService from "../services/knowError-service.ts"
 import { toast } from "react-toastify";
 import KnowErrorCreateForm from "../KnowErrorCreateForm/KnowErrorCreateForm.tsx";
+import useKnowErrorActions from "../hooks/useKnowErrorActions.tsx";
+import ModalConfirm from "../../../components/UI/ModalConfirm/ModalConfirm.tsx";
 
 type TableKnowErrorProps = {
     knowerros: KnowErrorSimpleDTO[];
@@ -29,7 +31,13 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    const formRef = useRef<HTMLFormElement>(null);
+    const editFormRef = useRef<HTMLFormElement>(null);
+    const newFormRef = useRef<HTMLFormElement>(null);
+
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+
+    const { archive, isArchiving } = useKnowErrorActions(selectedId!, onReload);
 
     return (
         <>
@@ -136,6 +144,29 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                     isOpen={isNewModalOpen}
                     onClose={() => setIsNewModalOpen(false)}
                     width="900px"
+                    footer={
+                        <>
+                            <Button
+                                text="Salvar"
+                                icon={faSave}
+                                background="#0f766e"
+                                hoverColor="#0d9488"
+                                type="button"
+                                borderRadius="5px"
+                                onClick={() => newFormRef.current?.requestSubmit()}
+                            />
+                            <Button
+                                text="Cancelar"
+                                icon={faClose}
+                                background="#fee2e2"
+                                hoverColor="#fecaca"
+                                color="#dc2626"
+                                type="button"
+                                borderRadius="5px"
+                                onClick={() => setIsNewModalOpen(false)}
+                            />
+                        </>
+                    }
                 >
                     <div className="modal-scroll-content">
                         <KnowErrorCreateForm
@@ -143,6 +174,7 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                                 setIsNewModalOpen(false)
                             }}
                             onReload={onReload}
+                            newFormRef={newFormRef}
                         />
                     </div>
                 </Modal>
@@ -160,7 +192,6 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                     width="900px"
                     footer={
                         <>
-
                             <Button
                                 text="Fechar"
                                 icon={faClose}
@@ -173,9 +204,7 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                                     setIsViewModalOpen(false);
                                     onReload();
                                 }}
-
                             />
-
                             <Button
                                 text="Útil"
                                 icon={faThumbsUp}
@@ -211,33 +240,48 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                     }}
                     width="900px"
                     footer={
-                        <>
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+
                             <Button
-                                text="Salvar Alterações"
-                                icon={faSave}
-                                background="#0f766e"
-                                hoverColor="#0d9488"
+                                text="Arquivar"
+                                icon={faBoxArchive}
+                                background="#fef3c7"
+                                hoverColor="#fde68a"
+                                color="#d97706"
                                 type="button"
                                 borderRadius="5px"
-                                onClick={() => formRef.current?.requestSubmit()}
+                                isLoading={isArchiving}
+                                onClick={() => setIsConfirmOpen(true)}
                             />
-                            <Button
-                                text="Cancelar"
-                                icon={faClose}
-                                background="#fee2e2"
-                                hoverColor="#fecaca"
-                                color="#dc2626"
-                                type="button"
-                                borderRadius="5px"
-                                onClick={() => setIsEditModalOpen(false)}
-                            />
-                        </>
+
+                            <div style={{ display: "flex", gap: "10px" }}>
+                                <Button
+                                    text="Salvar Alterações"
+                                    icon={faSave}
+                                    background="#0f766e"
+                                    hoverColor="#0d9488"
+                                    type="button"
+                                    borderRadius="5px"
+                                    onClick={() => editFormRef.current?.requestSubmit()}
+                                />
+                                <Button
+                                    text="Cancelar"
+                                    icon={faClose}
+                                    background="#fee2e2"
+                                    hoverColor="#fecaca"
+                                    color="#dc2626"
+                                    type="button"
+                                    borderRadius="5px"
+                                    onClick={() => setIsEditModalOpen(false)}
+                                />
+                            </div>
+                        </div>
                     }
                 >
                     <div className="modal-scroll-content">
                         <KnowErrorEditWrapper
                             id={selectedId}
-                            formRef={formRef}
+                            formRef={editFormRef}
                             onSuccess={() => {
                                 setIsEditModalOpen(false);
                                 onReload();
@@ -246,7 +290,21 @@ const KnowErrorListing = ({ onSearch, knowerros, onReload }: TableKnowErrorProps
                     </div>
                 </Modal>
             )}
+
+            {isConfirmOpen && selectedId && (
+                <ModalConfirm
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={() => archive()}
+                    title="Arquivar erro conhecido?"
+                    message="Esta ação é irreversível. O erro não poderá mais ser editado após arquivado."
+                    confirmText="Arquivar"
+                    confirmColor="#d97706"
+                />
+            )}
         </>
+
+
     );
 };
 

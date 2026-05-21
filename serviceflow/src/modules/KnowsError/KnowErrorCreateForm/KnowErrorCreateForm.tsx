@@ -1,8 +1,6 @@
 import InputCustom from "../../../components/form/InputCustom/InputCustom.tsx";
 import CustomTextarea from "../../../components/form/CustomTextarea/CustomTextarea.tsx";
 import CustomSelect from "../../../components/form/CustomSelect/CustomSelect.tsx";
-import Button from "../../../components/UI/Button/Button.tsx";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
 import useKnowErrorForm from "../hooks/useKnowErrorForm.tsx";
 import "./KnowErrorCreateForm.css";
 import CustomUploadFile from "../../../components/form/CustomUploadFile/CustomUploadFile.tsx";
@@ -11,9 +9,10 @@ import CustomUploadFile from "../../../components/form/CustomUploadFile/CustomUp
 type Props = {
     onSuccess: () => void;
     onReload: () => void;
+    newFormRef: React.RefObject<HTMLFormElement | null>
 };
 
-function KnowErrorCreateForm({ onSuccess, onReload }: Props) {
+function KnowErrorCreateForm({ onSuccess, onReload, newFormRef }: Props) {
     const {
         formData,
         handleChange,
@@ -31,27 +30,13 @@ function KnowErrorCreateForm({ onSuccess, onReload }: Props) {
         });
 
     return (
-        <form onSubmit={handleSubmit} className="ke-form-container">
+        <form ref={newFormRef} onSubmit={handleSubmit} className="ke-form-container">
             {/* Título */}
             <InputCustom
                 label="Título"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-            />
-
-            {/* Status */}
-            <CustomSelect
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                options={[
-                    { value: "OPEN", label: "OPEN" },
-                    { value: "UNDER_ANALYSIS", label: "UNDER_ANALYSIS" },
-                    { value: "DOCUMENTED", label: "DOCUMENTED" },
-                    { value: "SOLUTION_PENDING", label: "SOLUTION_PENDING" },
-                    { value: "RESOLVED", label: "RESOLVED" },
-                ]}
             />
 
             {/* Recursos Afetados */}
@@ -124,23 +109,27 @@ function KnowErrorCreateForm({ onSuccess, onReload }: Props) {
                 rows={3}
             />
 
+            {/* Status */}
+            <CustomSelect
+                label="Status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                options={[
+                    { value: "OPEN", label: "OPEN" },
+                    { value: "UNDER_ANALYSIS", label: "UNDER_ANALYSIS" },
+                    { value: "DOCUMENTED", label: "DOCUMENTED" },
+                    { value: "SOLUTION_PENDING", label: "SOLUTION_PENDING" },
+                    { value: "RESOLVED", label: "RESOLVED" },
+                ]}
+            />
+
+            {/* Anexos */}
             <CustomUploadFile
                 files={attachedFiles}
                 onFilesChange={setAttachedFiles}
             />
 
-            {/* Botão */}
-            <div className="ke-form-footer">
-                <Button
-                    text="Salvar"
-                    icon={faSave}
-                    background="#0f766e"
-                    hoverColor="#0d9488"
-                    type="submit"
-                    borderRadius="8px"
-                    isLoading={isLoading}
-                />
-            </div>
         </form>
     );
 }

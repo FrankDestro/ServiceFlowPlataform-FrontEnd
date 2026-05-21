@@ -7,7 +7,7 @@ import type { KnowledgeBaseSearchParams, KnowledgeBaseSimpleDTO } from "../model
 import "./KnowledgeBaseListing.css";
 import { useRef, useState } from "react";
 import Button from "../../../components/UI/Button/Button.tsx";
-import { faClose, faPlus, faSave, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faBoxArchive, faClose, faPlus, faSave, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import KnowledgeBaseCreateForm from "../KnowledgeBaseCreateForm/KnowledgeBaseCreateForm.tsx";
 import KnowledgeBaseDetail from "../KnowledgeBaseDetail/KnowledgeBaseDetail.tsx";
@@ -15,6 +15,8 @@ import KnowledgeBaseEditWrapper from "../KnowledgeBaseEditWrapper/KnowledgeBaseE
 import * as KnowledgeBaseService from "../service/knowledgeBase-service.ts";
 import { toast } from "react-toastify";
 import * as functions from "../../../utils/helpers/functions.ts"
+import ModalConfirm from "../../../components/UI/ModalConfirm/ModalConfirm.tsx";
+import useKnowledgeBaseActions from "../hooks/useKnowledgeBaseActions.tsx";
 
 type KnowledgeBaseListingProps = {
     articles: KnowledgeBaseSimpleDTO[];
@@ -28,6 +30,10 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
+
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+    const { archive, isArchiving } = useKnowledgeBaseActions(selectedId!, onReload);
 
     return (
         <>
@@ -192,27 +198,40 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
                     }}
                     width="1200px"
                     footer={
-                        <>
+                        <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                             <Button
-                                text="Salvar Alterações"
-                                icon={faSave}
-                                background="#0f766e"
-                                hoverColor="#0d9488"
+                                text="Arquivar"
+                                icon={faBoxArchive}
+                                background="#fef3c7"
+                                hoverColor="#fde68a"
+                                color="#d97706"
                                 type="button"
                                 borderRadius="5px"
-                                onClick={() => formRef.current?.requestSubmit()}
+                                isLoading={isArchiving}
+                                onClick={() => setIsConfirmOpen(true)}
                             />
-                            <Button
-                                text="Cancelar"
-                                icon={faClose}
-                                background="#fee2e2"
-                                hoverColor="#fecaca"
-                                color="#dc2626"
-                                type="button"
-                                borderRadius="5px"
-                                onClick={() => setIsEditModalOpen(false)}
-                            />
-                        </>
+                            <div style={{ display: "flex", gap: "10px" }}>
+                                <Button
+                                    text="Salvar Alterações"
+                                    icon={faSave}
+                                    background="#0f766e"
+                                    hoverColor="#0d9488"
+                                    type="button"
+                                    borderRadius="5px"
+                                    onClick={() => formRef.current?.requestSubmit()}
+                                />
+                                <Button
+                                    text="Cancelar"
+                                    icon={faClose}
+                                    background="#fee2e2"
+                                    hoverColor="#fecaca"
+                                    color="#dc2626"
+                                    type="button"
+                                    borderRadius="5px"
+                                    onClick={() => setIsEditModalOpen(false)}
+                                />
+                            </div>
+                        </div>
                     }
                 >
                     <div className="modal-scroll-content">
@@ -226,6 +245,18 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
                         />
                     </div>
                 </Modal>
+            )}
+
+            {isConfirmOpen && selectedId && (
+                <ModalConfirm
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={() => archive()}
+                    title="Arquivar artigo?"
+                    message="Esta ação é irreversível. O artigo não poderá mais ser editado após arquivado."
+                    confirmText="Arquivar"
+                    confirmColor="#d97706"
+                />
             )}
         </>
     );

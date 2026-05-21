@@ -52,6 +52,14 @@ export function relatedTicketsByProblemId(id: number) {
     return requestBackendConfig(config);
 }
 
+export function relatedChangesByProblemId(id: number) {
+    const config: AxiosRequestConfig = {
+        method: "GET",
+        url: `/problems/${id}/changes`,
+    };
+    return requestBackendConfig(config);
+}
+
 export function historyByProblemId(id: number) {
     const config: AxiosRequestConfig = {
         method: "GET",

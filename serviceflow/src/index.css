@@ -125,16 +125,18 @@ p {
 /* Estilização input e select */
 select {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
   font-size: 14px !important;
+  transition: border-color 0.3s ease;
 }
 
 select:focus {
   border-color: #007bff;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
 }
 
 select option {
@@ -561,6 +563,20 @@ td:first-child {
   color: #085041;
 }
 
+
+.anx-delete {
+  color: #dd4c4c;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.anx-delete:hover {
+  color: #dc2626;
+}
+
 .anx-btn-add {
   display: flex;
   align-items: center;
@@ -639,29 +655,28 @@ td:first-child {
   background: #085041;
 }
 
-
-
 .modal-scroll-content {
-    overflow-y: auto;
-    max-height: 600px;
-    padding-right: 4px; /* evita cortar scrollbar */
+  overflow-y: auto;
+  max-height: 600px;
+  padding-right: 4px;
+  /* evita cortar scrollbar */
 }
 
 /* scrollbar discreta no padrão do projeto */
 .modal-scroll-content::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .modal-scroll-content::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 999px;
+  background: #f1f5f9;
+  border-radius: 999px;
 }
 
 .modal-scroll-content::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 999px;
+  background: #cbd5e1;
+  border-radius: 999px;
 }
 
 .modal-scroll-content::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+  background: #94a3b8;
 }

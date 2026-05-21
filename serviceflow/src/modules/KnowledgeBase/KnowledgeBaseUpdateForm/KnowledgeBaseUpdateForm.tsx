@@ -1,8 +1,6 @@
 import InputCustom from "../../../components/form/InputCustom/InputCustom.tsx";
 import CustomSelect from "../../../components/form/CustomSelect/CustomSelect.tsx";
-import Button from "../../../components/UI/Button/Button.tsx";
 import TiptapEditor from "../../../components/form/TiptapEditor/TiptapEditor.tsx";
-import { faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import useKnowledgeBaseUpdateForm from "../hooks/useKnowledgeBaseUpdateForm.tsx";
 import useKnowledgeBaseActions from "../hooks/useKnowledgeBaseActions.tsx";
 import type { KnowledgeBaseDTO } from "../models/knowledgeBaseDTO.ts";
@@ -28,10 +26,9 @@ function KnowledgeBaseUpdateForm({ article, onSuccess, formRef }: Props) {
         handleRemoveWord,
     } = useKnowledgeBaseUpdateForm(article, onSuccess);
 
-    const { changeStatus, archive, isArchiving } = useKnowledgeBaseActions(article.id, onSuccess);
+    const { changeStatus} = useKnowledgeBaseActions(article.id, onSuccess);
 
     const { data: categories, isLoading: loadingCategories } = useKnowledgeBaseCategories();
-
 
     return (
         <form ref={formRef} onSubmit={handleSubmit} className="kb-form-container">
@@ -94,7 +91,7 @@ function KnowledgeBaseUpdateForm({ article, onSuccess, formRef }: Props) {
                 />
             </div>
 
-            {/* Status + Arquivar */}
+            {/* Status*/}
             <div style={{ display: "flex", gap: "12px", alignItems: "flex-end" }}>
                 <div style={{ flex: 1 }}>
                     <CustomSelect
@@ -108,17 +105,6 @@ function KnowledgeBaseUpdateForm({ article, onSuccess, formRef }: Props) {
                         ]}
                     />
                 </div>
-                <Button
-                    text="Arquivar"
-                    icon={faBoxArchive}
-                    background="#fee2e2"
-                    hoverColor="#fecaca"
-                    color="#dc2626"
-                    type="button"
-                    borderRadius="5px"
-                    isLoading={isArchiving}
-                    onClick={() => archive()}
-                />
             </div>
         </form>
     );

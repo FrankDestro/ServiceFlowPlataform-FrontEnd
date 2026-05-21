@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as knowErrorService from "../services/knowError-service.ts";
 import type { KnowErrorDTO } from "../models/knowErrorDTO.ts";
+import * as attachmentService from "../../Attachment/service/attachment-service.ts"
 
 export type KnowErrorUpdateDTO = {
     title: string;
@@ -12,12 +13,15 @@ export type KnowErrorUpdateDTO = {
     workaround: string;
     affectedSystems: string;
     tags: string[];
+    status: string
 };
 
 function useKnowErrorUpdateForm(knowError: KnowErrorDTO, onSuccess: () => void) {
     const queryClient = useQueryClient();
     const [words, setWords] = useState<string[]>(knowError.tags ?? []);
     const [inputValue, setInputValue] = useState("");
+    const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
+
 
     const [formData, setFormData] = useState<KnowErrorUpdateDTO>({
         title: knowError.title,
@@ -27,12 +31,25 @@ function useKnowErrorUpdateForm(knowError: KnowErrorDTO, onSuccess: () => void) 
         workaround: knowError.workaround,
         affectedSystems: knowError.affectedSystems,
         tags: knowError.tags,
+        status: knowError.status, // ← adiciona
     });
 
     const { mutate, isPending } = useMutation({
         mutationFn: (data: KnowErrorUpdateDTO) =>
             knowErrorService.updateKnowErrorRequest(knowError.id, { ...data, tags: words }),
-        onSuccess: () => {
+        onSuccess: async () => {
+            if (attachedFiles.length > 0) {
+                const uploads = attachedFiles.map((file) => {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("originalName", file.name);
+                    formData.append("entityType", "KNOW_ERROR");
+                    formData.append("entityId", String(knowError.id));
+                    return attachmentService.uploadAnexos(formData);
+                });
+                await Promise.all(uploads);
+                setAttachedFiles([]);
+            }
             toast.success("KnowError atualizado com sucesso!");
             queryClient.invalidateQueries({ queryKey: ["know-error"] });
             setTimeout(() => onSuccess(), 500);
@@ -84,6 +101,8 @@ function useKnowErrorUpdateForm(knowError: KnowErrorDTO, onSuccess: () => void) 
         setInputValue,
         handleKeyDown,
         handleRemoveWord,
+        attachedFiles,
+        setAttachedFiles,
     };
 }
 

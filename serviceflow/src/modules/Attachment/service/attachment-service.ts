@@ -28,3 +28,16 @@ export function downloadAnexo(bucket: string, objectName: string) {
     };
     return requestBackendConfig(config);
 }
+
+export function deleteAnexo(attachmentId: number, bucket: string, objectName: string) {
+    const config: AxiosRequestConfig = {
+        method: "DELETE",
+        url: `/attachments/deletarFile`,
+        params: {
+            idAttachment: attachmentId,
+            bucket,
+            objectName,
+        }
+    };
+    return requestBackendConfig(config);
+}

@@ -19,15 +19,16 @@ import type { AttachmentDTO } from "../../Attachment/models/AttachmentDTO";
 import { useAttachmentDownload } from "../../Attachment/hooks/useAttachmentDownload";
 import NoData from "../../../components/UI/NoData/NoData";
 import * as attachmentService from "../../Attachment/service/attachment-service"
+import ModalConfirm from "../../../components/UI/ModalConfirm/ModalConfirm";
 
 type TableTicketProps = {
     tickets: TicketSimpleDTO[];
     onFilter: (ticket: TicketSimpleDTO, ticketComplete: TicketDTO) => void;
-    onReload?: () => void; // ← opcional
+    onReload?: () => void;
 };
 
 function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
-    const { isSubmitting, rejectReason, setRejectReason, approveTicket, rejectTicket } =
+    const { approveTicket, rejectTicket } =
         useApprovalSubmit(() => {
             setIsModalOpen(false);
             onReload?.();
@@ -36,6 +37,8 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedTicket, setSelectedTicket] = useState<TicketDTO | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     // BUSCAR ANEXOS
     const [ticketAttachments, setTicketAttachments] = useState<AttachmentDTO[]>([]);
@@ -61,7 +64,7 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
             .then((response) => {
                 setSelectedTicket(response.data);
                 setIsModalOpen(true);
-                attachmentService.getAllAttachmentById(ticket.id.toString()).then((res) => {
+                attachmentService.getAllAttachmentById("TICKET", ticket.id.toString()).then((res) => {
                     setTicketAttachments(res.data);
                 });
             })
@@ -71,7 +74,7 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
     };
 
     function handleReasonConfirm(reason: string) {
-        rejectTicket(selectedTicket!.id, reason); // ← passa direto
+        rejectTicket(selectedTicket!.id, reason);
         setModalOpen(false);
     }
 
@@ -178,7 +181,8 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                                 />
                             </div>
                             <div
-                                onClick={() => approveTicket(selectedTicket.id)}
+                                // onClick={() => approveTicket(selectedTicket.id)}
+                                onClick={() => setIsConfirmOpen(true)}
                             >
                                 <Button
                                     text="Aprovar"
@@ -212,23 +216,23 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                         {ticketAttachments?.length > 0 ? (
 
                             <div className="TESTE">
-                            <div className="ke-detail-card">
-                                <span className="ke-detail-section-title">ANEXOS</span>
-                                <div className="ke-detail-attachments">
-                                    {ticketAttachments.map((att: AttachmentDTO) => (
-                                        <div key={att.id} className="ke-detail-attachment-chip">
-                                            <span>📎 {att.originalName}</span>
-                                            <span className="ke-detail-attachment-size">{att.sizeInMb} MB</span>
-                                            <div className="anx-download"
-                                                onClick={() => download({ bucket: att.bucket, objectName: att.objectName })}
-                                            >
-                                                <FiDownload size={15} />
+                                <div className="ke-detail-card">
+                                    <span className="ke-detail-section-title">ANEXOS</span>
+                                    <div className="ke-detail-attachments">
+                                        {ticketAttachments.map((att: AttachmentDTO) => (
+                                            <div key={att.id} className="ke-detail-attachment-chip">
+                                                <span>📎 {att.originalName}</span>
+                                                <span className="ke-detail-attachment-size">{att.sizeInMb} MB</span>
+                                                <div className="anx-download"
+                                                    onClick={() => download({ bucket: att.bucket, objectName: att.objectName })}
+                                                >
+                                                    <FiDownload size={15} />
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                             </div>
                         ) : (
                             <div className="ke-detail-card">
                                 <span className="ke-detail-section-title">ANEXOS</span>
@@ -242,6 +246,18 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                 isOpen={modalOpen}
                 onClose={() => setModalOpen(false)}
                 onConfirm={handleReasonConfirm} />
+
+            {isConfirmOpen && selectedTicket && (
+                <ModalConfirm
+                    isOpen={isConfirmOpen}
+                    onClose={() => setIsConfirmOpen(false)}
+                    onConfirm={() => approveTicket(selectedTicket.id)}
+                    title="Aprovar solicitação?"
+                    message={`Confirmar aprovação do ticket ${selectedTicket.ticketNumber}?`}
+                    confirmText="Arquivar"
+                    confirmColor="#d97706"
+                />
+            )}
         </div>
     );
 }

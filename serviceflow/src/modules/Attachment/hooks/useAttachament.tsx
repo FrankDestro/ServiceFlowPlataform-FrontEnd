@@ -3,7 +3,7 @@ import { getAllAttachmentById } from "../service/attachment-service";
 
 export function useAttachment(entityType: string, id: string) {
 
-    const { data: attachments, isLoading } = useQuery({
+    const { data: attachments, isLoading, refetch } = useQuery({
         queryKey: ["attachment", entityType, id],
         queryFn: () => getAllAttachmentById(entityType, id).then(res => res.data),
         enabled: !!id && !!entityType,
@@ -12,5 +12,6 @@ export function useAttachment(entityType: string, id: string) {
     return {
         attachments,
         isLoading,
+        refetch
     };
 }
