@@ -34,6 +34,21 @@ export type ProblemDetailDTO = {
     createdByName: string;
 };
 
+export type ProblemFormDTO = {
+    title: string;
+    description: string;
+    priority: string;
+    urgency: string;
+    categoryId: number | null;
+    affectedServices: string;
+    dueDate: string | null;
+    rootCause: string | null;
+    workaround: string | null;
+    resolutionNotes: string | null;
+    relatedTicketNumbers: string[];
+    relatedChangeNumbers: string[];
+};
+
 export type ProblemSearchParams = {
     problemNumber: string;
     categoryId: number | null;
@@ -65,3 +80,5 @@ export type ChangeSummaryDTO = {
     changeOwner: string | null;
     createdAt: string;
 };
+
+

@@ -16,6 +16,7 @@ import ChangeDetailPage from "./pages/ChangePageDetail/ChangeDetailPage.tsx";
 import ChangeCreate from "./modules/Change/ChangeCreate/ChangeCreate.tsx";
 import ManagementProblemPage from "./pages/Problem/ManagementProblemPage/ManagementProblemPage.tsx";
 import ManagementProblemPageDetail from "./pages/Problem/ManagementProblemPageDetail/ManagementProblemPageDetail.tsx";
+import ProblemManagementCreate from "./modules/ProblemManagement/ProblemManagementCreate/ProblemManagementCreate.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -47,6 +48,7 @@ function App() {
             {/* //MODULO PROBLEM */}
             <Route path="/problems" element={<ManagementProblemPage />} />
             <Route path="/problems/:id" element={<ManagementProblemPageDetail />} />
+              <Route path="/problems/new" element={<ProblemManagementCreate />} />
           </Route>
         </Routes>
       </BrowserRouter>

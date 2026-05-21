@@ -194,17 +194,19 @@ function ProblemDetail({ id }: Props) {
           </div>
 
           <div className="prb-detail-card">
-            <div className="prb-detail-section-title">Tickets vinculados</div>
-            {relatedTickets.length === 0 ? (
-              <span style={{ fontSize: 11, color: "#94a3b8" }}>Nenhum ticket vinculado</span>
-            ) : (
-              relatedTickets.map((ticket: any) => (
-                <div key={ticket.id} className="prb-detail-side-row">
-                  <span className="prb-detail-ticket-number">{ticket.ticketNumber}</span>
-                  <span className={getPriorityClass(ticket.priority)} style={{ fontSize: 11 }}>{ticket.priority}</span>
-                </div>
-              ))
-            )}
+            <div className="prb-detail-section-title">Associações</div>
+            <div className="prb-detail-side-row">
+              <span className="prb-detail-side-label">Tickets vinculados</span>
+              <span style={{ fontWeight: 600, color: "#0f766e" }}>{relatedTickets.length}</span>
+            </div>
+            <div className="prb-detail-side-row">
+              <span className="prb-detail-side-label">Mudanças associadas</span>
+              <span style={{ fontWeight: 600, color: "#0f766e" }}>{relatedChanges.length}</span>
+            </div>
+            <div className="prb-detail-side-row">
+              <span className="prb-detail-side-label">Know Error gerado</span>
+              <span style={{ fontWeight: 600, color: "#0f766e" }}>{0}</span>
+            </div>
           </div>
 
           <div className="prb-detail-card">

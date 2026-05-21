@@ -29,6 +29,7 @@ const routeMap: Record<string, RouteConfig> = {
 
   "/problems": { title: "Gerenciamento de Problemas", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" } },
   "/problems/:id": { title: "Detalhes do Problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
+   "/problems/new": { title: "Registrar novo problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
 
   "/home": { title: "Home" },
   "/dashboard": { title: "Dashboard" },
@@ -80,9 +81,9 @@ const NavbarLocation = () => {
             <span className={index === breadcrumb.length - 1 ? "active" : ""}>
               {item.title}
             </span>
-            {index < breadcrumb.length - 1 && (
+            {/* {index < breadcrumb.length - 1 && (
               <span className="separator">/</span>
-            )}
+            )} */}
           </div>
         ))}
       </div>
