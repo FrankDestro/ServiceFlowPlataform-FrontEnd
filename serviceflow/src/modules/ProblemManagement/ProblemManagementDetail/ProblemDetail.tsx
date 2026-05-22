@@ -213,7 +213,7 @@ function ProblemDetail({ id }: Props) {
             <div className="prb-detail-section-title">Ações</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <Button text="Resolver" icon={faCheck} type="button" borderRadius="8px" hoverColor="" disabled={!canResolve} className="prb-btn-resolve" />
-              <Button text="Encerrar" icon={faX} type="button" borderRadius="8px" hoverColor="" disabled={!canClose} className="prb-btn-close" />
+              {/* <Button text="Encerrar" icon={faX} type="button" borderRadius="8px" hoverColor="" disabled={!canClose} className="prb-btn-close" /> */}
             </div>
           </div>
         </div>
