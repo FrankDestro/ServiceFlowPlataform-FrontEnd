@@ -12,6 +12,7 @@ import type { TicketDTO } from "../models/ticketDTO.ts";
 import { getNoteTypeLabel } from "../../../utils/helpers/functions.ts";
 import TicketTimeline from "../components/TicketTimeline.tsx";
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
+import TiptapEditor from "../../../components/form/TiptapEditor/TiptapEditor.tsx";
 
 
 type Props = {
@@ -23,7 +24,6 @@ function getInitials(firstName: string, lastName: string): string {
 }
 
 const AndamentoTab: React.FC<Props> = ({ ticket }) => {
-
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -46,6 +46,10 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                 ? e.target.checked
                 : value,
         }));
+    };
+
+    const handleDescriptionChange = (value: string) => {
+        setFormData((prev) => ({ ...prev, description: value }));
     };
 
     const fetchAndamentos = async () => {
@@ -184,10 +188,10 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                                             ) : andamento.noteType === "OBSERVATION" ? (
                                                 <>
                                                     <span className="at-tag-obs">Observação: </span>
-                                                    {andamento.description}
+                                                    <div dangerouslySetInnerHTML={{ __html: andamento.description }} />
                                                 </>
                                             ) : (
-                                                andamento.description
+                                                <div dangerouslySetInnerHTML={{ __html: andamento.description }} />
                                             )}
                                         </div>
                                     </div>
@@ -207,14 +211,22 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                     </div>
                 ) : (
                     <form onSubmit={handleSubmitNote} className="at-form">
-                        <div className="at-textarea-wrap">
-                            <textarea
+                        <div className="">
+                            {/* <textarea
                                 id="description"
                                 className="at-textarea"
                                 placeholder="Adicionar uma nota ao chamado..."
                                 value={formData.description}
                                 onChange={handleChange}
                                 rows={3}
+                            /> */}
+                            <TiptapEditor
+                                content={formData.description}
+                                onChange={handleDescriptionChange}
+                                placeholder="Adicionar uma nota ao chamado..."
+                                minHeight="150px"
+                                maxHeight="200px"
+                                scrollable={true}
                             />
                             <div className="at-form-footer">
                                 <div className="at-checks">

@@ -13,7 +13,7 @@ import ApprovalsPage from "./pages/ApprovalsPage/ApprovalsPage.tsx";
 import KnowledgeBasePage from "./pages/KnowledgeBasePage/KnowledgeBasePage.tsx";
 import ChangePage from "./pages/ChangePage/ChangePage.tsx";
 import ChangeDetailPage from "./pages/ChangePageDetail/ChangeDetailPage.tsx";
-import ChangeCreate from "./modules/Change/ChangeCreate/ChangeCreate.tsx";
+import ChangeCreate from "./modules/Change/ChangeCreate/ChangeCreateForm.tsx";
 import ManagementProblemPage from "./pages/Problem/ManagementProblemPage/ManagementProblemPage.tsx";
 import ManagementProblemPageDetail from "./pages/Problem/ManagementProblemPageDetail/ManagementProblemPageDetail.tsx";
 import ProblemManagementCreate from "./modules/ProblemManagement/ProblemManagementCreate/ProblemManagementCreate.tsx";

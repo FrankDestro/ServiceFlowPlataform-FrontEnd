@@ -130,6 +130,7 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
                     onClose={() => setIsNewModalOpen(false)}
                     width="1200px"
                     maxBodyHeight="120vh"
+                    allowMaximize={true}
                 >
                     <KnowledgeBaseCreateForm
                         onSuccess={() => setIsNewModalOpen(false)}

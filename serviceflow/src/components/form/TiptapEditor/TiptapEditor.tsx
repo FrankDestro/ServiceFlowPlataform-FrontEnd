@@ -4,7 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { createLowlight, common } from "lowlight";
-import { useEffect, useMemo } from "react";
+import { useEffect, useImperativeHandle, useMemo, forwardRef } from "react";
 import "highlight.js/styles/atom-one-dark.css";
 import "./TiptapEditor.css";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -15,40 +15,53 @@ type Props = {
     content: string;
     onChange: (value: string) => void;
     editable?: boolean;
+    placeholder?: string;
+    minHeight?: string;
+    maxHeight?: string;
+    scrollable?: boolean;
 };
 
-function TiptapEditor({ content, onChange, editable = true }: Props) {
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure({ codeBlock: false }),
-            Placeholder.configure({
-                placeholder: "Escreva o conteúdo do artigo...",
-            }),
-            CodeBlockLowlight.configure({ lowlight, defaultLanguage: "plaintext" }),
-            CharacterCount,
-        ],
-        content: editable ? { type: "doc", content: [{ type: "paragraph" }] } : content || "",
-        editable,
-        immediatelyRender: false,
-        onUpdate({ editor }) {
-            onChange(editor.getHTML());
-        },
-    });
+export type TiptapEditorRef = {
+    clear: () => void;
+};
 
-    useEffect(() => {
-        if (!editor || !editable) return;
-        if (content && editor.isEmpty) {
-            editor.commands.setContent(content);
-        }
-    }, [editor, content, editable]);
+const TiptapEditor = forwardRef<TiptapEditorRef, Props>(
+    ({ content, onChange, editable = true, placeholder, minHeight = "300px", maxHeight, scrollable = false }, ref) => {
 
-    const providerValue = useMemo(() => ({ editor }), [editor]);
+        const editor = useEditor({
+            extensions: [
+                StarterKit.configure({ codeBlock: false }),
+                Placeholder.configure({
+                    placeholder: placeholder ?? "Escreva os detalhes...",
+                }),
+                CodeBlockLowlight.configure({ lowlight, defaultLanguage: "plaintext" }),
+                CharacterCount,
+            ],
+            content: editable ? { type: "doc", content: [{ type: "paragraph" }] } : content || "",
+            editable,
+            immediatelyRender: false,
+            onUpdate({ editor }) {
+                onChange(editor.getHTML());
+            },
+        });
 
-    if (!editor) return null;
+        useImperativeHandle(ref, () => ({
+            clear: () => editor?.commands.clearContent(),
+        }));
 
-    return (
-        <EditorContext.Provider value={providerValue}>
-            <div className="tiptap-wrapper">
+        useEffect(() => {
+            if (!editor || !editable) return;
+            if (content && editor.isEmpty) {
+                editor.commands.setContent(content);
+            }
+        }, [editor, content, editable]);
+
+        const providerValue = useMemo(() => ({ editor }), [editor]);
+
+        if (!editor) return null;
+
+        return (
+            <EditorContext.Provider value={providerValue}>
                 {editable && (
                     <div className="tiptap-toolbar">
                         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()}
@@ -81,7 +94,13 @@ function TiptapEditor({ content, onChange, editable = true }: Props) {
                             className="tiptap-btn">↪</button>
                     </div>
                 )}
-                <EditorContent editor={editor} />
+                <div className="tiptap-wrapper" style={{
+                    '--editor-height': minHeight,
+                    ...(maxHeight ? { '--editor-max-height': maxHeight } : {}),
+                    ...(scrollable ? { overflowY: 'auto' } : {}),
+                } as React.CSSProperties}>
+                    <EditorContent editor={editor} />
+                </div>
 
                 {editable && (
                     <div className="tiptap-footer">
@@ -90,7 +109,6 @@ function TiptapEditor({ content, onChange, editable = true }: Props) {
                     </div>
                 )}
 
-                {/* BubbleMenu - aparece ao selecionar texto */}
                 <BubbleMenu editor={editor}>
                     <div className="tiptap-bubble-menu">
                         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()}
@@ -101,11 +119,9 @@ function TiptapEditor({ content, onChange, editable = true }: Props) {
                             className={editor.isActive("strike") ? "tiptap-btn active" : "tiptap-btn"}>S</button>
                     </div>
                 </BubbleMenu>
-
-
-            </div>
-        </EditorContext.Provider>
-    );
-}
+            </EditorContext.Provider>
+        );
+    }
+);
 
 export default TiptapEditor;

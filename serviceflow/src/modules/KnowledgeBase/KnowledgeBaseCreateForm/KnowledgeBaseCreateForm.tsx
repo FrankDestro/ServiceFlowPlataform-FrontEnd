@@ -103,6 +103,10 @@ function KnowledgeBaseCreateForm({ onSuccess, onReload }: Props) {
                 <TiptapEditor
                     content={formData.content}
                     onChange={handleContentChange}
+                    placeholder="Descreva um novo artigo"
+                    minHeight="400px"
+                    maxHeight="800px"
+                    scrollable={true}
                 />
             </div>
 

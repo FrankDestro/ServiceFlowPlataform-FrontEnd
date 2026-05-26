@@ -3,6 +3,8 @@ import Button from "../../../components/UI/Button/Button";
 import { useTicketForm } from "../hooks/useTicketForm";
 import "./TicketFormCreate.css";
 import CustomSelect from "../../../components/form/CustomSelect/CustomSelect";
+import TiptapEditor from "../../../components/form/TiptapEditor/TiptapEditor";
+import { useState } from "react";
 
 function TicketFormCreate() {
     const {
@@ -20,7 +22,9 @@ function TicketFormCreate() {
         handleSubmit,
         setAttachedFiles,
         loadingSubCategories
-    } = useTicketForm();
+    } = useTicketForm(() => setEditorKey(prev => prev + 1));
+
+    const [editorKey, setEditorKey] = useState(0);
 
     return (
         <div className="ticket-form-card">
@@ -158,14 +162,19 @@ function TicketFormCreate() {
 
                     {/* ── Descrição ── */}
                     <div className="ticket-input-container">
-                        <textarea
-                            name="description"
-                            value={formData.description}
-                            onChange={(e) => handleDescriptionChange(e.target.value)}
-                            placeholder="Descreva a solicitação em detalhes"
-                            className="ticket-textarea"
-                            rows={8}
-                        />
+                        <div className="kb-editor-placeholder">
+                            <label className="kb-editor-label">Descricao</label>
+                            <TiptapEditor
+                                content={formData.description}
+                                onChange={(value) => handleDescriptionChange(value)}
+                                placeholder="Descreva a solicitação em detalhes"
+                                minHeight="250px"
+                                maxHeight="300px"
+                                scrollable={true}
+                                key={editorKey}
+                            />
+                        </div>
+
                     </div>
                     {/* ── Anexos ── */}
                     <div className="ticket-upload-container">

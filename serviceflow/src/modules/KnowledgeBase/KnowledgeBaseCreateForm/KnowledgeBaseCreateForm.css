@@ -68,7 +68,6 @@
 .kb-editor-placeholder {
     display: flex;
     flex-direction: column;
-    gap: 6px;
 }
 
 .kb-editor-label {

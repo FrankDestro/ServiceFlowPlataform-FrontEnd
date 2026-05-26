@@ -23,7 +23,6 @@ function AnexoUpload({ entityType, id }: Props) {
     };
 
     const handleUpload = async () => {
-
         if (!selectedFile) { alert("Selecione um arquivo antes de salvar."); return; }
         const fileType = getFileType(selectedFile.type);
 

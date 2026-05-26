@@ -132,7 +132,6 @@ function ProblemManagementCreate() {
         </div>
 
         <div className="pp-sidebar">
-
           <div className="pp-card">
             <div className="pp-section-title">Classificação</div>
             <div className="pp-side-field">

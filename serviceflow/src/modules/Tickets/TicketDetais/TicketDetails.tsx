@@ -111,7 +111,7 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
             </div>
 
             {/* SIDEBAR FIXA */}
-            <div className="td-sidebar">
+            <div className="td-sidebar dc-card">
                 <AtualizacaoTicket ticket={ticket} />
             </div>
 

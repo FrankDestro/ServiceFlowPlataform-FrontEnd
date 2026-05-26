@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./ChangeCreate.css";
+import "./ChangeCreateForm.css";
 import Button from "../../../components/UI/Button/Button";
 import { faSave, faX } from "@fortawesome/free-solid-svg-icons";
 import { LucideUserPlus2, TicketIcon, TriangleAlertIcon } from "lucide-react";
@@ -11,10 +11,8 @@ import type { ChangeFormDTO, ChangeTypeDTO } from "../models/ChangeDTO";
 import { toast } from "react-toastify";
 import * as changeService from "../service/change-service";
 
-
 type TabId = "info" | "tarefas" | "aprovadores";
 type LevelType = "" | "LOW" | "MEDIUM" | "HIGH";
-
 
 type Approver = {
     id: number;
@@ -50,7 +48,7 @@ function LevelIndicator({ value }: { value: LevelType }) {
     );
 }
 
-export default function ChangeCreate() {
+export default function ChangeCreateForm() {
     const [activeTab, setActiveTab] = useState<TabId>("info");
 
     const {

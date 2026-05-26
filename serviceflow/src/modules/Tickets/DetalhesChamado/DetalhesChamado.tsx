@@ -82,7 +82,8 @@ const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
             {/* DESCRIÇÃO */}
             <div className="dc-card">
                 <div className="dc-sec-lbl">Descrição</div>
-                <div className="dc-desc">{ticket.description}</div>
+            <div className="dc-desc" dangerouslySetInnerHTML={{ __html: ticket.description }} />
+
             </div>
 
             {/* PARTICIPANTES */}

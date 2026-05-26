@@ -29,7 +29,7 @@ const initialFormData: TicketFormDTO = {
     subCategoryTicket: ""
 };
 
-export function useTicketForm() {
+export function useTicketForm(onClear?: () => void) {
     const [typeRequests, setTypeRequests] = useState<TypeRequestDTO[]>([]);
     const [categories, setCategories] = useState<CategoryTicketDTO[]>([]);
     const [subCategories, setSubCategories] = useState<SubCategoryTicketDTO[]>([]);
@@ -116,7 +116,9 @@ export function useTicketForm() {
                     type: "success",
                     isLoading: false,
                     autoClose: 3000,
-                });
+
+                }
+                );
 
                 if (attachedFiles.length > 0) {
                     try {
@@ -156,6 +158,7 @@ export function useTicketForm() {
         setSolvingArea(null);
         setSubCategories([]);
         setAttachedFiles([]);
+        onClear?.();
     }
 
     function validate(): boolean {

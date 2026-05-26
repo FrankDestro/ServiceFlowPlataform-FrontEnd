@@ -1,14 +1,14 @@
 /* TiptapEditor.css */
 .tiptap-wrapper {
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
-    overflow: hidden;
     background: #fff;
     transition: border-color 0.2s;
+    max-height: var(--editor-max-height, 300px);
+    border: 1.5px solid #e2e8f0;
 }
 
-
-
+.tiptap-wrapper .ProseMirror {
+    min-height: var(--editor-height, 300px);
+}
 
 .tiptap-wrapper:focus-within {
     border-color: #14b8a6;
@@ -20,9 +20,11 @@
     align-items: center;
     gap: 2px;
     padding: 8px 12px;
-    border-bottom: 1px solid #f1f5f9;
     background: #f8fafc;
     flex-wrap: wrap;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px 8px 0 0;
+    margin-top: 10px;
 }
 
 .tiptap-btn {
@@ -57,7 +59,7 @@
 
 .ProseMirror {
     padding: 16px;
-    min-height: 300px;
+    min-height: var(--editor-min-height, 300px);
     font-size: 14px;
     color: #1e293b;
     line-height: 1.8;
@@ -68,18 +70,24 @@
     margin-top: 0;
 }
 
-.ProseMirror ul, .ProseMirror ol {
+.ProseMirror ul,
+.ProseMirror ol {
     padding: 0 1rem;
     margin: 1rem 1rem 1rem 0.4rem;
 }
 
-.ProseMirror ul li p, .ProseMirror ol li p {
+.ProseMirror ul li p,
+.ProseMirror ol li p {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
 }
 
-.ProseMirror h1, .ProseMirror h2, .ProseMirror h3,
-.ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
     line-height: 1.1;
     margin-top: 2rem;
     margin-bottom: 0.5rem;
@@ -87,10 +95,23 @@
     color: #0f172a;
 }
 
-.ProseMirror h1 { font-size: 1.4rem; }
-.ProseMirror h2 { font-size: 1.2rem; }
-.ProseMirror h3 { font-size: 1.1rem; }
-.ProseMirror h4, .ProseMirror h5, .ProseMirror h6 { font-size: 1rem; }
+.ProseMirror h1 {
+    font-size: 1.4rem;
+}
+
+.ProseMirror h2 {
+    font-size: 1.2rem;
+}
+
+.ProseMirror h3 {
+    font-size: 1.1rem;
+}
+
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+    font-size: 1rem;
+}
 
 .ProseMirror code {
     background: #f1f5f9;
@@ -146,7 +167,7 @@
     background: #1e293b;
     border-radius: 6px;
     padding: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .tiptap-bubble-menu .tiptap-btn {
@@ -167,22 +188,12 @@
     display: flex;
     justify-content: flex-end;
     gap: 16px;
-    padding: 6px 16px;
-    border-top: 1px solid #f1f5f9;
+    padding: 8px 16px;
     background: #f8fafc;
     font-size: 11px;
     color: #94a3b8;
-}
-
-.ProseMirror {
-    padding: 16px;
-    min-height: 300px;
-    max-height: 500px;
-    overflow-y: auto;
-    font-size: 14px;
-    color: #1e293b;
-    line-height: 1.8;
-    outline: none;
+    border-radius: 0 0 8px 8px;
+    border: 1.5px solid #e2e8f0;
 }
 
 /* scrollbar discreta no ProseMirror */

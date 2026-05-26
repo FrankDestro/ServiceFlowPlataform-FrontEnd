@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import * as knowledgeBaseService from "../service/knowledgeBase-service.ts";
 
@@ -53,7 +53,15 @@ function useKnowledgeBaseCreateForm(onSuccess: () => void) {
 
     function handleContentChange(value: string) {
         setFormData(prev => ({ ...prev, content: value }));
+        localStorage.setItem('kb-draft', JSON.stringify({ ...formData, content: value }));
     }
+
+    useEffect(() => {
+        const draft = localStorage.getItem('kb-draft');
+        if (draft) {
+            setFormData(JSON.parse(draft));
+        }
+    }, []);
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -75,6 +83,7 @@ function useKnowledgeBaseCreateForm(onSuccess: () => void) {
                     isLoading: false,
                     autoClose: 3000,
                 });
+                localStorage.removeItem('kb-draft');
                 setTimeout(() => onSuccess(), 500);
             })
             .catch(() => {
@@ -102,4 +111,4 @@ function useKnowledgeBaseCreateForm(onSuccess: () => void) {
     };
 }
 
-export default useKnowledgeBaseCreateForm;
+export default useKnowledgeBaseCreateForm;111111111

@@ -9,10 +9,10 @@ type Props = {
 const AnexoTabProblem: React.FC<Props> = ({ problem }) => {
     return (
         <AnexoTabGeral
-            entityType="TICKET"
+            entityType="PROBLEM"
             entityId={problem.id.toString()}
             isReadOnly={problem.status === ProblemStatus.CLOSED || problem.status === ProblemStatus.RESOLVED}
-            readOnlyMessage="Não é possível adicionar anexos para tickets finalizados"
+            readOnlyMessage="Não é possível adicionar anexos para problemas finalizados"
         />
     );
 };
