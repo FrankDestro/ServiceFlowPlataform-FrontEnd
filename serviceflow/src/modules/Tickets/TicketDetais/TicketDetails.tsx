@@ -110,9 +110,29 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
                 </div>
             </div>
 
-            {/* SIDEBAR FIXA */}
-            <div className="td-sidebar dc-card">
-                <AtualizacaoTicket ticket={ticket} />
+            <div >
+                {/* SIDEBAR FIXA */}
+                <div className="td-sidebar dc-card">
+                    <AtualizacaoTicket ticket={ticket} />
+                </div>
+
+                <div style={{ marginLeft: "15px" }}>
+                    {ticket.relatedTickets?.length > 0 && (
+                        <div className="ch-detail-card">
+                            <div className="ch-detail-section-title">Associações</div>
+                            <span className="ch-detail-side-label" style={{ fontSize: 11, display: "block", marginBottom: 5 }}>
+                                Tickets relacionados
+                            </span>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                                {ticket.relatedTickets.map((t, i) => (
+                                    <span key={i} className="ch-detail-assoc-tag ch-detail-assoc-ticket">
+                                        🎫 {t}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <Modal

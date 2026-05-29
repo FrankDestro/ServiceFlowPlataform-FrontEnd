@@ -41,7 +41,7 @@ export type TicketDTO = {
     completionDate: string | null;
     updatedAt: string;
     closureReason: string | null;
-    parentTicketId: number | null;
+    relatedTickets : [];
     typeRequest: TypeRequestDTO;
     sla: SLADTO;
     solvingArea: SolvingAreaDTO;
@@ -58,7 +58,7 @@ export type TicketFormDTO = {
     urgency: string;
     impact: string;
     channel: string;
-    parentTicketId: string;
+    relatedTickets?: string[];
     typeRequest: string;
     solvingArea: string;
     categoryTicket: string;

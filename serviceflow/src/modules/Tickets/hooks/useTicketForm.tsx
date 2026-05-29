@@ -22,7 +22,7 @@ const initialFormData: TicketFormDTO = {
     urgency: "",
     impact: "",
     channel: "",
-    parentTicketId: "",
+    relatedTickets: [],
     typeRequest: "",
     solvingArea: "",
     categoryTicket: "",
@@ -83,10 +83,8 @@ export function useTicketForm(onClear?: () => void) {
         setFormData(prev => ({ ...prev, description: value }));
     }
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>, assocTags: { value: string; type: string }[] = []) {
         e.preventDefault();
-
-        console.log("formData no submit:", formData);
 
         if (!validate()) return;
 
@@ -101,7 +99,7 @@ export function useTicketForm(onClear?: () => void) {
             solvingArea: formData.solvingArea,
             urgency: formData.urgency,
             impact: formData.impact,
-            parentTicketId: formData.parentTicketId,
+            relatedTickets: assocTags.filter(t => t.type === "ticket").map(t => t.value),
             channel: "PORTAL",
         };
 
@@ -208,6 +206,6 @@ export function useTicketForm(onClear?: () => void) {
         handleSubmit,
         handleReset,
         setAttachedFiles,
-        loadingSubCategories
+        loadingSubCategories,
     };
 }
