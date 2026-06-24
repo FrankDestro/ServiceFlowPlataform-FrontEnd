@@ -1,4 +1,4 @@
 providers = ["node"]
 
 [node]
-nodeVersion = "22"
+nodeVersion = "22.13.0"
