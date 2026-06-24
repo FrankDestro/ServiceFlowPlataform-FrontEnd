@@ -220,3 +220,7 @@
     max-height: 600px;
     padding-right: 4px;
 }
+
+.at-desc code {
+    background: none;
+}

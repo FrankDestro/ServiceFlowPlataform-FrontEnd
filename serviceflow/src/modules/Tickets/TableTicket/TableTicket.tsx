@@ -139,11 +139,12 @@ function TableTicket({ tickets, onFilter, onReload }: TableTicketProps) {
                                 <td>{functions.formatDate(ticket.registrationDate)}</td>
 
                                 <td>
-                                    <div className="btn-action" onClick={() =>
-                                        ticket.statusTicket === TicketStatus.AWAITING_APPROVAL
-                                            ? handleViewClick(ticket)
-                                            : handleChamadoClick(ticket)
-                                    }>
+                                    <div className="btn-action" onClick={(e) => {
+    e.stopPropagation();
+    ticket.statusTicket === TicketStatus.AWAITING_APPROVAL
+        ? handleViewClick(ticket)
+        : handleChamadoClick(ticket)
+}}>
                                         {ticket.statusTicket === TicketStatus.AWAITING_APPROVAL
                                             ? <Eye size={14} />
                                             : <PencilLine size={14} />

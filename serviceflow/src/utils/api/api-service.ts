@@ -1,13 +1,13 @@
 import axios, { AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 import * as authService from "../../modules/Auth/service/auth-keycloak-service.ts";
-import { BASE_URL } from "../system/system.ts";
+import { ENV } from "../../config/env.ts";
 import { showToast } from "../../layout/Toastify/Toastify.tsx";
 
 // ===========================
 // SEM TOKEN — uso em dev ou rotas públicas
 // ===========================
 export function requestBackend(config: AxiosRequestConfig) {
-    return axios({ ...config, baseURL: BASE_URL });
+    return axios({ ...config, baseURL: ENV.apiUrl });
 }
 
 // ===========================
@@ -21,7 +21,7 @@ export function requestBackendConfig(config: AxiosRequestConfig) {
          // @ts-ignore
         silent: config.silent  // ← repassa o silent
     };
-    return axios({ ...config, baseURL: BASE_URL, headers: config.headers });
+    return axios({ ...config, baseURL: ENV.apiUrl, headers: config.headers });
 }
 
 // ===========================
@@ -39,7 +39,7 @@ export function requestBackendConfig(config: AxiosRequestConfig) {
 // REQUEST INTERCEPTOR
 // injeta token apenas quando usar requestBackendToken
 // ===========================
-const axiosWithToken = axios.create({ baseURL: BASE_URL });
+const axiosWithToken = axios.create({ baseURL: ENV.apiUrl });
 
 axiosWithToken.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {

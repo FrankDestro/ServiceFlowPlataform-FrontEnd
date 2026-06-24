@@ -5,9 +5,10 @@ import Placeholder from "@tiptap/extension-placeholder";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { createLowlight, common } from "lowlight";
 import { useEffect, useImperativeHandle, useMemo, forwardRef } from "react";
-import "highlight.js/styles/atom-one-dark.css";
 import "./TiptapEditor.css";
 import CharacterCount from "@tiptap/extension-character-count";
+import 'highlight.js/styles/github-dark.css'
+
 
 const lowlight = createLowlight(common);
 
@@ -34,8 +35,11 @@ const TiptapEditor = forwardRef<TiptapEditorRef, Props>(
                 Placeholder.configure({
                     placeholder: placeholder ?? "Escreva os detalhes...",
                 }),
-                CodeBlockLowlight.configure({ lowlight, defaultLanguage: "plaintext" }),
+                CodeBlockLowlight.configure({
+                    lowlight,
+                }),
                 CharacterCount,
+
             ],
             content: editable ? { type: "doc", content: [{ type: "paragraph" }] } : content || "",
             editable,

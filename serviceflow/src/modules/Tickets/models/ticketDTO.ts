@@ -41,7 +41,7 @@ export type TicketDTO = {
     completionDate: string | null;
     updatedAt: string;
     closureReason: string | null;
-    relatedTickets : [];
+    relatedTickets: string[];
     typeRequest: TypeRequestDTO;
     sla: SLADTO;
     solvingArea: SolvingAreaDTO;

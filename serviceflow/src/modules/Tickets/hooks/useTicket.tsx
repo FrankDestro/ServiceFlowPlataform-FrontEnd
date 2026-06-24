@@ -43,7 +43,7 @@ export function useTicket() {
       })
       .finally(() => setIsLoading(false));
 
-  }, [queryParams, showPagination]);
+  }, [queryParams]);
 
   function handleSearch(filters: Partial<TicketFilter>) {
     setTickets([]);

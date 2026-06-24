@@ -65,12 +65,6 @@ const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
                         {ticket.slaBreached ? "Estourado" : "Dentro do prazo"}
                     </span>
                 </div>
-                {ticket.parentTicketId && (
-                    <div className="dc-row">
-                        <span className="dc-lbl">Ticket pai</span>
-                        <span className="dc-val">#{ticket.parentTicketId}</span>
-                    </div>
-                )}
                 {ticket.closureReason && (
                     <div className="dc-row">
                         <span className="dc-lbl">Motivo de encerramento</span>

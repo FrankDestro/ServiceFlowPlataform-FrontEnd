@@ -13,6 +13,8 @@ import { getNoteTypeLabel } from "../../../utils/helpers/functions.ts";
 import TicketTimeline from "../components/TicketTimeline.tsx";
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import TiptapEditor from "../../../components/form/TiptapEditor/TiptapEditor.tsx";
+import hljs from 'highlight.js'
+import 'highlight.js/styles/atom-one-dark.css'
 
 
 type Props = {
@@ -63,6 +65,12 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
             setCarregando(false);
         }
     };
+
+    useEffect(() => {
+    document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block as HTMLElement)
+    })
+}, [andamentos])
 
     useEffect(() => {
         fetchAndamentos();
@@ -212,21 +220,13 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                 ) : (
                     <form onSubmit={handleSubmitNote} className="at-form">
                         <div className="">
-                            {/* <textarea
-                                id="description"
-                                className="at-textarea"
-                                placeholder="Adicionar uma nota ao chamado..."
-                                value={formData.description}
-                                onChange={handleChange}
-                                rows={3}
-                            /> */}
                             <TiptapEditor
                                 content={formData.description}
                                 onChange={handleDescriptionChange}
                                 placeholder="Adicionar uma nota ao chamado..."
                                 minHeight="150px"
                                 maxHeight="200px"
-                                scrollable={true}
+                                scrollable={true} 
                             />
                             <div className="at-form-footer">
                                 <div className="at-checks">
@@ -258,8 +258,6 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                             </div>
                         </div>
                     </form>
-
-
                 )
             }
         </div >

@@ -1,5 +1,3 @@
-import { faTicket } from "@fortawesome/free-solid-svg-icons";
-import NoData from "../../components/UI/NoData/NoData";
 import SearchTicket from "../../modules/Tickets/SearchTicket/SearchTicket";
 import TicketTabsContainer from "../../modules/Tickets/TicketTabsContainer/TicketTabsContainer";
 import { useTicket } from "../../modules/Tickets/hooks/useTicket";
@@ -19,7 +17,7 @@ function TicketPage() {
         handleActiveTabChange,
     } = useTicket();
 
-    const [ticketOpen, setTicketOpen] = useState(false);
+const [isOnListTab, setIsOnListTab] = useState(true);
 
     const handleSearchAdapted = (filters: {
         ticketNumber: string;
@@ -54,43 +52,38 @@ function TicketPage() {
         });
     };
 
-    const handleActiveTabChangeWithFilter = (isTabOneActive: boolean) => {
-        if (ticketOpen === isTabOneActive) {  // ✅ só atualiza se mudou
-            setTicketOpen(!isTabOneActive);
-            handleActiveTabChange(isTabOneActive);
-        }
-    };
+   const handleActiveTabChangeWithFilter = (isTabOneActive: boolean) => {
+    setIsOnListTab(isTabOneActive);
+    handleActiveTabChange(isTabOneActive);
+};
 
     return (
-        <div>
-            {!ticketOpen && (
-                <SearchTicket onSearch={handleSearchAdapted} />
-            )}
-            {isLoading ? (
-                <div className="spinner-container">
-                    <div className="spinner-border" role="status"></div>
-                    <span>Carregando....</span>
+    <div>
+        {isOnListTab && <SearchTicket onSearch={handleSearchAdapted} />}
+        
+        {isLoading ? (
+            <div className="spinner-container">
+                <div className="spinner-border" role="status"></div>
+                <span>Carregando....</span>
+            </div>
+        ) : (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ flexGrow: 1 }}>
+                    <TicketTabsContainer
+                        tickets={tickets}
+                        totalItems={totalItems}
+                        onActiveTabChange={handleActiveTabChangeWithFilter}
+                        totalPages={totalPages}
+                        currentPage={queryParams.page}
+                        onPageChange={handlePageChange}
+                        size={queryParams.size}
+                        onRowsPerPageChange={handleRowsPerPageChange}
+                    />
                 </div>
-            ) : tickets.length === 0 ? (
-                <NoData icon={faTicket} message="Não foi encontrado ticket" />
-            ) : (
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ flexGrow: 1 }}>
-                        <TicketTabsContainer
-                            tickets={tickets}
-                            totalItems={totalItems}  // ✅ adiciona
-                            onActiveTabChange={handleActiveTabChangeWithFilter}
-                            totalPages={totalPages}
-                            currentPage={queryParams.page}
-                            onPageChange={handlePageChange}
-                            size={queryParams.size}
-                            onRowsPerPageChange={handleRowsPerPageChange}
-                        />
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+            </div>
+        )}
+    </div>
+);
 }
 
 export default TicketPage;

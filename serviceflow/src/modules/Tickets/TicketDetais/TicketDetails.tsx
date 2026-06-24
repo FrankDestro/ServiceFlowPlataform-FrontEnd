@@ -116,8 +116,8 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
                     <AtualizacaoTicket ticket={ticket} />
                 </div>
 
-                <div style={{ marginLeft: "15px" }}>
-                    {ticket.relatedTickets?.length > 0 && (
+                {ticket.relatedTickets?.length > 0 && ticket.relatedTickets.some(t => t?.trim() !== "") && (
+                    <div style={{ marginLeft: "15px" }}>
                         <div className="ch-detail-card">
                             <div className="ch-detail-section-title">Associações</div>
                             <span className="ch-detail-side-label" style={{ fontSize: 11, display: "block", marginBottom: 5 }}>
@@ -131,8 +131,8 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
                                 ))}
                             </div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
 
             <Modal

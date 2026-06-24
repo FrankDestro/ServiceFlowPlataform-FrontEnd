@@ -1,6 +1,6 @@
 import { faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import type { TicketDTO, TicketSimpleDTO } from "../models/ticketDTO.ts";
 import TicketDetailsPage from "../../../pages/TicketDetailsPage/TicketDetailsPage.tsx";
@@ -8,7 +8,6 @@ import TableTicket from "../TableTicket/TableTicket.tsx";
 import "./TicketTabsContainer.css";
 import TicketFormCreate from "../TicketFormCreate/TicketFormCreate.tsx";
 import Pagination from "../../../components/UI/Pagination/Pagination.tsx";
-import { Plus } from "lucide-react";
 
 type TicketsProps = {
   tickets: TicketSimpleDTO[];
@@ -40,66 +39,57 @@ function TicketTabsContainer({
     Array<{ key: string; ticket: TicketSimpleDTO | TicketDTO | null }>
   >([{ key: "1", ticket: null }]);
 
-  const handleSelect = (key: string | null) => {
+  const closingTabRef = useRef<string | null>(null);
+
+
+const handleSelect = (key: string | null) => {
     if (key) {
-      setActiveKey(key);
-      if (key === "1" || activeKey === "1") {
+        setActiveKey(key);
         onActiveTabChange(key === "1");
-      }
     }
-  };
+};
 
-  const handleCloseTab = (key: string) => {
+const handleCloseTab = (key: string) => {
+    const ticketTabs = openTabs.filter((tab) => tab.ticket !== null);
+    const currentIndex = ticketTabs.findIndex((tab) => tab.key === key);
     const filteredTabs = openTabs.filter((tab) => tab.key !== key);
+    closingTabRef.current = key;
     setOpenTabs(filteredTabs);
-    if (activeKey === key) {
-      const newActiveKey = filteredTabs.length > 0 ? filteredTabs[0].key : "1";
-      setActiveKey(newActiveKey);
-      if (newActiveKey === "1") {
-        onActiveTabChange(true); // ✅ volta o filtro ao fechar todos os tickets
-      }
-    }
-  };
 
-  const onFilter = (_ticket: TicketSimpleDTO, ticketData: TicketDTO) => {
+    if (activeKey === key) {
+        const remainingTicketTabs = ticketTabs.filter((tab) => tab.key !== key);
+        const previousTab = remainingTicketTabs[currentIndex - 1];
+        const newKey = previousTab ? previousTab.key : "1";
+        setActiveKey(newKey);
+        onActiveTabChange(newKey === "1");
+    }
+};
+
+const onFilter = (_ticket: TicketSimpleDTO, ticketData: TicketDTO) => {
+      console.log("onFilter chamado, ticketData:", ticketData.id, "openTabs:", openTabs);
     const existingTab = openTabs.find(
-      (tab) => tab.ticket && tab.ticket.id === ticketData.id
+        (tab) => tab.ticket && tab.ticket.id === ticketData.id
     );
 
     if (existingTab) {
-      setActiveKey(existingTab.key);
+        setActiveKey(existingTab.key);
+        onActiveTabChange(false);  // ← adiciona isso
     } else {
-      const newKey = `chamado-${ticketData.id}`;
-      const newTabs = [...openTabs, { key: newKey, ticket: ticketData }];
-      setOpenTabs(newTabs);
-      setActiveKey(newKey);
-      // ✅ só notifica se era a primeira aba de ticket abrindo
-      if (!openTabs.some(tab => tab.ticket !== null)) {
+        const newKey = `chamado-${ticketData.id}`;
+        const newTabs = [...openTabs, { key: newKey, ticket: ticketData }];
+        setOpenTabs(newTabs);
+        setActiveKey(newKey);
         onActiveTabChange(false);
-      }
     }
-  };
+};
 
-  useEffect(() => {
-    if (activeKey === "newTicket") {
-      if (!openTabs.some((tab) => tab.key === "newTicket")) {
-        setOpenTabs([...openTabs, { key: "newTicket", ticket: null }]);
-      }
-      return;
+useEffect(() => {
+    if (closingTabRef.current && activeKey === closingTabRef.current) {
+        setActiveKey("1");
+        onActiveTabChange(true);
+        closingTabRef.current = null;
     }
-
-    if (openTabs.length === 0) {
-      setActiveKey("1");
-      onActiveTabChange(true);
-      return;
-    }
-
-    if (activeKey && !openTabs.some((tab) => tab.key === activeKey)) {
-      const newActiveKey =
-        openTabs.length > 0 ? openTabs[openTabs.length - 1].key : "1";
-      setActiveKey(newActiveKey);
-    }
-  }, [openTabs, activeKey]);
+}, [openTabs]);
 
   return (
     <div className="tickets-container">
