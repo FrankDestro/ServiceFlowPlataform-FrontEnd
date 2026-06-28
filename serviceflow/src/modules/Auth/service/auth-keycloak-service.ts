@@ -3,9 +3,9 @@ import Keycloak from "keycloak-js";
 import { type AccessTokenPayLoadNewDTO, type RoleEnum } from "../models/Login";
 
 const keycloak = new Keycloak({
-  url: "http://localhost:8080",
-  realm: "REALM_SPRING_API",
-  clientId: "itsm-frontend",
+  url: import.meta.env.VITE_KEYCLOAK_URL,
+  realm: import.meta.env.VITE_KEYCLOAK_REALM,
+  clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
 });
 
 // 🔒 garante que o init rode apenas uma vez
