@@ -14,12 +14,23 @@ export function requestBackend(config: AxiosRequestConfig) {
 // COM TOKEN — rotas protegidas
 // agora pega o token do Keycloak automaticamente
 // ===========================
-export function requestBackendConfig(config: AxiosRequestConfig) {
+// export function requestBackendConfig(config: AxiosRequestConfig) {
+//     config.headers = {
+//         ...(config.headers || {}),
+//         Authorization: "Bearer " + authService.getAccessToken(),
+//          // @ts-ignore
+//         silent: config.silent  // ← repassa o silent
+//     };
+//     return axios({ ...config, baseURL: ENV.apiUrl, headers: config.headers });
+// }
+
+export async function requestBackendConfig(config: AxiosRequestConfig) {
+    const token = await authService.getAccessTokenFresh();
     config.headers = {
         ...(config.headers || {}),
-        Authorization: "Bearer " + authService.getAccessToken(),
-         // @ts-ignore
-        silent: config.silent  // ← repassa o silent
+        Authorization: "Bearer " + token,
+        // @ts-ignore
+        silent: config.silent
     };
     return axios({ ...config, baseURL: ENV.apiUrl, headers: config.headers });
 }
@@ -41,9 +52,21 @@ export function requestBackendConfig(config: AxiosRequestConfig) {
 // ===========================
 const axiosWithToken = axios.create({ baseURL: ENV.apiUrl });
 
+// axiosWithToken.interceptors.request.use(
+//     (config: InternalAxiosRequestConfig) => {
+//         const token = authService.getAccessToken();
+//         if (token) {
+//             config.headers = config.headers ?? {};
+//             config.headers["Authorization"] = `Bearer ${token}`;
+//         }
+//         return config;
+//     },
+//     (error: AxiosError) => Promise.reject(error)
+// );
+
 axiosWithToken.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
-        const token = authService.getAccessToken();
+    async (config: InternalAxiosRequestConfig) => {
+        const token = await authService.getAccessTokenFresh(); // 👈 troca aqui
         if (token) {
             config.headers = config.headers ?? {};
             config.headers["Authorization"] = `Bearer ${token}`;
@@ -52,6 +75,7 @@ axiosWithToken.interceptors.request.use(
     },
     (error: AxiosError) => Promise.reject(error)
 );
+
 
 // sobrescreve requestBackendToken para usar a instância com token
 export function requestBackendTokenImpl(config: AxiosRequestConfig) {

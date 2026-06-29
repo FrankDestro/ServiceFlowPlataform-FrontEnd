@@ -18,6 +18,17 @@ export function initAuth() {
   return keycloak.init({
     onLoad: "login-required",
     pkceMethod: "S256",
+  }).then((authenticated) => {
+    if (authenticated) {
+      // renova o token automaticamente 60s antes de expirar
+      setInterval(() => {
+        keycloak.updateToken(60).catch(() => {
+          console.warn("Token expirado, fazendo logout...");
+          keycloak.logout();
+        });
+      }, 30000); // checa a cada 30s
+    }
+    return authenticated;
   });
 }
 
@@ -38,7 +49,13 @@ export async function logout() {
   }
 }
 
-export function getAccessToken(): string | undefined {
+export async function getAccessTokenFresh(): Promise<string | undefined> {
+  try {
+    await keycloak.updateToken(30);
+  } catch {
+    keycloak.login();
+    return undefined;
+  }
   return keycloak.token;
 }
 
