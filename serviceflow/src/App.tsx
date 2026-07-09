@@ -17,6 +17,8 @@ import ChangeCreate from "./modules/Change/ChangeCreate/ChangeCreateForm.tsx";
 import ManagementProblemPage from "./pages/Problem/ManagementProblemPage/ManagementProblemPage.tsx";
 import ManagementProblemPageDetail from "./pages/Problem/ManagementProblemPageDetail/ManagementProblemPageDetail.tsx";
 import ProblemManagementCreate from "./modules/ProblemManagement/ProblemManagementCreate/ProblemManagementCreate.tsx";
+import OperationalTaskPage from "./pages/OperationalTaskPage/OperationalTaskPage.tsx";
+import OperatonalPageDetail from "./pages/OperationalPageDetail/OperatonalPageDetail.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -48,7 +50,10 @@ function App() {
             {/* //MODULO PROBLEM */}
             <Route path="/problems" element={<ManagementProblemPage />} />
             <Route path="/problems/:id" element={<ManagementProblemPageDetail />} />
-              <Route path="/problems/new" element={<ProblemManagementCreate />} />
+            <Route path="/problems/new" element={<ProblemManagementCreate />} />
+            {/* //MODULO OPERATIONAL TASK */}
+            <Route path="/tarefas-operacionais" element={<OperationalTaskPage />} />
+            <Route path="/tarefas-operacionais/:id" element={<OperatonalPageDetail />} />
           </Route>
         </Routes>
       </BrowserRouter>

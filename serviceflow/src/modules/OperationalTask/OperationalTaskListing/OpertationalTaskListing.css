@@ -1,0 +1,13 @@
+.ot-limited-text {
+    max-width: 220px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ot-container-btn-new {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: end;
+}

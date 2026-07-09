@@ -1,4 +1,4 @@
-import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Rocket, ClipboardList } from "lucide-react";
+import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Calendar } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 import "./NavbarLocation.css";
@@ -29,10 +29,15 @@ const routeMap: Record<string, RouteConfig> = {
 
   "/problems": { title: "Gerenciamento de Problemas", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" } },
   "/problems/:id": { title: "Detalhes do Problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
-   "/problems/new": { title: "Registrar novo problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
+  "/problems/new": { title: "Registrar novo problema", hexIcon: { icon: Bug, color: "#7c3aed", bg: "#ede9fe" }, parent: "/problems" },
+
+  "/tarefas-operacionais": { title: "Tarefas Operacionais", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" } },
+  "/tarefas-operacionais/:id": { title: "Detalhes da Tarefa Operacional", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" }, parent: "/tarefas-operacionais" },
+  "/tarefas-operacionais/new": { title: "Nova Tarefa Operacional", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" }, parent: "/tarefas-operacionais" },
 
   "/home": { title: "Home" },
   "/dashboard": { title: "Dashboard" },
+
 };
 
 const NavbarLocation = () => {
@@ -81,9 +86,6 @@ const NavbarLocation = () => {
             <span className={index === breadcrumb.length - 1 ? "active" : ""}>
               {item.title}
             </span>
-            {/* {index < breadcrumb.length - 1 && (
-              <span className="separator">/</span>
-            )} */}
           </div>
         ))}
       </div>
