@@ -17,7 +17,7 @@ function TicketPage() {
         handleActiveTabChange,
     } = useTicket();
 
-const [isOnListTab, setIsOnListTab] = useState(true);
+    const [isOnListTab, setIsOnListTab] = useState(true);
 
     const handleSearchAdapted = (filters: {
         ticketNumber: string;
@@ -52,38 +52,38 @@ const [isOnListTab, setIsOnListTab] = useState(true);
         });
     };
 
-   const handleActiveTabChangeWithFilter = (isTabOneActive: boolean) => {
-    setIsOnListTab(isTabOneActive);
-    handleActiveTabChange(isTabOneActive);
-};
+    const handleActiveTabChangeWithFilter = (isTabOneActive: boolean) => {
+        setIsOnListTab(isTabOneActive);
+        handleActiveTabChange(isTabOneActive);
+    };
 
     return (
-    <div>
-        {isOnListTab && <SearchTicket onSearch={handleSearchAdapted} />}
-        
-        {isLoading ? (
-            <div className="spinner-container">
-                <div className="spinner-border" role="status"></div>
-                <span>Carregando....</span>
-            </div>
-        ) : (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ flexGrow: 1 }}>
-                    <TicketTabsContainer
-                        tickets={tickets}
-                        totalItems={totalItems}
-                        onActiveTabChange={handleActiveTabChangeWithFilter}
-                        totalPages={totalPages}
-                        currentPage={queryParams.page}
-                        onPageChange={handlePageChange}
-                        size={queryParams.size}
-                        onRowsPerPageChange={handleRowsPerPageChange}
-                    />
+        <div>
+            {isOnListTab && <SearchTicket onSearch={handleSearchAdapted} />}
+
+            {isLoading ? (
+                <div className="spinner-container">
+                    <div className="spinner-border" role="status"></div>
+                    <span>Carregando....</span>
                 </div>
-            </div>
-        )}
-    </div>
-);
+            ) : (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ flexGrow: 1 }}>
+                        <TicketTabsContainer
+                            tickets={tickets}
+                            totalItems={totalItems}
+                            onActiveTabChange={handleActiveTabChangeWithFilter}
+                            totalPages={totalPages}
+                            currentPage={queryParams.page}
+                            onPageChange={handlePageChange}
+                            size={queryParams.size}
+                            onRowsPerPageChange={handleRowsPerPageChange}
+                        />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default TicketPage;
