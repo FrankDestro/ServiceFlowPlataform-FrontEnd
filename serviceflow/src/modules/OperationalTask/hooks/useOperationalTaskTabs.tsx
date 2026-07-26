@@ -1,18 +1,7 @@
 // hooks/useOperationalTaskTabs.ts
 import { useQuery } from "@tanstack/react-query";
-
-const mockChecklist = [
-    { id: 1, title: "Verificar conexão com o banco de dados", completed: true },
-    { id: 2, title: "Executar pg_dump e gerar arquivo .sql.gz", completed: true },
-    { id: 3, title: "Fazer upload para o bucket S3", completed: false },
-    { id: 4, title: "Verificar integridade do arquivo após upload", completed: false },
-];
-
-const mockHistory = [
-    { id: 1, description: "Tarefa iniciada por Carlos Pereira", createdAt: "23/06/2026 02:05" },
-    { id: 2, description: "Status alterado de OPEN para IN_PROGRESS", createdAt: "23/06/2026 02:05" },
-    { id: 3, description: "Tarefa OT-42 criada por Juliana Costa", createdAt: "10/06/2026 09:00" },
-];
+import type { ChangeSummaryDTO, OperationalSubTaskDTO, OperationalTaskHistoryDTO, ProblemSummaryDTO, TicketSummaryDTO } from "../model/operationalTaskDTO";
+import * as operationalTaskService from "../services/operational-task-service";
 
 const mockAttachments = [
     { id: 1, fileName: "backup_log_230626.txt", fileSize: "14 KB", createdAt: "23/06/2026 03:10" },
@@ -20,18 +9,57 @@ const mockAttachments = [
 ];
 
 export function useOperationalTaskChecklist(id: number, enabled: boolean) {
-    return useQuery({
-        queryKey: ["operational-task-checklist", id],
-        queryFn: () => Promise.resolve(mockChecklist),
-        enabled,
+    return useQuery<OperationalSubTaskDTO[]>({
+        queryKey: ["operational-task/checklist", id, "task"],
+        queryFn: async () => {
+            const res = await operationalTaskService.OperationalTaskCheckListById(id!);
+            return res.data;
+        },
+       enabled: !!id && enabled,
     });
 }
 
 export function useOperationalTaskHistory(id: number, enabled: boolean) {
-    return useQuery({
-        queryKey: ["operational-task-history", id],
-        queryFn: () => Promise.resolve(mockHistory),
-        enabled,
+    return useQuery<OperationalTaskHistoryDTO[]>({
+        queryKey: ["operational-task/", id, "task"],
+        queryFn: async () => {
+            const res = await operationalTaskService.OperationalTaskHistoricById(id!);
+            return res.data;
+        },
+       enabled: !!id && enabled,
+    });
+}
+
+export function useOperationalTaskRelatedTickets(id: number, enabled: boolean) {
+    return useQuery<TicketSummaryDTO[]>({
+        queryKey: ["operational-task/", id, "tickets"],
+        queryFn: async () => {
+            const res = await operationalTaskService.OperationalTaskRelatedTicketsById(id!);
+            return res.data;
+        },
+       enabled: !!id && enabled,
+    });
+}
+
+export function useOperationalTaskRelatedChanges(id: number, enabled: boolean) {
+    return useQuery<ChangeSummaryDTO[]>({
+        queryKey: ["operational-task/", id, "changes"],
+        queryFn: async () => {
+            const res = await operationalTaskService.OperationalTaskRelatedChangesById(id!);
+            return res.data;
+        },
+       enabled: !!id && enabled,
+    });
+}
+
+export function useOperationalTaskRelatedProblems(id: number, enabled: boolean) {
+    return useQuery<ProblemSummaryDTO[]>({
+        queryKey: ["operational-task/", id, "problems"],
+        queryFn: async () => {
+            const res = await operationalTaskService.OperationalTaskRelatedProblemsById(id!);
+            return res.data;
+        },
+       enabled: !!id && enabled,
     });
 }
 

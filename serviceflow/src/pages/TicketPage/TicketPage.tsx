@@ -3,6 +3,7 @@ import TicketTabsContainer from "../../modules/Tickets/TicketTabsContainer/Ticke
 import { useTicket } from "../../modules/Tickets/hooks/useTicket";
 import type { TicketStatus } from "../../modules/Tickets/constant/TicketStatus";
 import { useState } from "react";
+import LoadingOverlay from "../../layout/LoadingOverlay/LoadingOverlay";
 
 function TicketPage() {
     const {
@@ -62,10 +63,7 @@ function TicketPage() {
             {isOnListTab && <SearchTicket onSearch={handleSearchAdapted} />}
 
             {isLoading ? (
-                <div className="spinner-container">
-                    <div className="spinner-border" role="status"></div>
-                    <span>Carregando....</span>
-                </div>
+               <LoadingOverlay/>
             ) : (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ flexGrow: 1 }}>

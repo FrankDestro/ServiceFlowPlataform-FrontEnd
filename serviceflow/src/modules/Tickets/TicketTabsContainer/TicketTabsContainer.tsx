@@ -73,7 +73,7 @@ const onFilter = (_ticket: TicketSimpleDTO, ticketData: TicketDTO) => {
 
     if (existingTab) {
         setActiveKey(existingTab.key);
-        onActiveTabChange(false);  // ← adiciona isso
+        onActiveTabChange(false);
     } else {
         const newKey = `chamado-${ticketData.id}`;
         const newTabs = [...openTabs, { key: newKey, ticket: ticketData }];

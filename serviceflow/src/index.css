@@ -375,62 +375,13 @@ td:first-child {
 /* Estilização Table */
 
 /* Estilização Pagination */
-
 .container-pagination {
   width: 100%;
   display: flex;
   justify-content: end;
   margin-bottom: 30px;
 }
-
 /* Estilização Pagination */
-
-
-
-
-
-/* Estilização do Spinner de Carregamento */
-/* Container do spinner */
-.spinner-container {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 60px;
-}
-
-/* Customização do spinner (spinner-border) */
-.spinner-border {
-  width: 48px !important;
-  height: 48px !important;
-  border-width: 4px !important;
-  border-style: solid !important;
-  border-color: #e2e8f0 !important;
-  /* cor de fundo neutra */
-  border-top-color: #14b8a6 !important;
-  /* teal ServiceFlow */
-  animation: spin 0.8s linear infinite;
-}
-
-/* Texto "Carregando..." */
-.spinner-container span {
-  font-size: 14px;
-  font-weight: 500;
-  color: #64748b;
-  letter-spacing: 0.2px;
-}
-
-/* Animação de rotação */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 /* Estilização do Titlle Settings */
 .container-title-settings {

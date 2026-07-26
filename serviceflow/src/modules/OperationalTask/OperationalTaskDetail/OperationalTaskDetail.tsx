@@ -5,14 +5,22 @@ import { faCheck, faPen, faX } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/UI/Button/Button";
 import { getPriorityClass, getStatusBadgeClass } from "../../../utils/helpers/functions";
 import useOperationalTaskDetail from "../hooks/useOperationalTaskDetail";
-import { useOperationalTaskChecklist, useOperationalTaskHistory, useOperationalTaskAttachments } from "../hooks/useOperationalTaskTabs";
 import "./OperationalTaskDetail.css";
+import {
+    useOperationalTaskChecklist, useOperationalTaskHistory, useOperationalTaskRelatedChanges,
+    useOperationalTaskRelatedProblems, useOperationalTaskRelatedTickets
+} from "../hooks/useOperationalTaskTabs";
+import RelatedTicketsTable from "../../ProblemManagement/components/RelatedTicketsTable/RelatedTicketsTable";
+import RelatedChangesTable from "../../ProblemManagement/components/RelatedChangesTable/RelatedChangesTable";
+import RelatedProblemsTable from "../components/RelatedProblemsTable/RelatedProblemsTable";
+import AnexoTabOperationalTask from "../components/AnexoTabOperationalTask/AnexoTabOperationalTask";
+import type { OperationalSubTaskDTO } from "../model/operationalTaskDTO";
 
 type Props = {
     id: number;
 };
 
-type Tab = "detalhes" | "checklist" | "relacionados" | "anexos" | "historico";
+type Tab = "detalhes" | "checklist" | "tickets" | "mudancas" | "problemas" | "anexos" | "historico";
 
 function OperationalTaskDetail({ id }: Props) {
 
@@ -22,7 +30,9 @@ function OperationalTaskDetail({ id }: Props) {
     const { data: task, isLoading, error } = useOperationalTaskDetail(id);
     const { data: checklist = [] } = useOperationalTaskChecklist(id, activeTab === "checklist");
     const { data: history = [] } = useOperationalTaskHistory(id, activeTab === "historico");
-    const { data: attachments = [] } = useOperationalTaskAttachments(id, activeTab === "anexos");
+    const { data: relatedTickets = [] } = useOperationalTaskRelatedTickets(id, activeTab === "tickets");
+    const { data: relatedChanges = [] } = useOperationalTaskRelatedChanges(id, activeTab === "mudancas");
+    const { data: relatedProblem = [] } = useOperationalTaskRelatedProblems(id, activeTab === "problemas");
 
     if (isLoading) return <p>Carregando...</p>;
     if (error || !task) return <p>Erro ao carregar</p>;
@@ -31,7 +41,7 @@ function OperationalTaskDetail({ id }: Props) {
     const canStart = task.status === "OPEN";
     const canComplete = task.status === "IN_PROGRESS";
 
-    const completedItems = checklist.filter((c: any) => c.completed).length;
+    const completedItems = checklist.filter((c: OperationalSubTaskDTO) => c.status === "COMPLETED").length;
     const totalItems = checklist.length;
     const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
@@ -63,18 +73,18 @@ function OperationalTaskDetail({ id }: Props) {
             </div>
 
             {/* Recorrência banner */}
-            {task.recurrence && (
-                <div className="ot-detail-recurrence-banner">
-                    🔁 Tarefa recorrente — {task.recurrence}
-                </div>
-            )}
+            {/* {task.recurrence && ( */}
+            <div className="ot-detail-recurrence-banner">
+                🔁 Tarefa recorrente — implementacao futura
+            </div>
+            {/* )}  */}
 
             {/* Content */}
             <div className="ot-detail-content">
                 <div className="ot-detail-main">
                     <div className="ot-detail-tabs-wrapper">
                         <div className="ot-detail-tabs">
-                            {(["detalhes", "checklist", "relacionados", "anexos", "historico"] as Tab[]).map((tab) => (
+                            {(["detalhes", "checklist", "tickets", "mudancas", "problemas", "anexos", "historico"] as Tab[]).map((tab) => (
                                 <div
                                     key={tab}
                                     className={`ot-detail-tab ${activeTab === tab ? "active" : ""}`}
@@ -84,17 +94,11 @@ function OperationalTaskDetail({ id }: Props) {
                                     {tab === "checklist" && (
                                         <>Checklist {totalItems > 0 && <span className="ot-detail-tab-badge">{totalItems}</span>}</>
                                     )}
-                                    {tab === "relacionados" && (
-                                        <>Itens relacionados {(task.relatedItems.tickets.length + task.relatedItems.changes.length + task.relatedItems.problems.length) > 0 && (
-                                            <span className="ot-detail-tab-badge">
-                                                {task.relatedItems.tickets.length + task.relatedItems.changes.length + task.relatedItems.problems.length}
-                                            </span>
-                                        )}</>
-                                    )}
-                                    {tab === "anexos" && (
-                                        <>Anexos {attachments.length > 0 && <span className="ot-detail-tab-badge">{attachments.length}</span>}</>
-                                    )}
+                                    {tab === "tickets" && <>Tickets vinculados {relatedTickets.length > 0 && <span className="prb-detail-tab-badge">{relatedTickets.length}</span>}</>}
+                                    {tab === "mudancas" && <>Mudanças associadas {relatedChanges.length > 0 && <span className="prb-detail-tab-badge">{relatedChanges.length}</span>}</>}
+                                    {tab === "problemas" && <>Problemas associadas {relatedProblem.length > 0 && <span className="prb-detail-tab-badge">{relatedProblem.length}</span>}</>}
                                     {tab === "historico" && "Histórico"}
+                                    {tab === "anexos" && "Anexos"}
                                 </div>
                             ))}
                         </div>
@@ -164,55 +168,53 @@ function OperationalTaskDetail({ id }: Props) {
                             </div>
                         )}
 
-                        {/* Aba Relacionados */}
-                        {activeTab === "relacionados" && (
-                            <div className="ot-detail-tab-content">
-                                {task.relatedItems.tickets.length > 0 && (
-                                    <>
-                                        <div className="ot-detail-section-title">Tickets vinculados</div>
-                                        <div className="ot-detail-assoc-chips">
-                                            {task.relatedItems.tickets.map((t: any) => (
-                                                <span key={t.id} className="ot-detail-assoc-tag ot-detail-assoc-ticket">🎫 {t.number}</span>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                                {task.relatedItems.changes.length > 0 && (
-                                    <>
-                                        <div className="ot-detail-section-title" style={{ marginTop: 16 }}>Mudanças associadas</div>
-                                        <div className="ot-detail-assoc-chips">
-                                            {task.relatedItems.changes.map((c: any) => (
-                                                <span key={c.id} className="ot-detail-assoc-tag ot-detail-assoc-change">🔄 {c.number}</span>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                                {task.relatedItems.problems.length > 0 && (
-                                    <>
-                                        <div className="ot-detail-section-title" style={{ marginTop: 16 }}>Problemas relacionados</div>
-                                        <div className="ot-detail-assoc-chips">
-                                            {task.relatedItems.problems.map((p: any) => (
-                                                <span key={p.id} className="ot-detail-assoc-tag ot-detail-assoc-problem">⚠ {p.number}</span>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
+                        {/* Aba Tickets vinculados */}
+                        {activeTab === "tickets" && (
+                            <div className="prb-detail-tab-content">
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                                    <div className="prb-detail-section-title" style={{ marginBottom: 0 }}>
+                                        Tickets vinculados <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{relatedTickets.length} ticket(s)</span>
+                                    </div>
+                                    <button className="prb-detail-btn prb-detail-btn-primary prb-detail-btn-sm">+ Vincular ticket</button>
+                                </div>
+                                <RelatedTicketsTable tickets={relatedTickets} />
+                            </div>
+                        )}
+
+
+                        {/* Aba Mudancas vinculados */}
+                        {activeTab === "mudancas" && (
+                            <div className="prb-detail-tab-content">
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                                    <div className="prb-detail-section-title" style={{ marginBottom: 0 }}>
+                                        Mudanças associadas <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{relatedChanges.length} mudança(s)</span>
+                                    </div>
+                                    <button className="prb-detail-btn prb-detail-btn-primary prb-detail-btn-sm">+ Vincular mudança</button>
+                                </div>
+                                <RelatedChangesTable changes={relatedChanges} />
+                            </div>
+                        )}
+
+
+                        {/* Aba Problemas vinculados */}
+                        {activeTab === "problemas" && (
+                            <div className="prb-detail-tab-content">
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                                    <div className="prb-detail-section-title" style={{ marginBottom: 0 }}>
+                                        Problemas associados <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{relatedProblem.length} problema(s)</span>
+                                    </div>
+                                    <button className="prb-detail-btn prb-detail-btn-primary prb-detail-btn-sm">+ Vincular problema</button>
+                                </div>
+                                <RelatedProblemsTable problems={relatedProblem} />
                             </div>
                         )}
 
                         {/* Aba Anexos */}
                         {activeTab === "anexos" && (
-                            <div className="ot-detail-tab-content">
-                                <div className="ot-detail-section-title">Anexos</div>
-                                {attachments.map((att: any) => (
-                                    <div key={att.id} className="ot-detail-att-item">
-                                        <div className="ot-detail-att-icon">📄</div>
-                                        <div className="ot-detail-att-info">
-                                            <div className="ot-detail-att-name">{att.fileName}</div>
-                                            <div className="ot-detail-att-meta">{att.fileSize} · {att.createdAt}</div>
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="prb-detail-tab-content">
+                                <AnexoTabOperationalTask
+                                    operationalTask={task}
+                                />
                             </div>
                         )}
 

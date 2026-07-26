@@ -518,6 +518,7 @@ export const getStatusBadgeClass = (status: string) => {
     IN_PROGRESS: "badge badge-progress",
     COMPLETED: "badge badge-completed",
     CANCELLED: "badge badge-cancelled",
+    RESOLVED : "badge badge-resolved",
   };
   return map[status] ?? "badge";
 };

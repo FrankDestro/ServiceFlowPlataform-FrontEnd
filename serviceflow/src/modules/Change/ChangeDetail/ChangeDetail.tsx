@@ -21,6 +21,8 @@ function ChangeDetail({ id }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>("detalhes");
   
   const { data: article, isLoading, error } = useChangeDetail(id);
+
+  
   const { data: tasks = [] } = useChangeTasks(id, activeTab === "tarefas");
   const { data: approvers = [] } = useChangeApprovers(id, activeTab === "aprovadores");
   const { data: history = [] } = useChangeHistory(id, activeTab === "historico");
