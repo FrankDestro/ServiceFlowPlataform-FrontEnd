@@ -152,7 +152,7 @@
 .prb-detail-content {
     display: flex;
     gap: 16px;
-    padding: 20px 24px;
+    padding: 20px 0px;
     align-items: flex-start;
 }
 

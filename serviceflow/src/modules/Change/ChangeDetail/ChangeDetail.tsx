@@ -15,14 +15,11 @@ type Tab = "detalhes" | "tarefas" | "aprovadores" | "historico";
 
 function ChangeDetail({ id }: Props) {
 
-
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<Tab>("detalhes");
   
-  const { data: article, isLoading, error } = useChangeDetail(id);
-
-  
+  const { data: article, isLoading, error } = useChangeDetail(id);  
   const { data: tasks = [] } = useChangeTasks(id, activeTab === "tarefas");
   const { data: approvers = [] } = useChangeApprovers(id, activeTab === "aprovadores");
   const { data: history = [] } = useChangeHistory(id, activeTab === "historico");

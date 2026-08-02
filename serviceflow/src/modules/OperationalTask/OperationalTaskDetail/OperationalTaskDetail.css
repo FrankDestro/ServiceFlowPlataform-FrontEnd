@@ -66,18 +66,20 @@
     align-items: center;
     gap: 8px;
     background: #f0fdfa;
-    border-bottom: 1px solid #99f6e4;
+    border: 1px solid #99f6e4;
     padding: 8px 24px;
     font-size: 12px;
     color: #0f766e;
     font-weight: 500;
+    margin-top: 10px;
+    border-radius: 8px;
 }
 
 /* Layout */
 .ot-detail-content {
     display: flex;
     gap: 16px;
-    padding: 20px 24px;
+    padding: 20px 0px;
     align-items: flex-start;
 }
 
