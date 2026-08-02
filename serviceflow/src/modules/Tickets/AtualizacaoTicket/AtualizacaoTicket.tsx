@@ -1,5 +1,4 @@
-import { faSave } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faExchange } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import CustomSelect from "../../../components/form/CustomSelect/CustomSelect";
 import { TicketStatus, TicketStatusLabels } from "../constant/TicketStatus";
@@ -11,10 +10,10 @@ import * as SlaService from "../service/sla-service";
 import * as TypeRequestService from "../service/type-request";
 import "./AtualizacaoTicket.css";
 import type { TicketDTO } from "../models/ticketDTO";
-import { RotateCcw } from "lucide-react";
 import { useTicketUpdate } from "../hooks/useTicketUpdate";
 import ModalAnnotation from "../../../components/UI/ModalAnnotation/ModalAnnotation";
 import { useTicketAssignment } from "../hooks/useTicketAssignment";
+import Button from "../../../components/UI/Button/Button";
 
 
 type Props = {
@@ -187,16 +186,26 @@ function AtualizacaoTicket({ ticket }: Props) {
 
                 {/* SUBMMIT */}
                 <form onSubmit={(e) => handleUpdateSubmmit(e, assignmentFormData)}>
-                    <button className="upd-btn-save" disabled={isLocked}>
-                        <FontAwesomeIcon icon={faSave} style={{ fontSize: 12 }} />
-                        Salvar alterações
-                    </button>
-                </form>
+                    <div className="upd-btn-save">
+                        <Button text="Salvar Alterações" icon={faCheck}
+                            type="button" borderRadius="8px"
+                            background="#0f766e"
+                            hoverColor="#0d9488"
+                            width="100%"
+                        />
+                    </div>
 
-                <button type="button" className="upd-btn-reopen" disabled={!isLocked}>
-                    <RotateCcw size={12} />
-                    Reabrir Ticket
-                </button>
+                    <div className="upd-btn-reopen">
+                        <Button text="Reabir Ticket"
+                            icon={faExchange}
+                            type="button"
+                            borderRadius="8px"
+                            hoverColor=""
+                            className="ot-btn-cancel"
+                            width="100%"
+                            disabled={!isLocked} />
+                    </div>
+                </form>
             </div>
 
             <ModalAnnotation

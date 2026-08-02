@@ -170,8 +170,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px;
-    border-top: 1px solid #f1f5f9;
-    background: #f8fafc;
+    border: 1px solid #eaecee;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .at-checks {
@@ -366,15 +367,20 @@
     background: #f0fdf9;
 }
 
-.at-desc h1, .at-desc h2, .at-desc h3 {
+.at-desc h1,
+.at-desc h2,
+.at-desc h3 {
     font-weight: 700;
     margin: 0.5rem 0;
     color: #0f172a;
 }
-.at-desc ul, .at-desc ol {
+
+.at-desc ul,
+.at-desc ol {
     padding-left: 1.5rem;
     margin: 0.5rem 0;
 }
+
 .at-desc blockquote {
     border-left: 3px solid #14b8a6;
     padding-left: 1rem;
@@ -382,6 +388,7 @@
     font-style: italic;
     margin: 0.5rem 0;
 }
+
 .at-desc code {
     background: #f1f5f9;
     padding: 0.2em 0.4em;
@@ -389,6 +396,7 @@
     font-size: 0.85rem;
     font-family: 'JetBrains Mono', monospace;
 }
+
 .at-desc pre {
     background: #1e293b;
     color: #e2e8f0;

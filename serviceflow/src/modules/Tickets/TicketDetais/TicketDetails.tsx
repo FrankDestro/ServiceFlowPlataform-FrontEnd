@@ -10,6 +10,7 @@ import { getAllAttachmentById } from "../../Attachment/service/attachment-servic
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import TicketTimelineChart from "../TicketTimelineChart/TicketTimelineChart.tsx";
 import { getSeverityBadgeStyle, getStatusTicketBadgeStyle } from "../../../utils/helpers/functions.ts";
+import { useNavigate } from "react-router-dom";
 
 type Aba = "detalhes" | "andamento" | "anexo";
 
@@ -49,65 +50,76 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
             {/* CONTEÚDO PRINCIPAL */}
             <div className="td-main">
 
-                <div className="dc-hd-container">
-                    <div className="dc-hd-top">
-                        <span className="dc-hd-num">{ticket.ticketNumber}</span>
-                        <span style={getStatusTicketBadgeStyle(ticket.statusTicket)}>{ticket.statusTicket}</span>
-                        <span style={getSeverityBadgeStyle(ticket.sla.severity)}>{ticket.sla.severity}</span>
-                        {ticket.solvingArea?.name && (
-                            <span className="dc-pill-gray">{ticket.solvingArea.name}</span>
+                {/* Topbar */}
+                <div className="tk-detail-topbar">
+                    <div className="tk-detail-topbar-left">
+                        <div>
+                            <div className="tk-detail-topbar-meta">
+                                <span className="tk-detail-ticket-number">{ticket.ticketNumber}</span>
+                                <span style={getStatusTicketBadgeStyle(ticket.statusTicket)}>{ticket.statusTicket}</span>
+                                <span style={getSeverityBadgeStyle(ticket.sla.severity)}>{ticket.sla.severity}</span>
+                                {ticket.solvingArea?.name && (
+                                    <span style={{ fontSize: 12, color: "#64748b" }}>
+                                        Área solucionadora: <span className="tk-detail-area-pill">{ticket.solvingArea.name}</span>
+                                    </span>
+                                )}
+                            </div>
+                            <div className="tk-detail-ticket-title">{ticket.subject}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="tk-detail-tabs-wrapper">
+                    {/* ABAS */}
+                    <div className="td-tabs">
+                        <button
+                            className={`td-tab ${abaAtiva === "detalhes" ? "active" : ""}`}
+                            onClick={() => setAbaAtiva("detalhes")}
+                        >
+                            Detalhes do chamado
+                        </button>
+                        <button
+                            className={`td-tab ${abaAtiva === "andamento" ? "active" : ""}`}
+                            onClick={() => setAbaAtiva("andamento")}
+                        >
+                            Andamento
+                        </button>
+                        <button
+                            className={`td-tab ${abaAtiva === "anexo" ? "active" : ""}`}
+                            onClick={() => setAbaAtiva("anexo")}
+                        >
+                            Anexos
+                        </button>
+                    </div>
+
+                    {/* CONTEÚDO */}
+                    <div className="td-content">
+                        {abaAtiva === "detalhes" && (
+                            <DetalhesChamado ticket={ticket} />
+                        )}
+
+                        {abaAtiva === "andamento" && (
+                            <div>
+                                {carregandoAndamentos ? (
+                                    <p className="td-loading">Carregando andamento...</p>
+                                ) : (
+                                    <AndamentoTab ticket={ticket} />
+                                )}
+                            </div>
+                        )}
+                        {abaAtiva === "anexo" && (
+                            <div>
+                                {carregandoAndamentos ? (
+                                    <p className="td-loading">Carregando anexos...</p>
+                                ) : (
+                                    <AnexoTab ticket={ticket} />
+                                )}
+                            </div>
                         )}
                     </div>
-                    <div className="dc-hd-title">{ticket.subject}</div>
                 </div>
 
-                {/* ABAS */}
-                <div className="td-tabs">
-                    <button
-                        className={`td-tab ${abaAtiva === "detalhes" ? "active" : ""}`}
-                        onClick={() => setAbaAtiva("detalhes")}
-                    >
-                        Detalhes do chamado
-                    </button>
-                    <button
-                        className={`td-tab ${abaAtiva === "andamento" ? "active" : ""}`}
-                        onClick={() => setAbaAtiva("andamento")}
-                    >
-                        Andamento
-                    </button>
-                    <button
-                        className={`td-tab ${abaAtiva === "anexo" ? "active" : ""}`}
-                        onClick={() => setAbaAtiva("anexo")}
-                    >
-                        Anexos
-                    </button>
-                </div>
 
-                {/* CONTEÚDO */}
-                <div className="td-content">
-                    {abaAtiva === "detalhes" && (
-                        <DetalhesChamado ticket={ticket} />
-                    )}
-
-                    {abaAtiva === "andamento" && (
-                        <div>
-                            {carregandoAndamentos ? (
-                                <p className="td-loading">Carregando andamento...</p>
-                            ) : (
-                                <AndamentoTab ticket={ticket} />
-                            )}
-                        </div>
-                    )}
-                    {abaAtiva === "anexo" && (
-                        <div>
-                            {carregandoAndamentos ? (
-                                <p className="td-loading">Carregando anexos...</p>
-                            ) : (
-                                <AnexoTab ticket={ticket} />
-                            )}
-                        </div>
-                    )}
-                </div>
             </div>
 
             <div >
@@ -148,6 +160,9 @@ const TicketDetails: React.FC<Props> = ({ ticket }) => {
                 />
             </Modal>
         </div>
+
+
+
     );
 };
 

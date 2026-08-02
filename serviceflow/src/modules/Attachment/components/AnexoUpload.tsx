@@ -4,6 +4,9 @@ import { useState } from "react";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { getFileType } from "../../../utils/helpers/functions";
 import { useAttachmentUpload } from "../hooks/useAttachmentUpload";
+import Button from "../../../components/UI/Button/Button";
+import { showToast } from "../../../layout/Toastify/Toastify";
+
 
 type Props = {
     entityType: string;
@@ -23,10 +26,11 @@ function AnexoUpload({ entityType, id }: Props) {
     };
 
     const handleUpload = async () => {
-        if (!selectedFile) { alert("Selecione um arquivo antes de salvar."); return; }
+        if (!selectedFile) { showToast.warning("Selecione um arquivo!!"); return }
+
         const fileType = getFileType(selectedFile.type);
 
-        if (!fileType) { alert("Tipo de arquivo inválido."); return; }
+        if (!fileType) { showToast.error("Tipo de arquivo inválido."); return }
 
         upload(
             { file: selectedFile, originalName: selectedFile.name },
@@ -41,23 +45,30 @@ function AnexoUpload({ entityType, id }: Props) {
 
     return (
         <>
-            <button className="anx-btn-add" onClick={() => setShowModal(true)}>
-                <FontAwesomeIcon icon={faPaperclip} style={{ fontSize: 11 }} />
-                Adicionar anexo
-            </button>
-
+            <Button
+                text="Adicionar anexo"
+                icon={faPaperclip}
+                borderRadius="4px"
+                background="#0f766e"
+                hoverColor="#0d9488"
+                className="anx-btn-add"
+                onClick={() => setShowModal(true)}
+            />
             <Modal
                 title="Anexar um documento"
                 isOpen={showModal}
                 onClose={() => setShowModal(false)}
                 footer={
-                    <button
-                        onClick={handleUpload}
+                    <Button
+                        text={isUploading ? "Enviando..." : "Salvar arquivo"}
+                        icon={faPaperclip}
+                        borderRadius="4px"
+                        background="#0f766e"
+                        hoverColor="#0d9488"
                         className="anx-btn-save"
+                        onClick={handleUpload}
                         disabled={isUploading}
-                    >
-                        {isUploading ? "Enviando..." : "Salvar arquivo"}
-                    </button>
+                    />
                 }
             >
                 <div className="anx-upload-area">

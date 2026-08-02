@@ -26,8 +26,6 @@
   height: calc(100vh - 140px);
   overflow-y: auto;
   scroll-behavior: smooth;
-    background: #f8fafc!important;  /* ✅ cinza neutro suave */
-
 }
 
 /* barra */

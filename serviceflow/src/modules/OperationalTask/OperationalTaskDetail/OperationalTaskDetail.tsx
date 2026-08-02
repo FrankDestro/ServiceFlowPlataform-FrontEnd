@@ -20,7 +20,7 @@ type Props = {
     id: number;
 };
 
-type Tab = "detalhes" | "checklist" | "tickets" | "mudancas" | "problemas" | "anexos" | "historico";
+type Tab = "detalhes" | "checklist" | "tickets" | "mudancas" | "problemas" | "anexos" | "historico" | "automacao";
 
 function OperationalTaskDetail({ id }: Props) {
 
@@ -84,7 +84,7 @@ function OperationalTaskDetail({ id }: Props) {
                 <div className="ot-detail-main">
                     <div className="ot-detail-tabs-wrapper">
                         <div className="ot-detail-tabs">
-                            {(["detalhes", "checklist", "tickets", "mudancas", "problemas", "anexos", "historico"] as Tab[]).map((tab) => (
+                            {(["detalhes", "checklist", "tickets", "mudancas", "problemas", "anexos", "historico", "automacao"] as Tab[]).map((tab) => (
                                 <div
                                     key={tab}
                                     className={`ot-detail-tab ${activeTab === tab ? "active" : ""}`}
@@ -99,6 +99,7 @@ function OperationalTaskDetail({ id }: Props) {
                                     {tab === "problemas" && <>Problemas associadas {relatedProblem.length > 0 && <span className="prb-detail-tab-badge">{relatedProblem.length}</span>}</>}
                                     {tab === "historico" && "Histórico"}
                                     {tab === "anexos" && "Anexos"}
+                                     {tab === "automacao" && "Automação"}
                                 </div>
                             ))}
                         </div>
@@ -229,6 +230,15 @@ function OperationalTaskDetail({ id }: Props) {
                                         <div className="ot-detail-history-date">{item.createdAt ?? "—"}</div>
                                     </div>
                                 ))}
+                            </div>
+                        )}
+
+                        {/* Aba Anexos */}
+                        {activeTab === "automacao" && (
+                            <div className="prb-detail-tab-content">
+                                <div>
+                                 Versão 2
+                                </div>
                             </div>
                         )}
                     </div>

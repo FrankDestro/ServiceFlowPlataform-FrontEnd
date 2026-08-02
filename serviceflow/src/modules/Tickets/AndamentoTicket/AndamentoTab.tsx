@@ -1,4 +1,4 @@
-import { faCalendarAlt, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faSave, faTimeline } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import NoData from "../../../components/UI/NoData/NoData.tsx";
@@ -15,6 +15,7 @@ import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import TiptapEditor from "../../../components/form/TiptapEditor/TiptapEditor.tsx";
 import hljs from 'highlight.js'
 import 'highlight.js/styles/atom-one-dark.css'
+import Button from "../../../components/UI/Button/Button.tsx";
 
 
 type Props = {
@@ -67,10 +68,10 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
     };
 
     useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightElement(block as HTMLElement)
-    })
-}, [andamentos])
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block as HTMLElement)
+        })
+    }, [andamentos])
 
     useEffect(() => {
         fetchAndamentos();
@@ -121,14 +122,26 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
     return (
         <div className="at-wrap">
             <div className="container-timeline-ticket">
-                <button
+                {/* <button
                     type="button"
                     className="at-btn-timeline"
                     onClick={handleOpenModal}
                 >
                     {showTimeline ? "Ocultar linha do tempo" : "Ver linha do tempo"}
-                </button>
+                </button> */}
 
+                <div style={{ marginTop: '10px' }}>
+                    <Button
+                        text={showTimeline ? "Ocultar linha do tempo" : "Ver linha do tempo"}
+                        icon={faTimeline}
+                        type="button"
+                        borderRadius="8px"
+                        hoverColor=""
+                        className="ot-btn-start"
+                        onClick={handleOpenModal}
+                    />
+                </div>
+                
                 <Modal
                     isOpen={isModalVisible}
                     onClose={handleCloseModal}
@@ -226,7 +239,7 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                                 placeholder="Adicionar uma nota ao chamado..."
                                 minHeight="150px"
                                 maxHeight="200px"
-                                scrollable={true} 
+                                scrollable={true}
                             />
                             <div className="at-form-footer">
                                 <div className="at-checks">
@@ -251,10 +264,14 @@ const AndamentoTab: React.FC<Props> = ({ ticket }) => {
                                         Visível ao solicitante
                                     </label>
                                 </div>
-                                <button type="submit" className="at-btn-save">
-                                    <FontAwesomeIcon icon={faSave} style={{ fontSize: 11 }} />
-                                    Salvar nota
-                                </button>
+                                <Button
+                                    text="Salvar Alterações"
+                                    icon={faSave}
+                                    type="submit"
+                                    borderRadius="4px"
+                                    background="#0f766e"
+                                    hoverColor="#0d9488"
+                                />
                             </div>
                         </div>
                     </form>

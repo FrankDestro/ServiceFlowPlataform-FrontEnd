@@ -12,13 +12,13 @@
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
+    
 }
 
 /* ABAS */
 .td-tabs {
     display: flex;
     border-bottom: 1px solid #e2e8f0;
-   
     flex-shrink: 0;
 }
 
@@ -33,6 +33,7 @@
     cursor: pointer;
     transition: all 0.15s;
     white-space: nowrap;
+    
 }
 
 .td-tab:hover {
@@ -50,6 +51,7 @@
 .td-content {
     flex: 1;
     overflow-y: auto;
+    padding: 20px;
 
 }
 
@@ -113,10 +115,87 @@
 }
 
 .dc-pill-gray {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
-    padding: 2px 9px;
+    padding: 2px 0px;
     border-radius: 999px;
     background: #f8fafc;
     color: #64748b;
+}
+
+/* Topbar */
+.tk-detail-topbar {
+    background: #fff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 20px;
+}
+
+.tk-detail-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tk-detail-back-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fff;
+    font-size: 15px;
+    color: #64748b;
+    transition: all 0.15s;
+}
+
+.tk-detail-back-btn:hover {
+    background: #f8fafc;
+}
+
+.tk-detail-ticket-number {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f766e;
+}
+
+.tk-detail-ticket-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 2px;
+}
+
+.tk-detail-topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+}
+
+.tk-detail-area-pill {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+/* Topbar */
+
+
+
+.tk-detail-tabs-wrapper {
+    background: #fff;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    overflow: hidden;
 }
