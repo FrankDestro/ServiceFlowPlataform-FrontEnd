@@ -104,8 +104,8 @@ function KnowledgeBaseCreateForm({ onSuccess, onReload }: Props) {
                     content={formData.content}
                     onChange={handleContentChange}
                     placeholder="Descreva um novo artigo"
-                    minHeight="400px"
-                    maxHeight="800px"
+                    minHeight="350px"
+                    maxHeight="355px"
                     scrollable={true}
                 />
             </div>

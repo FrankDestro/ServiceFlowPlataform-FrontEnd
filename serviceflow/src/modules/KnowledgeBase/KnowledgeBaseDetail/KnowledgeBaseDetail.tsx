@@ -63,7 +63,7 @@ function KnowledgeBaseDetail({ id }: Props) {
                     <span className="kb-detail-label">Útil</span>
                     <span className="kb-detail-value" style={{ color: "#16a34a", fontWeight: 600 }}>{article.helpfulCount}</span>
                 </div>
-                 <div className="kb-detail-row">
+                <div className="kb-detail-row">
                     <span className="kb-detail-label">Status</span>
                     <span className="kb-detail-value" style={functions.getStatusKnowledgeBadgeStyle(article.status)}>{article.status}</span>
                 </div>
@@ -74,8 +74,9 @@ function KnowledgeBaseDetail({ id }: Props) {
                 <span className="kb-detail-section-title">CONTEÚDO</span>
                 <TiptapEditor
                     content={article.content}
-                    onChange={() => {}}
+                    onChange={() => { }}
                     editable={false}
+                    scrollable={true}
                 />
             </div>
         </div>
