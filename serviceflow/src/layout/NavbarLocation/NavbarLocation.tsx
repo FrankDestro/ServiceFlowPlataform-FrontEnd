@@ -1,6 +1,5 @@
-import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Calendar } from "lucide-react";
+import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Calendar, LucideProjector, Milestone } from "lucide-react";
 import { useLocation } from "react-router-dom";
-
 import "./NavbarLocation.css";
 import { HexIcon } from "../../components/UI/HexIcon/HexIcon";
 
@@ -34,6 +33,9 @@ const routeMap: Record<string, RouteConfig> = {
   "/tarefas-operacionais": { title: "Tarefas Operacionais", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" } },
   "/tarefas-operacionais/:id": { title: "Detalhes da Tarefa Operacional", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" }, parent: "/tarefas-operacionais" },
   "/tarefas-operacionais/new": { title: "Nova Tarefa Operacional", hexIcon: { icon: Calendar, color: "#0f766e", bg: "#ccfbf1" }, parent: "/tarefas-operacionais" },
+
+  "/epicos": { title: "Épicos", hexIcon: { icon: Milestone, color: "#0369a1", bg: "#dbeafe" } },
+  "/epics/:id": { title: "Detalhes do Épico", hexIcon: { icon: Bug, color: "#0369a1", bg: "#dbeafe" }, parent: "/epicos" },
 
   "/home": { title: "Home" },
   "/dashboard": { title: "Dashboard" },

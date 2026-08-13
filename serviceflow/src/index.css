@@ -283,6 +283,7 @@ th {
   color: #64748b;
   background-color: #e9edf1;
   border-bottom: 1px solid #e2e8f0;
+  cursor: pointer;
 }
 
 /* -------------------------------
@@ -396,8 +397,6 @@ td:first-child {
 .error-message {
   color: var(--color-error);
 }
-
-
 
 /* -------------------------------
    ACTION BUTTON (edit)

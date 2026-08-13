@@ -131,7 +131,7 @@
     color: #5dcaa5;
 }
 
-.ant-layout-sider {
+/* .ant-layout-sider {
     background: #0f2044 !important;
 }
 
@@ -141,6 +141,23 @@
 
 .ant-menu-dark .ant-menu-sub {
     background: #0f2044 !important;
+} */
+
+.ant-layout-sider {
+    background: linear-gradient(
+        90deg,
+        rgb(2, 49, 80) 0%,
+        rgb(0, 39, 77) 50%,
+        rgb(11, 34, 69) 100%
+    ) !important;
+}
+
+.ant-menu.ant-menu-dark {
+    background: transparent !important;
+}
+
+.ant-menu-dark .ant-menu-sub {
+    background: rgba(0, 0, 0, 0.12) !important;
 }
 
 .ant-menu-dark .ant-menu-item,

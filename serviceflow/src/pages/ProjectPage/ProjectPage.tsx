@@ -1,38 +1,44 @@
 import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../../components/UI/NoData/NoData";
-import LoadingOverlay from "../../layout/LoadingOverlay/LoadingOverlay";
-import UseOperationalTask from "../../modules/OperationalTask/hooks/UseOperationalTask"
-import OperationalTaskListing from "../../modules/OperationalTask/OperationalTaskListing/OperationalTaskListing";
+import EpicListing from "../../modules/Project/EpicListing/EpicListing";
+import useEpicListing from "../../modules/Project/hooks/useEpicListing";
 import Pagination from "../../components/UI/Pagination/Pagination";
 import { Outlet } from "react-router-dom";
+import LoadingOverlay from "../../layout/LoadingOverlay/LoadingOverlay";
 
-function OperationalTaskPage() {
+function ProjectPage() {
 
   const {
-    tasks,
-    isLoading,
+    epics,
     totalItems,
+    isLoading,
     queryParams,
     search,
     changePage,
     changePageSize,
     reload,
-  } = UseOperationalTask();
+    changeSort
+  } = useEpicListing();
 
   const pageSizeOptions = [2, 10, 20];
+
+  console.log(epics)
 
   return (
     <div>
       {isLoading && <LoadingOverlay />}
+
       {!isLoading && (
         <>
-          <OperationalTaskListing
+          <EpicListing
             onSearch={search}
-            tasks={tasks}
+            changeSort={changeSort}
+            epics={epics}
             onReload={reload}
+            sort={queryParams.sort}
           />
-          {tasks.length === 0 ? (
-            <NoData icon={faDatabase} message="Não há tarefas disponíveis" />
+          {epics.length === 0 ? (
+            <NoData icon={faDatabase} message="Não há épicos disponíveis" />
           ) : (
             <div className="container-pagination">
               <Pagination
@@ -43,6 +49,7 @@ function OperationalTaskPage() {
                 onPageSizeChange={changePageSize}
                 onPageChange={(page) => {
                   changePage(page);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               />
             </div>
@@ -54,4 +61,4 @@ function OperationalTaskPage() {
   )
 }
 
-export default OperationalTaskPage
+export default ProjectPage

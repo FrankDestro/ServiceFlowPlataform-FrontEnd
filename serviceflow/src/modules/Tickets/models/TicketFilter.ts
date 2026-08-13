@@ -22,4 +22,6 @@ export type TicketFilter = {
   myTickets: boolean;
   myAreaTickets: boolean;
   assignedToMe: boolean;
+
+  sort: string;
 };

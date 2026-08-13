@@ -54,6 +54,7 @@ function SearchTicket({ onSearch }: Props) {
         slaId: "",
         initialDate: "",  
         finalDate: "",     
+        sort: ""
     });
 
     const [switches, setSwitches] = useState<Switches>({
@@ -101,6 +102,7 @@ function SearchTicket({ onSearch }: Props) {
             slaId: "",
             initialDate: "",   // ← era registrationDate
             finalDate: "",     // ← novo
+            sort: ""
         });
         setSwitches({ myTickets: false, myAreaTickets: false, assignedToMe: false, slaBreached: false });
         onSearch({

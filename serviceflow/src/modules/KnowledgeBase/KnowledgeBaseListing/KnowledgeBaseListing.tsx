@@ -1,7 +1,7 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { format, parseISO } from "date-fns";
-import { Eye, EyeIcon, PencilLine, ThumbsUp } from "lucide-react";
+import { ArrowDown, ArrowUp, Eye, EyeIcon, PencilLine, ThumbsUp } from "lucide-react";
 import SearchFilterKnowledgeBase from "../components/SearchFilterKnowledgeBase/SearchFilterKnowledgeBase.tsx";
 import type { KnowledgeBaseSearchParams, KnowledgeBaseSimpleDTO } from "../models/knowledgeBaseDTO.ts";
 import "./KnowledgeBaseListing.css";
@@ -17,14 +17,17 @@ import { toast } from "react-toastify";
 import * as functions from "../../../utils/helpers/functions.ts"
 import ModalConfirm from "../../../components/UI/ModalConfirm/ModalConfirm.tsx";
 import useKnowledgeBaseActions from "../hooks/useKnowledgeBaseActions.tsx";
+import SortableHeader from "../../../components/UI/SortableHeader/SortableHeader.tsx";
 
 type KnowledgeBaseListingProps = {
     articles: KnowledgeBaseSimpleDTO[];
     onSearch: (formData: KnowledgeBaseSearchParams) => void;
+    changeSort: (field: string) => void;
     onReload: () => void;
+    sort: string;
 };
 
-const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseListingProps) => {
+const KnowledgeBaseListing = ({ onSearch, articles, onReload, changeSort, sort }: KnowledgeBaseListingProps) => {
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [isNewModalOpen, setIsNewModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -34,6 +37,13 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
     const { archive, isArchiving } = useKnowledgeBaseActions(selectedId!, onReload);
+
+    const getSortIcon = (field: string) => {
+        if (!sort.startsWith(field)) {
+            return null;
+        }
+        return sort.endsWith(",asc") ? <ArrowUp size={15} /> : <ArrowDown size={15} />;
+    };
 
     return (
         <>
@@ -53,16 +63,137 @@ const KnowledgeBaseListing = ({ onSearch, articles, onReload }: KnowledgeBaseLis
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Título</th>
-                        <th>Categoria</th>
+                        <th>
+                            <SortableHeader
+                                field="id"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Id
+                            </SortableHeader>
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="title"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Titulo
+                            </SortableHeader>
+
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="category_id"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Categoria
+                            </SortableHeader>
+
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="tags"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Tags
+                            </SortableHeader>
+
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="visibility"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Visibilidade
+                            </SortableHeader>
+
+                        </th>
+                        <th>
+                            <SortableHeader
+                                field="status"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Status
+                            </SortableHeader>
+
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="created_by_user_id"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Criado por
+                            </SortableHeader>
+
+
+                        </th>
+
+
+                        <th>
+                            <SortableHeader
+                                field="created_at"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                Criado em
+                            </SortableHeader>
+
+                        </th>
+                        <th>
+                            <SortableHeader
+                                field="views_count"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                <div className="cont-title-icon">
+                                    <EyeIcon size={14} />
+                                    Views
+                                </div>
+                            </SortableHeader>
+                        </th>
+
+                        <th>
+                            <SortableHeader
+                                field="helpful_count"
+                                sort={sort}
+                                onSort={changeSort}
+                                getSortIcon={getSortIcon}
+                            >
+                                <div className="cont-title-icon">
+                                    <ThumbsUp size={14} />
+                                    Útil
+                                </div>
+                            </SortableHeader>
+
+                        </th>
+                        {/* <th>Categoria</th>
                         <th>Tags</th>
                         <th>Visibilidade</th>
                         <th>Status</th>
                         <th>Criado por</th>
-                        <th>Criado em</th>
-                        <th><EyeIcon size={14} /> Views</th>
-                        <th><ThumbsUp size={14} /> Útil</th>
+                        <th>Criado em</th> */}
+                        {/* <th><EyeIcon size={14} /> Views</th> */}
+                        {/* <th><ThumbsUp size={14}/> Útil</th> */}
                         <th>Opções</th>
                     </tr>
                 </thead>

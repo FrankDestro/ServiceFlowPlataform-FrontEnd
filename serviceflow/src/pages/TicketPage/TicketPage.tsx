@@ -16,6 +16,7 @@ function TicketPage() {
         handlePageChange,
         handleRowsPerPageChange,
         handleActiveTabChange,
+        changeSort
     } = useTicket();
 
     const [isOnListTab, setIsOnListTab] = useState(true);
@@ -50,6 +51,7 @@ function TicketPage() {
             myTickets: filters.myTickets,
             myAreaTickets: filters.myAreaTickets,
             assignedToMe: filters.assignedToMe,
+            sort: filters.sort
         });
     };
 

@@ -1,0 +1,14 @@
+.sortable {
+    padding: 2px;
+}
+
+.cont-title-icon {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.header-sort-content { 
+   display: flex;
+   gap: 4px; 
+}

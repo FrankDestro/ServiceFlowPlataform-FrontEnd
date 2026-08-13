@@ -10,7 +10,6 @@ import { getAllAttachmentById } from "../../Attachment/service/attachment-servic
 import Modal from "../../../components/UI/ModalDefault/Modal.tsx";
 import TicketTimelineChart from "../TicketTimelineChart/TicketTimelineChart.tsx";
 import { getSeverityBadgeStyle, getStatusTicketBadgeStyle } from "../../../utils/helpers/functions.ts";
-import { useNavigate } from "react-router-dom";
 
 type Aba = "detalhes" | "andamento" | "anexo";
 

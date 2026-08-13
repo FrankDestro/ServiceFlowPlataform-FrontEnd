@@ -9,7 +9,6 @@ import Footer from "./Footer/footer";
 import NavbarLocation from "./NavbarLocation/NavbarLocation";
 import NotificationBell from "./Notification/Notification";
 import UserMenu from "./UserMenu/UserMenu";
-// ⬅ novo componente
 import "./MainLayout.css";
 import Sidebar from "./SideBar/SideBar";
 import AiAssistant from "../modules/AIAssistant/AiAssistant";
@@ -36,11 +35,13 @@ const MainLayout: React.FC = () => {
           <Header
             style={{
               padding: "0 20px",
-              background: "#ffffff",
-              borderBottom: "1px solid #f1f5f9",
+              borderBottom: "1px solid rgba(177, 189, 200, 0.12)",
               display: "flex",
               alignItems: "center",
               boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+              // background: "linear-gradient(90deg, rgb(2, 49, 80) 0%, rgb(0, 39, 77) 50%, rgb(11, 34, 69) 100%)",
+              background: "white",
+              color: "#fff",
             }}
           >
             <Button

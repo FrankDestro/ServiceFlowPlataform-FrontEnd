@@ -13,3 +13,4 @@ export default function useOperationalTaskDetail(id: number | null) {
         enabled: !!id,
     });
 }
+

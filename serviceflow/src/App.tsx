@@ -19,6 +19,8 @@ import ManagementProblemPageDetail from "./pages/Problem/ManagementProblemPageDe
 import ProblemManagementCreate from "./modules/ProblemManagement/ProblemManagementCreate/ProblemManagementCreate.tsx";
 import OperationalTaskPage from "./pages/OperationalTaskPage/OperationalTaskPage.tsx";
 import OperatonalPageDetail from "./pages/OperationalPageDetail/OperatonalPageDetail.tsx";
+import ProjectPage from "./pages/ProjectPage/ProjectPage.tsx";
+import EpicDetailPage from "./pages/EpicDetailPage/EpicDetailPage.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -54,6 +56,9 @@ function App() {
             {/* //MODULO OPERATIONAL TASK */}
             <Route path="/tarefas-operacionais" element={<OperationalTaskPage />} />
             <Route path="/tarefas-operacionais/:id" element={<OperatonalPageDetail />} />
+              {/* //MODULO PROJECT */}
+            <Route path="/epicos" element={<ProjectPage />} />
+            <Route path="/epics/:id" element={<EpicDetailPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>

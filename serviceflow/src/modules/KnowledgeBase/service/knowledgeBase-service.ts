@@ -9,6 +9,7 @@ export function allKnowledgeBaseRequest(
     categoryId: number | null,
     status: string,
     tags: string,
+    sort: string
 ) {
     const config: AxiosRequestConfig = {
         method: "GET",
@@ -20,6 +21,7 @@ export function allKnowledgeBaseRequest(
             categoryId: categoryId || null,
             status: status || null,
             tags: tags.length > 0 ? tags : null,
+            sort
         },
     };
     return requestBackendConfig(config);

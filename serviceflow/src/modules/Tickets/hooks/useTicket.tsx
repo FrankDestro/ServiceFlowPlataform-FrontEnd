@@ -19,8 +19,8 @@ export const initialQueryParams: TicketFilter = {
   myTickets: false,
   myAreaTickets: false,
   assignedToMe: false,
+  sort: "create_at,desc"
 };
-
 
 export function useTicket() {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,9 +51,24 @@ export function useTicket() {
     setQueryParams(prev => ({
       ...prev,
       page: 0,
+      sort: "create_at,desc",
       ...filters,
     }));
   }
+
+   function changeSort(field: string) {
+        setQueryParams(prev => {
+            const direction =
+                prev.sort === `${field},asc`
+                    ? "desc"
+                    : "asc";
+            return {
+                ...prev,
+                page: 0,
+                sort: `${field},${direction}`
+            };
+        });
+    }
 
   function handlePageChange(newPage: number) {
     console.log("🔍 handlePageChange recebeu:", newPage); // ✅
@@ -80,5 +95,6 @@ export function useTicket() {
     handlePageChange,
     handleRowsPerPageChange,
     handleActiveTabChange,
+    changeSort
   };
 }

@@ -136,6 +136,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onCollapse }) => {
             trigger={null}
             width={280}
             collapsedWidth={90}
+            style={{
+                background: "linear-gradient(90deg, rgb(2, 49, 80) 0%, rgb(0, 39, 77) 50%, rgb(11, 34, 69) 100%)",
+            }}
         >
             <div className="container-logo">
                 <img src={Logo} alt="Logo" />

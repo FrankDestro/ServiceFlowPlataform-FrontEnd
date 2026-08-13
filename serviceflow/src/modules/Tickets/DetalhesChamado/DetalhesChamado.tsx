@@ -17,9 +17,10 @@ const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
 
             {/* INFORMAÇÕES */}
             <div className="dc-card">
-                <div className="dc-sec-lbl">Informações do chamado</div>
+                <div className="dc-sec-lbl">Informações do ticket</div>
                 <div className="tk-detail-info-grid">
                     <div className="dc-row"><span className="dc-lbl">Solicitante</span><span className="dc-val">{ticket.requester.firstName} {ticket.requester.lastName}</span></div>
+                    <div className="dc-row"><span className="dc-lbl">Contato:</span><span className="dc-val">{ticket.requester.email}</span></div>
                     <div className="dc-row"><span className="dc-lbl">Área solucionadora</span><span className="dc-val">{ticket.solvingArea?.name ?? "—"}</span></div>
                     <div className="dc-row"><span className="dc-lbl">Canal</span><span className="dc-val">{ticket.channel ?? "—"}</span></div>
                     <div className="dc-row"><span className="dc-lbl">Tipo</span><span className="dc-val">{ticket.typeRequest?.name ?? "—"}</span></div>
@@ -103,44 +104,41 @@ const DetalhesChamado: React.FC<Props> = ({ ticket }) => {
                         </div>
                     </div>
 
-              
 
-
-
-                <div className="dc-part-role">Analista responsável</div>
-                {ticket.technician ? (
-                    <div className="dc-part-item">
-                        <div className="dc-av dc-av-teal">
-                            {getInitials(ticket.technician.firstName, ticket.technician.lastName)}
-                        </div>
-                        <div>
-                            <div className="dc-part-name">{ticket.technician.firstName} {ticket.technician.lastName}</div>
-                            <div className="dc-part-email">{ticket.technician.email}</div>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="dc-part-item">
-                        <span style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>Não atribuído</span>
-                    </div>
-                )}
-
-                {ticket.resolver && (
-                    <>
-                        <div className="dc-part-role">Resolvido por</div>
+                    <div className="dc-part-role">Analista responsável</div>
+                    {ticket.technician ? (
                         <div className="dc-part-item">
-                            <div className="dc-av dc-av-amber">
-                                {getInitials(ticket.resolver.firstName, ticket.resolver.lastName)}
+                            <div className="dc-av dc-av-teal">
+                                {getInitials(ticket.technician.firstName, ticket.technician.lastName)}
                             </div>
                             <div>
-                                <div className="dc-part-name">{ticket.resolver.firstName} {ticket.resolver.lastName}</div>
-                                <div className="dc-part-email">{ticket.resolver.email}</div>
+                                <div className="dc-part-name">{ticket.technician.firstName} {ticket.technician.lastName}</div>
+                                <div className="dc-part-email">{ticket.technician.email}</div>
                             </div>
                         </div>
-                    </>
-                )}
-            </div>
+                    ) : (
+                        <div className="dc-part-item">
+                            <span style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>Não atribuído</span>
+                        </div>
+                    )}
 
-              </div>
+                    {ticket.resolver && (
+                        <>
+                            <div className="dc-part-role">Resolvido por</div>
+                            <div className="dc-part-item">
+                                <div className="dc-av dc-av-amber">
+                                    {getInitials(ticket.resolver.firstName, ticket.resolver.lastName)}
+                                </div>
+                                <div>
+                                    <div className="dc-part-name">{ticket.resolver.firstName} {ticket.resolver.lastName}</div>
+                                    <div className="dc-part-email">{ticket.resolver.email}</div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
+
+            </div>
         </div>
     );
 };

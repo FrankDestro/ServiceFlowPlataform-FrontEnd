@@ -14,13 +14,14 @@ function KnowledgeBasePage() {
         totalItems,
         queryParams,
         search,
+        changeSort,
         changePage,
         changePageSize,
         reload,
     } = useKnowledgeBase();
 
     const pageSizeOptions = [2, 10, 20];
-
+    
     return (
         <div>
             {isLoading && <LoadingOverlay />}
@@ -28,8 +29,10 @@ function KnowledgeBasePage() {
                 <>
                     <KnowledgeBaseListing
                         onSearch={search}
+                        changeSort={changeSort}
                         articles={articles}
                         onReload={reload}
+                        sort={queryParams.sort}
                     />
                     {articles.length === 0 ? (
                         <NoData icon={faDatabase} message="Não há artigos disponíveis" />

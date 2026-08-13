@@ -84,7 +84,7 @@ function SearchFilterKnowError({ onSearch }: Props) {
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Search</Accordion.Header>
+        <Accordion.Header>Filtros</Accordion.Header>
         <Accordion.Body>
           <form onSubmit={handleSubmit}>
             <div className="kedb-search-container">
