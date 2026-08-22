@@ -18,7 +18,7 @@ export function useTasks(id: number, enabled: boolean) {
     return useQuery<TaskDTO[]>({
         queryKey: ["epic/", id, "tasks"],
         queryFn: async () => {
-            const res = await epicServices.Tasks(id!);
+            const res = await epicServices.getTaskByEpicId(id!);
             return res.data;
         },
        enabled: !!id && enabled,

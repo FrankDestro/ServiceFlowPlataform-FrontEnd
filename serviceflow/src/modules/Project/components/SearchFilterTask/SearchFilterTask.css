@@ -1,0 +1,101 @@
+/* SearchFilterTask.css */
+.tsk-search-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    margin-bottom: 8px;
+}
+
+.tsk-search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tsk-search-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.tsk-input-container {
+    position: relative;
+    flex: 1;
+}
+
+.tsk-floating-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    font-size: 13px;
+    color: #334155;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.tsk-floating-input:focus {
+    outline: none;
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.15);
+}
+
+.tsk-floating-label {
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-size: 11px;
+    color: #64748b;
+    background: #ffffff;
+    padding: 0 6px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.tsk-select-container {
+    flex: 1;
+}
+
+.tsk-select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    font-size: 13px;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.tsk-select:focus {
+    outline: none;
+    border-color: #185FA5;
+    box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.15);
+}
+
+.tsk-search-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+@media (max-width: 1024px) {
+    .tsk-search-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tsk-search-buttons {
+        justify-content: flex-end;
+    }
+}

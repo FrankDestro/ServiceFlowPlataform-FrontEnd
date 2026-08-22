@@ -43,7 +43,7 @@ export function EpicHistory(id: number): AxiosPromise<EpicHistoryDTO[]> {
 }
 
 
-export function Tasks(id: number): AxiosPromise<TaskDTO[]> {
+export function getTaskByEpicId(id: number): AxiosPromise<TaskDTO[]> {
     const config: AxiosRequestConfig = {
         method: "GET",
         url: `/epic/${id}/tasks`,

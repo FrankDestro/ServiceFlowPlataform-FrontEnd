@@ -1,0 +1,135 @@
+.tsk-modal-loading {
+    padding: 24px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.tsk-modal-topline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px 0;
+}
+
+.tsk-modal-number {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0C447C;
+}
+
+.tsk-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 8px 24px 16px;
+}
+
+.tsk-modal-section {
+    padding: 0 24px 20px;
+}
+
+.tsk-modal-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+}
+
+.tsk-modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+}
+
+.tsk-modal-row:last-child {
+    border-bottom: none;
+}
+
+.tsk-modal-k {
+    color: #64748b;
+}
+
+.tsk-modal-v {
+    font-weight: 500;
+    color: #1e293b;
+    text-align: right;
+}
+
+.tsk-modal-content-block {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.tsk-modal-close-btn {
+    background: #fff1f2;
+    color: #dc2626;
+    border: 1px solid #fecdd3;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tsk-modal-close-btn:hover {
+    background: #fee2e2;
+}
+
+.tsk-btn-start {
+    background: #f0fdf4 !important;
+    color: #16a34a !important;
+    border: 1px solid #16a34a !important;
+}
+
+.tsk-btn-start:hover {
+    background: #dcfce7 !important;
+}
+
+.tsk-btn-complete {
+    background: #185FA5 !important;
+    color: #fff !important;
+    border: 1px solid #185FA5 !important;
+}
+
+.tsk-btn-complete:hover {
+    background: #0C447C !important;
+}
+
+.tsk-btn-cancel {
+    background: #fff1f2 !important;
+    color: #dc2626 !important;
+    border: 1px solid #dc2626 !important;
+}
+
+.tsk-btn-cancel:hover {
+    background: #fee2e2 !important;
+}
+
+.tsk-btn-start:disabled,
+.tsk-btn-complete:disabled,
+.tsk-btn-cancel:disabled {
+    color: #edebeb !important;
+    background: #94a3b8 !important;
+    cursor: not-allowed !important;
+    border: 1px solid #94a3b8 !important;
+}
+
+.dueDate-est {
+    background-color: #CCE5FF;
+    color: #004085;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}

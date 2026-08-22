@@ -616,3 +616,18 @@ export const getProblemStatusBadgeClass = (status: string) => {
   };
   return map[status] ?? "badge";
 };
+
+
+// PROJECT
+export const getStatusTaskBadgeClass = (status: string) => {
+  const map: Record<string, string> = {
+    BACKLOG: "badge badge-requested",
+    TODO: "badge badge-approved",
+    IN_PROGRESS: "badge badge-progress",
+    IN_REVIEW: "badge badge-completed",
+    TESTING: "badge badge-cancelled",
+    DONE: "badge badge-resolved",
+    CANCELLED: "badge badge-cancelled",
+  };
+  return map[status] ?? "badge";
+};
