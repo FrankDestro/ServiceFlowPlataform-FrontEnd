@@ -1,7 +1,8 @@
-import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Calendar, Milestone, ListTodo } from "lucide-react";
+import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug, Calendar, Milestone, ListTodo, FolderKanban } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import "./NavbarLocation.css";
 import { HexIcon } from "../../components/UI/HexIcon/HexIcon";
+import { DashboardOutlined, DashOutlined } from "@ant-design/icons";
 
 type RouteConfig = {
   title: string;
@@ -40,6 +41,8 @@ const routeMap: Record<string, RouteConfig> = {
   "/tasks": { title: "Tasks", hexIcon: { icon: ListTodo, color: "#0369a1", bg: "#dbeafe" } },
   "/tasks/:id": { title: "Detalhes da task", hexIcon: { icon: ListTodo, color: "#0369a1", bg: "#dbeafe" }, parent: "/tasks" },
 
+  "/sprints": { title: "Sprints", hexIcon: { icon: DashboardOutlined, color: "#0369a1", bg: "#dbeafe" } },
+
   "/home": { title: "Home" },
   "/dashboard": { title: "Dashboard" },
 
@@ -51,10 +54,8 @@ const NavbarLocation = () => {
   const buildBreadcrumb = () => {
     const path = location.pathname;
 
-    // tenta match exato primeiro
     let current = routeMap[path];
 
-    // se não achou, tenta match dinâmico com :id
     if (!current) {
       const matchedKey = Object.keys(routeMap).find((key) => {
         const pattern = key.replace(/:[\w]+/g, "[^/]+");

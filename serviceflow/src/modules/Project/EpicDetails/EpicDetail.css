@@ -33,7 +33,9 @@
     transition: all 0.15s;
 }
 
-.ep-detail-back-btn:hover { background: #f8fafc; }
+.ep-detail-back-btn:hover {
+    background: #f8fafc;
+}
 
 .ep-detail-epic-number {
     font-size: 14px;
@@ -168,7 +170,9 @@
     gap: 8px;
 }
 
-.ep-detail-info-row:last-child { border-bottom: none; }
+.ep-detail-info-row:last-child {
+    border-bottom: none;
+}
 
 .ep-detail-info-label {
     color: #64748b;
@@ -192,12 +196,14 @@
     min-height: 56px;
 }
 
-.ep-detail-text-section { margin-top: 16px; }
+.ep-detail-text-section {
+    margin-top: 16px;
+}
 
 /* Tasks list */
 .ep-detail-task-row {
     display: grid;
-    grid-template-columns: 70px 1fr 90px 70px 120px 32px;
+    grid-template-columns: 70px 1fr 90px 70px 120px 50px;
     align-items: center;
     gap: 10px;
     padding: 10px 0;
@@ -205,10 +211,23 @@
     font-size: 12px;
 }
 
-.ep-detail-task-row:last-child { border-bottom: none; }
-.ep-detail-task-number { font-weight: 700; color: #0C447C; }
-.ep-detail-task-title { color: #1e293b; }
-.ep-detail-task-assignee { color: #64748b; }
+.ep-detail-task-row:last-child {
+    border-bottom: none;
+}
+
+.ep-detail-task-number {
+    font-weight: 700;
+    color: #0C447C;
+}
+
+.ep-detail-task-title {
+    color: #1e293b;
+}
+
+.ep-detail-task-assignee {
+    color: #64748b;
+}
+
 .ep-detail-task-view-btn {
     width: 26px;
     height: 26px;
@@ -219,7 +238,10 @@
     color: #64748b;
     cursor: pointer;
 }
-.ep-detail-task-view-btn:hover { background: #f1f5f9; }
+
+.ep-detail-task-view-btn:hover {
+    background: #f1f5f9;
+}
 
 /* Botão + no header de aba */
 .ep-detail-btn {
@@ -230,9 +252,20 @@
     border: none;
     cursor: pointer;
 }
-.ep-detail-btn-primary { background: #185FA5; color: #fff; }
-.ep-detail-btn-primary:hover { background: #0C447C; }
-.ep-detail-btn-sm { font-size: 11px; padding: 5px 10px; }
+
+.ep-detail-btn-primary {
+    background: #185FA5;
+    color: #fff;
+}
+
+.ep-detail-btn-primary:hover {
+    background: #0C447C;
+}
+
+.ep-detail-btn-sm {
+    font-size: 11px;
+    padding: 5px 10px;
+}
 
 /* Histórico */
 .ep-detail-history-item {
@@ -243,7 +276,9 @@
     font-size: 12px;
 }
 
-.ep-detail-history-item:last-child { border-bottom: none; }
+.ep-detail-history-item:last-child {
+    border-bottom: none;
+}
 
 .ep-detail-history-dot {
     width: 8px;
@@ -254,8 +289,17 @@
     flex-shrink: 0;
 }
 
-.ep-detail-history-text { flex: 1; color: #334155; line-height: 1.5; }
-.ep-detail-history-date { color: #94a3b8; white-space: nowrap; font-size: 11px; }
+.ep-detail-history-text {
+    flex: 1;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.ep-detail-history-date {
+    color: #94a3b8;
+    white-space: nowrap;
+    font-size: 11px;
+}
 
 /* Sidebar rows */
 .ep-detail-side-row {
@@ -267,8 +311,13 @@
     font-size: 12px;
 }
 
-.ep-detail-side-row:last-child { border-bottom: none; }
-.ep-detail-side-label { color: #64748b; }
+.ep-detail-side-row:last-child {
+    border-bottom: none;
+}
+
+.ep-detail-side-label {
+    color: #64748b;
+}
 
 /* Progress */
 .ep-detail-progress-bar {
@@ -294,7 +343,9 @@
     border: 1px solid #16a34a !important;
 }
 
-.ep-btn-start:hover { background: #dcfce7 !important; }
+.ep-btn-start:hover {
+    background: #dcfce7 !important;
+}
 
 .ep-btn-complete {
     background: #185FA5 !important;
@@ -302,7 +353,9 @@
     border: 1px solid #185FA5 !important;
 }
 
-.ep-btn-complete:hover { background: #0C447C !important; }
+.ep-btn-complete:hover {
+    background: #0C447C !important;
+}
 
 .ep-btn-cancel {
     background: #fff1f2 !important;
@@ -310,7 +363,9 @@
     border: 1px solid #dc2626 !important;
 }
 
-.ep-btn-cancel:hover { background: #fee2e2 !important; }
+.ep-btn-cancel:hover {
+    background: #fee2e2 !important;
+}
 
 .ep-btn-start:disabled,
 .ep-btn-complete:disabled,
@@ -319,4 +374,23 @@
     background: #94a3b8 !important;
     cursor: not-allowed !important;
     border: 1px solid #94a3b8 !important;
+}
+
+.ep-detail-task-header {
+    display: grid;
+    grid-template-columns: 70px 1fr 90px 70px 120px 60px;
+    gap: 10px;
+    padding: 0 0 8px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ep-container-task-table {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 20px 10px;
 }

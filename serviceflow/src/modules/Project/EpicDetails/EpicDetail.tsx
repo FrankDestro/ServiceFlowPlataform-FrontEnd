@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { faCheck, faPen, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faClose, faPen, faX } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/UI/Button/Button";
-import { getPriorityClass, getStatusBadgeClass, getTypeBadgeClass } from "../../../utils/helpers/functions";
+import { getPriorityClass, getStatusBadgeClass } from "../../../utils/helpers/functions";
 import useEpicDetail from "../hooks/useEpicDetails";
 import { useTasks, useEpicHistory } from "../hooks/useEpicTabs";
 import "./EpicDetail.css";
 import type { TaskSimpleDTO } from "../models/TaskDTO";
 import { Eye } from "lucide-react";
+import TaskDetails from "../TaskDetails/TaskDetails";
+import Modal from "../../../components/UI/ModalDefault/Modal";
 
 type Props = {
     id: number;
@@ -19,8 +21,8 @@ function EpicDetail({ id }: Props) {
 
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<Tab>("detalhes");
-    const [taskModalOpen, setTaskModalOpen] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+    const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
     const { data: epic, isLoading, error } = useEpicDetail(id);
     const { data: tasks = [] } = useTasks(id, activeTab === "tasks");
@@ -39,12 +41,16 @@ function EpicDetail({ id }: Props) {
 
     function openNewTaskModal() {
         setSelectedTaskId(null);
-        setTaskModalOpen(true);
+        // setIsViewModalOpen(true);
     }
 
     function openExistingTaskModal(taskId: number) {
+        console.log("fui chamado")
         setSelectedTaskId(taskId);
-        setTaskModalOpen(true);
+
+        console.log(selectedTaskId)
+
+        setIsViewModalOpen(true);
     }
 
     return (
@@ -120,25 +126,36 @@ function EpicDetail({ id }: Props) {
                             <div className="ep-detail-tab-content">
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                                     <div className="ep-detail-section-title" style={{ marginBottom: 0 }}>
-                                        Tasks <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{totalTasks} task(s)</span>
+                                        Tasks <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{tasks.length} task(s)</span>
                                     </div>
                                     <button className="ep-detail-btn ep-detail-btn-primary ep-detail-btn-sm" onClick={openNewTaskModal}>
                                         + Nova task
                                     </button>
                                 </div>
 
-                                {tasks.map((t: TaskSimpleDTO) => (
-                                    <div key={t.id} className="ep-detail-task-row">
-                                        <span className="ep-detail-task-number">{t.taskNumber}</span>
-                                        <span className="ep-detail-task-title">{t.title}</span>
-                                        <span className={getStatusBadgeClass(t.status)} style={{ fontSize: 10 }}>{t.status}</span>
-                                        <span className={getPriorityClass(t.priority)}>{t.priority}</span>
-                                        <span className="ep-detail-task-assignee">{t.assignedTo ?? "—"}</span>
-                                        <div className="ep-detail-task-view-btn" onClick={() => openExistingTaskModal(t.id)}>
-                                            <Eye size={16} />
-                                        </div>
+                                <div className="ep-container-task-table">
+                                    <div className="ep-detail-task-header">
+                                        <span>Nº</span>
+                                        <span>Título</span>
+                                        <span>Status</span>
+                                        <span>Prioridade</span>
+                                        <span>Responsável</span>
+                                        <span>Detalhes</span>
                                     </div>
-                                ))}
+
+                                    {tasks.map((t: TaskSimpleDTO) => (
+                                        <div key={t.id} className="ep-detail-task-row">
+                                            <span className="ep-detail-task-number">{t.taskNumber}</span>
+                                            <span className="ep-detail-task-title">{t.title}</span>
+                                            <span className={getStatusBadgeClass(t.status)} style={{ fontSize: 10 }}>{t.status}</span>
+                                            <span className={getPriorityClass(t.priority)}>{t.priority}</span>
+                                            <span className="ep-detail-task-assignee">{t.assignedTo ?? "—"}</span>
+                                            <div className="ep-detail-task-view-btn" onClick={() => openExistingTaskModal(t.id)}>
+                                                <Eye size={16} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
 
@@ -200,13 +217,46 @@ function EpicDetail({ id }: Props) {
                 </div>
             </div>
 
-            {/* {taskModalOpen && (
-                <TaskModal
-                    epicId={id.toString}
-                    taskId={selectedTaskId}
-                    onClose={() => setTaskModalOpen(false)}
-                />
-            )} */}
+            {isViewModalOpen && (
+                <Modal
+                    title="Detalhes da task"
+                    isOpen={isViewModalOpen}
+                    onClose={() => {
+                        setIsViewModalOpen(false);
+                        setSelectedTaskId(null);
+                    }}
+                    width="1200px"
+                    footer={
+                        <>
+                            <div className="tsk-modal-footer">
+                                <div className="tsk-modal-footer-actions">
+                                    <Button text="Iniciar" icon={faCheck} type="button" borderRadius="8px" hoverColor="" className="tsk-btn-start" />
+                                    <Button text="Concluir" icon={faCheck} type="button" borderRadius="8px" hoverColor="" className="tsk-btn-complete" />
+                                    <Button text="Cancelar task" icon={faX} type="button" borderRadius="8px" hoverColor="" className="tsk-btn-cancel" />
+                                </div>
+
+                                <Button
+                                    text="Fechar"
+                                    icon={faClose}
+                                    background="#fee2e2"
+                                    hoverColor="#fecaca"
+                                    color="#dc2626"
+                                    type="button"
+                                    borderRadius="5px"
+                                    onClick={() => {
+                                        setIsViewModalOpen(false);
+                                    }} />
+                            </div>
+                        </>
+                    }
+                >
+                    <div className="modal-scroll-content">
+                        <TaskDetails id={selectedTaskId} />
+                    </div>
+                </Modal>
+
+
+            )}
         </div>
     );
 }

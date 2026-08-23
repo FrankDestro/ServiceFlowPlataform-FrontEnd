@@ -3,7 +3,7 @@ import userTaskDetails from "../hooks/userTaskDetails";
 import "./TaskDetails.css";
 
 type Props = {
-    id: number;
+    id: number | null;
 };
 
 function TaskDetails({ id }: Props) {

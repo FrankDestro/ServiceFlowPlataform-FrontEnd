@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import * as epicServices from "../services/epic-service";
 import type { EpicHistoryDTO } from "../models/EpicDTO";
-import type { TaskDTO } from "../models/TaskDTO";
+import type { TaskSimpleDTO } from "../models/TaskDTO";
 
 export function useEpicHistory(id: number, enabled: boolean) {
     return useQuery<EpicHistoryDTO[]>({
@@ -15,7 +15,7 @@ export function useEpicHistory(id: number, enabled: boolean) {
 }
 
 export function useTasks(id: number, enabled: boolean) {
-    return useQuery<TaskDTO[]>({
+    return useQuery<TaskSimpleDTO[]>({
         queryKey: ["epic/", id, "tasks"],
         queryFn: async () => {
             const res = await epicServices.getTaskByEpicId(id!);

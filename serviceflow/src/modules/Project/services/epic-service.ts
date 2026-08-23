@@ -1,7 +1,7 @@
 import type { AxiosPromise, AxiosRequestConfig } from "axios";
 import { requestBackendConfig } from "../../../utils/api/api-service.ts";
 import type { EpicDetailDTO, EpicHistoryDTO } from "../models/EpicDTO.ts";
-import type { TaskDTO } from "../models/TaskDTO.ts";
+import type { TaskSimpleDTO } from "../models/TaskDTO.ts";
 
 export function getAllEpics(
     page: number,
@@ -9,7 +9,7 @@ export function getAllEpics(
     problemNumber: number | null,
     priority: string,
     status: string,
-     sort: string
+    sort: string
 ) {
     const config: AxiosRequestConfig = {
         method: "GET",
@@ -43,7 +43,7 @@ export function EpicHistory(id: number): AxiosPromise<EpicHistoryDTO[]> {
 }
 
 
-export function getTaskByEpicId(id: number): AxiosPromise<TaskDTO[]> {
+export function getTaskByEpicId(id: number): AxiosPromise<TaskSimpleDTO[]> {
     const config: AxiosRequestConfig = {
         method: "GET",
         url: `/epic/${id}/tasks`,
