@@ -23,6 +23,8 @@ import ProjectPage from "./pages/ProjectPage/ProjectPage.tsx";
 import EpicDetailPage from "./pages/EpicDetailPage/EpicDetailPage.tsx";
 import TaskPage from "./pages/TaskPage/TaskPage.tsx";
 import SprintPage from "./pages/SprintPage/SprintPage.tsx";
+import SprintDetailPage from "./pages/SprintDetailPage/SprintDetailPage.tsx";
+import BacklogPage from "./pages/Backlog/BacklogPage.tsx";
 
 function App() {
   const [keycloakReady, setKeycloakReady] = useState(false);
@@ -64,6 +66,8 @@ function App() {
             <Route path="/tasks" element={<TaskPage />} />
             <Route path="/task/:id" element={<EpicDetailPage />} />
             <Route path="/sprints" element={<SprintPage />} />
+            <Route path="/sprints/:id" element={<SprintDetailPage />} />
+            <Route path="/backlog" element={<BacklogPage />} />
 
           </Route>
         </Routes>

@@ -1,3 +1,5 @@
+import type { ProjectDTO } from "./ProjectDTO";
+
 export type SprintStatus = "PLANNED" | "ACTIVE" | "COMPLETED" | "CANCELLED";
 
 export interface SprintFilterFormData {
@@ -21,4 +23,17 @@ export interface SprintSimpleDTO {
   endDate: string | null;
   projectNumber: string;
   taskCount: number;
+}
+
+export interface SprintDetailDTO {
+  id: number;
+  name: string;
+  goal: string | null;
+  status: SprintStatus;
+  startDate: string;
+  endDate: string;
+  project: ProjectDTO;
+  taskCount: number;
+  createdAt: string;
+  createdBy: string;
 }
