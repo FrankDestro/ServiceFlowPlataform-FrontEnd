@@ -2,7 +2,6 @@ import { Activity, Ticket, CheckSquare, BookOpen, AlertTriangle, RefreshCw, Bug,
 import { useLocation } from "react-router-dom";
 import "./NavbarLocation.css";
 import { HexIcon } from "../../components/UI/HexIcon/HexIcon";
-import { BackwardOutlined, DashboardOutlined } from "@ant-design/icons";
 
 type RouteConfig = {
   title: string;

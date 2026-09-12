@@ -67,7 +67,7 @@ export const items: MenuItem[] = [
     getItem("Operações de TI", "ops", <ApiOutlined />, [
         getItem("Problemas", "/problems", <BugOutlined />),
         getItem("Mudanças", "/changes", <ToolOutlined />),
-        getItem("Releases", "/releases", <RocketOutlined />),
+        getItem(<span>Release <span style={{ fontSize: 10, background: "#e0f2fe", color: "#0369a1", padding: "1px 6px", borderRadius: 4, marginLeft: 4 }}>V2</span></span>, "/releases", <RocketOutlined />), 
         getItem("Tarefas Operacionais", "/tarefas-operacionais", <ScheduleOutlined />),
     ]),
 
@@ -77,10 +77,10 @@ export const items: MenuItem[] = [
     getItem("Projetos", "projetos", <AppstoreOutlined />, [
         getItem("Boards", "/boards", <ColumnWidthOutlined />),
         getItem("Sprints", "/sprints", <DashboardOutlined />),
-        getItem(<span>Backlog <span style={{ fontSize: 10, background: "#e0f2fe", color: "#0369a1", padding: "1px 6px", borderRadius: 4, marginLeft: 4 }}>Em breve</span></span>, "/backlog", <UnorderedListOutlined />),
+        getItem("Backlog", "/backlog", <UnorderedListOutlined />),
         getItem("Tarefas", "/tasks", <CheckSquareOutlined />),
-        getItem(<span>Épicos <span style={{ fontSize: 10, background: "#ede9fe", color: "#7c3aed", padding: "1px 6px", borderRadius: 4, marginLeft: 4 }}>Em breve</span></span>, "/epicos", <ApartmentOutlined />),
-        getItem(<span>Relatórios <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 6px", borderRadius: 4, marginLeft: 4 }}>Em breve</span></span>, "/relatorios", <BarChartOutlined />),
+        getItem("Epicos", "/epicos", <ApartmentOutlined />),
+        getItem(<span>Relatórios <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 6px", borderRadius: 4, marginLeft: 4 }}>V2</span></span>, "/relatorios", <BarChartOutlined />),
     ]),
 
     { type: "divider" },
