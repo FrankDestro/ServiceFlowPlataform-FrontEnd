@@ -1,17 +1,19 @@
 // SprintDetail.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { faCheck, faClose, faPen, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faClose, faDatabase, faPen, faX } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../components/UI/Button/Button";
 import { getStatusBadgeClass } from "../../../utils/helpers/functions";
 import useSprintDetail from "../hooks/useSprintDetail";
-import { useSprintTasks, useSprintHistory } from "../hooks/useSprintTabs";
+import { useSprintTasks } from "../hooks/useSprintTabs";
+import { useProjectHistory } from "../hooks/userProjectHistory"
 import "./SprintDetail.css";
 import type { TaskSimpleDTO } from "../models/TaskDTO";
 import { getPriorityClass } from "../../../utils/helpers/functions";
 import { Eye } from "lucide-react";
 import TaskDetails from "../TaskDetails/TaskDetails";
 import Modal from "../../../components/UI/ModalDefault/Modal";
+import NoData from "../../../components/UI/NoData/NoData";
 
 type Props = {
     id: number;
@@ -28,7 +30,7 @@ function SprintDetail({ id }: Props) {
 
     const { data: sprint, isLoading, error } = useSprintDetail(id);
     const { data: tasks = [] } = useSprintTasks(id, activeTab === "tasks");
-    const { data: history = [] } = useSprintHistory(id, activeTab === "historico");
+    const { data: history = [] } = useProjectHistory("SPRINT", id, activeTab === "historico");
 
     if (isLoading) return <p>Carregando...</p>;
     if (error || !sprint) return <p>Erro ao carregar</p>;
@@ -114,51 +116,122 @@ function SprintDetail({ id }: Props) {
                         {/* Aba Tasks */}
                         {activeTab === "tasks" && (
                             <div className="sp-detail-tab-content">
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        marginBottom: 16
+                                    }}
+                                >
                                     <div className="sp-detail-section-title" style={{ marginBottom: 0 }}>
-                                        Tasks <span style={{ color: "#94a3b8", fontWeight: 400, fontSize: 11 }}>{tasks.length} task(s)</span>
+                                        Tasks{" "}
+                                        <span
+                                            style={{
+                                                color: "#94a3b8",
+                                                fontWeight: 400,
+                                                fontSize: 11
+                                            }}
+                                        >
+                                            {tasks.length} task(s)
+                                        </span>
                                     </div>
                                 </div>
 
-                                <div className="sp-container-task-table">
-                                    <div className="sp-detail-task-header">
-                                        <span>Nº</span>
-                                        <span>Título</span>
-                                        <span>Status</span>
-                                        <span>Prioridade</span>
-                                        <span>Responsável</span>
-                                        <span>Detalhes</span>
+                                {tasks.length === 0 ? (
+                                    <div className="sp-container-task-table">
+                                        <NoData
+                                            icon={faDatabase}
+                                            message="Não há informações de tarefas"
+                                        />
                                     </div>
+                                ) : (
+                                    <div className="sp-container-task-table">
 
-                                    {tasks.map((t: TaskSimpleDTO) => (
-                                        <div key={t.id} className="sp-detail-task-row">
-                                            <span className="sp-detail-task-number">{t.taskNumber}</span>
-                                            <span className="sp-detail-task-title">{t.title}</span>
-                                            <span className={getStatusBadgeClass(t.status)} style={{ fontSize: 10 }}>{t.status}</span>
-                                            <span className={getPriorityClass(t.priority)}>{t.priority}</span>
-                                            <span className="sp-detail-task-assignee">{t.assignedTo ?? "—"}</span>
-                                            <div className="sp-detail-task-view-btn" onClick={() => openExistingTaskModal(t.id)}>
-                                                <Eye size={16} />
-                                            </div>
+                                        <div className="sp-detail-task-header">
+                                            <span>Nº</span>
+                                            <span>Título</span>
+                                            <span>Status</span>
+                                            <span>Prioridade</span>
+                                            <span>Responsável</span>
+                                            <span>Detalhes</span>
                                         </div>
-                                    ))}
-                                </div>
+
+                                        {tasks.map((t: TaskSimpleDTO) => (
+                                            <div
+                                                key={t.id}
+                                                className="sp-detail-task-row"
+                                            >
+                                                <span className="sp-detail-task-number">
+                                                    {t.taskNumber}
+                                                </span>
+
+                                                <span className="sp-detail-task-title">
+                                                    {t.title}
+                                                </span>
+
+                                                <span
+                                                    className={getStatusBadgeClass(t.status)}
+                                                    style={{ fontSize: 10 }}
+                                                >
+                                                    {t.status}
+                                                </span>
+
+                                                <span className={getPriorityClass(t.priority)}>
+                                                    {t.priority}
+                                                </span>
+
+                                                <span className="sp-detail-task-assignee">
+                                                    {t.assignedTo ?? "—"}
+                                                </span>
+
+                                                <div
+                                                    className="sp-detail-task-view-btn"
+                                                    onClick={() => openExistingTaskModal(t.id)}
+                                                >
+                                                    <Eye size={16} />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
 
                         {/* Aba Histórico */}
                         {activeTab === "historico" && (
                             <div className="sp-detail-tab-content">
-                                <div className="sp-detail-section-title">Histórico</div>
-                                {history.map((item: any) => (
-                                    <div key={item.id} className="sp-detail-history-item">
-                                        <div className="sp-detail-history-dot"></div>
-                                        <div className="sp-detail-history-text">{item.description}</div>
-                                        <div className="sp-detail-history-date">{item.createdAt ?? "—"}</div>
-                                    </div>
-                                ))}
+                                <div className="sp-detail-section-title">
+                                    Histórico
+                                </div>
+
+                                {history.length === 0 ? (
+                                    <NoData
+                                        icon={faDatabase}
+                                        message="Não há informações de histórico"
+                                    />
+                                ) : (
+                                    history.map((item: any) => (
+                                        <div
+                                            key={item.id}
+                                            className="sp-detail-history-item"
+                                        >
+                                            <div className="sp-detail-history-dot" />
+
+                                            <div className="sp-detail-history-text">
+                                                {item.description}
+                                            </div>
+
+                                            <div className="sp-detail-history-date">
+                                                {item.createdAt ?? "—"}
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         )}
+
                     </div>
                 </div>
 

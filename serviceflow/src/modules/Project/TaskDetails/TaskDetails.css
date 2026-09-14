@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 16px 24px 0;
+    padding: 5px 24px 0;
 }
 
 .tsk-modal-number {
@@ -18,10 +18,10 @@
 }
 
 .tsk-modal-title {
+    padding: 8px 24px 16px;
+    color: #1e293b;
     font-size: 16px;
     font-weight: 600;
-    color: #1e293b;
-    padding: 8px 24px 16px;
 }
 
 .tsk-modal-section {
@@ -29,12 +29,13 @@
 }
 
 .tsk-modal-section-label {
+    margin-bottom: 10px;
+    color: #94a3b8;
     font-size: 11px;
     font-weight: 700;
-    color: #94a3b8;
-    text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 10px;
+    text-transform: uppercase;
+    margin-top: 10px;
 }
 
 .tsk-modal-row {
@@ -55,42 +56,43 @@
 }
 
 .tsk-modal-v {
-    font-weight: 500;
     color: #1e293b;
+    font-weight: 500;
     text-align: right;
 }
 
 .tsk-modal-content-block {
+    max-height: 160px;
+    padding: 14px;
+    overflow-y: auto;
     background: #f8fafc;
     border: 1px solid #f1f5f9;
     border-radius: 8px;
-    padding: 14px;
-    font-size: 13px;
     color: #334155;
+    font-size: 13px;
     line-height: 1.6;
-    max-height: 160px;
-    overflow-y: auto;
 }
 
 .tsk-modal-close-btn {
+    padding: 8px 14px;
     background: #fff1f2;
-    color: #dc2626;
     border: 1px solid #fecdd3;
     border-radius: 8px;
-    padding: 8px 14px;
+    color: #dc2626;
+    cursor: pointer;
     font-size: 13px;
     font-weight: 600;
-    cursor: pointer;
 }
 
-.tsk-modal-close-btn:hover {
+.tsk-modal-close-btn:hover,
+.tsk-btn-cancel:hover {
     background: #fee2e2;
 }
 
 .tsk-btn-start {
     background: #f0fdf4 !important;
-    color: #16a34a !important;
     border: 1px solid #16a34a !important;
+    color: #16a34a !important;
 }
 
 .tsk-btn-start:hover {
@@ -99,8 +101,8 @@
 
 .tsk-btn-complete {
     background: #185FA5 !important;
-    color: #fff !important;
     border: 1px solid #185FA5 !important;
+    color: #fff !important;
 }
 
 .tsk-btn-complete:hover {
@@ -109,27 +111,79 @@
 
 .tsk-btn-cancel {
     background: #fff1f2 !important;
-    color: #dc2626 !important;
     border: 1px solid #dc2626 !important;
-}
-
-.tsk-btn-cancel:hover {
-    background: #fee2e2 !important;
+    color: #dc2626 !important;
 }
 
 .tsk-btn-start:disabled,
 .tsk-btn-complete:disabled,
 .tsk-btn-cancel:disabled {
-    color: #edebeb !important;
     background: #94a3b8 !important;
-    cursor: not-allowed !important;
     border: 1px solid #94a3b8 !important;
+    color: #edebeb !important;
+    cursor: not-allowed !important;
 }
 
 .dueDate-est {
-    background-color: #CCE5FF;
-    color: #004085;
     padding: 4px 8px;
+    background-color: #CCE5FF;
     border-radius: 4px;
+    color: #004085;
     font-size: 12px;
+}
+
+.tsk-modal-tabs {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    padding: 0 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tsk-modal-tab {
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.tsk-modal-tab.active {
+    border-bottom-color: #185FA5;
+    color: #0C447C;
+}
+
+.tsk-modal-history-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 12px;
+}
+
+.tsk-modal-history-item:last-child {
+    border-bottom: none;
+}
+
+.tsk-modal-history-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    margin-top: 4px;
+    background: #185FA5;
+    border-radius: 50%;
+}
+
+.tsk-modal-history-text {
+    flex: 1;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.tsk-modal-history-date {
+    color: #94a3b8;
+    white-space: nowrap;
+    font-size: 11px;
 }

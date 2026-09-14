@@ -4,7 +4,8 @@ import { faCheck, faClose, faPen, faX } from "@fortawesome/free-solid-svg-icons"
 import Button from "../../../components/UI/Button/Button";
 import { getPriorityClass, getStatusBadgeClass } from "../../../utils/helpers/functions";
 import useEpicDetail from "../hooks/useEpicDetails";
-import { useTasks, useEpicHistory } from "../hooks/useEpicTabs";
+import { useProjectHistory } from "../hooks/userProjectHistory"
+import { useTasks} from "../hooks/useEpicTabs";
 import "./EpicDetail.css";
 import type { TaskSimpleDTO } from "../models/TaskDTO";
 import { Eye } from "lucide-react";
@@ -26,7 +27,7 @@ function EpicDetail({ id }: Props) {
 
     const { data: epic, isLoading, error } = useEpicDetail(id);
     const { data: tasks = [] } = useTasks(id, activeTab === "tasks");
-    const { data: history = [] } = useEpicHistory(id, activeTab === "historico");
+    const { data: history = [] } = useProjectHistory("EPIC", id, activeTab === "historico");
 
     if (isLoading) return <p>Carregando...</p>;
     if (error || !epic) return <p>Erro ao carregar</p>;
